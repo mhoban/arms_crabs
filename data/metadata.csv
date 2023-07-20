@@ -1,0 +1,117 @@
+unit,island,region,island_group,deployment_year,depth,depth_zone,lat,lon,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact,sample_group,shallow_deep
+2011_OAH_ARMS_G01_G,Oahu,main,main,2009,12,shallow,21.28865,-157.86542,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G01_H,Oahu,main,main,2009,12,shallow,21.28865,-157.86542,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G01_I,Oahu,main,main,2009,12,shallow,21.28865,-157.86542,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G02_C,Oahu,main,main,2009,12,shallow,21.28875,-157.86555,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G02_E,Oahu,main,main,2009,12,shallow,21.28875,-157.86555,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G02_F,Oahu,main,main,2009,12,shallow,21.28875,-157.86555,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G03_A,Oahu,main,main,2009,12,shallow,21.28836,-157.8656,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G03_B,Oahu,main,main,2009,12,shallow,21.28836,-157.8656,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2011_OAH_ARMS_G03_D,Oahu,main,main,2009,12,shallow,21.28836,-157.8656,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2012_MCE_30_A,Oahu,mce,main,2010,30,30m,21.284433,-157.868683,NA,NA,NA,NA,NA,NA,NA,30m,deep
+2012_MCE_30_B,Oahu,mce,main,2010,30,30m,21.284433,-157.868683,NA,NA,NA,NA,NA,NA,NA,30m,deep
+2012_MCE_30_C,Oahu,mce,main,2010,30,30m,21.284433,-157.868683,NA,NA,NA,NA,NA,NA,NA,30m,deep
+2012_MCE_30_D,Oahu,mce,main,2010,30,30m,21.284433,-157.868683,NA,NA,NA,NA,NA,NA,NA,30m,deep
+2012_MCE_30_E,Oahu,mce,main,2010,30,30m,21.284433,-157.868683,NA,NA,NA,NA,NA,NA,NA,30m,deep
+2012_MCE_30_F,Oahu,mce,main,2010,30,30m,21.284433,-157.868683,NA,NA,NA,NA,NA,NA,NA,30m,deep
+2012_MCE_60_A,Oahu,mce,main,2010,60,60m,21.26775,-157.848867,NA,NA,NA,NA,NA,NA,NA,60m,deep
+2012_MCE_60_B,Oahu,mce,main,2010,60,60m,21.26775,-157.848867,NA,NA,NA,NA,NA,NA,NA,60m,deep
+2012_MCE_60_C,Oahu,mce,main,2010,60,60m,21.26775,-157.848867,NA,NA,NA,NA,NA,NA,NA,60m,deep
+2012_MCE_60_D,Oahu,mce,main,2010,60,60m,21.26775,-157.848867,NA,NA,NA,NA,NA,NA,NA,60m,deep
+2012_MCE_60_E,Oahu,mce,main,2010,60,60m,21.26775,-157.848867,NA,NA,NA,NA,NA,NA,NA,60m,deep
+2012_MCE_60_F,Oahu,mce,main,2010,60,60m,21.26775,-157.848867,NA,NA,NA,NA,NA,NA,NA,60m,deep
+2012_MCE_90_A,Oahu,mce,main,2010,90,90m,21.265817,-157.851617,NA,NA,NA,NA,NA,NA,NA,90m,deep
+2012_MCE_90_B,Oahu,mce,main,2010,90,90m,21.265817,-157.851617,NA,NA,NA,NA,NA,NA,NA,90m,deep
+2012_MCE_90_C,Oahu,mce,main,2010,90,90m,21.265817,-157.851617,NA,NA,NA,NA,NA,NA,NA,90m,deep
+2012_MCE_90_D,Oahu,mce,main,2010,90,90m,21.265817,-157.851617,NA,NA,NA,NA,NA,NA,NA,90m,deep
+2012_MCE_90_E,Oahu,mce,main,2010,90,90m,21.265817,-157.851617,NA,NA,NA,NA,NA,NA,NA,90m,deep
+2012_MCE_90_F,Oahu,mce,main,2010,90,90m,21.265817,-157.851617,NA,NA,NA,NA,NA,NA,NA,90m,deep
+2013_FFS_12_A,French Frigate Shoals,northwest,northwest,2010,12,shallow,23.63835,-166.18005,0.0404,24.9647,3.4483,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_12_B,French Frigate Shoals,northwest,northwest,2010,12,shallow,23.63835,-166.18005,0.0404,24.9647,3.4483,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_12_C,French Frigate Shoals,northwest,northwest,2010,12,shallow,23.63835,-166.18005,0.0404,24.9647,3.4483,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_32_A,French Frigate Shoals,northwest,northwest,2010,8,shallow,23.8061,-166.230633,0.0404,24.9647,0.3277,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_32_B,French Frigate Shoals,northwest,northwest,2010,8,shallow,23.8061,-166.230633,0.0404,24.9647,0.3277,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_32_C,French Frigate Shoals,northwest,northwest,2010,8,shallow,23.8061,-166.230633,0.0404,24.9647,0.3277,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_33_A,French Frigate Shoals,northwest,northwest,2010,9,shallow,23.836467,-166.266833,0.0404,24.9647,0.6024,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_33_B,French Frigate Shoals,northwest,northwest,2010,9,shallow,23.836467,-166.266833,0.0404,24.9647,0.6024,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_33_C,French Frigate Shoals,northwest,northwest,2010,9,shallow,23.836467,-166.266833,0.0404,24.9647,0.6024,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_34_A,French Frigate Shoals,northwest,northwest,2010,10,shallow,23.62792,-166.13538,0.0404,24.9647,2.1368,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_34_B,French Frigate Shoals,northwest,northwest,2010,10,shallow,23.62792,-166.13538,0.0404,24.9647,2.1368,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_34_C,French Frigate Shoals,northwest,northwest,2010,10,shallow,23.62792,-166.13538,0.0404,24.9647,2.1368,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_35_A,French Frigate Shoals,northwest,northwest,2010,9,shallow,23.790615,-166.232022,0.0404,24.9647,0.3621,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_35_B,French Frigate Shoals,northwest,northwest,2010,9,shallow,23.790615,-166.232022,0.0404,24.9647,0.3621,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_FFS_35_C,French Frigate Shoals,northwest,northwest,2010,9,shallow,23.790615,-166.232022,0.0404,24.9647,0.3621,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2013_HAW_22_A,Hawaii Island,main,main,2010,15,shallow,18.96859682,-155.730732,0.0404,25.9647,22.7273,0.574070943,155,0.048712,71,shallow_main,shallow
+2013_HAW_22_B,Hawaii Island,main,main,2010,15,shallow,18.96859682,-155.730732,0.0404,25.9647,22.7273,0.574070943,155,0.048712,71,shallow_main,shallow
+2013_HAW_22_C,Hawaii Island,main,main,2010,15,shallow,18.96859682,-155.730732,0.0404,25.9647,22.7273,0.574070943,155,0.048712,71,shallow_main,shallow
+2013_HAW_24_A,Hawaii Island,main,main,2010,15,shallow,19.03821667,-155.88255,0.0404,24.9647,22.7273,0.574070943,155,0.048712,71,shallow_main,shallow
+2013_HAW_24_B,Hawaii Island,main,main,2010,15,shallow,19.03821667,-155.88255,0.0404,24.9647,22.7273,0.574070943,155,0.048712,71,shallow_main,shallow
+2013_HAW_24_C,Hawaii Island,main,main,2010,15,shallow,19.03821667,-155.88255,0.0404,24.9647,22.7273,0.574070943,155,0.048712,71,shallow_main,shallow
+2013_KAU_02_A,Kauai,main,main,2010,14,shallow,22.16405324,-159.298801,0.0404,24.9647,2.0161,0.298612997,68,0.066186,79,shallow_main,shallow
+2013_KAU_02_B,Kauai,main,main,2010,14,shallow,22.16405324,-159.298801,0.0404,24.9647,2.0161,0.298612997,68,0.066186,79,shallow_main,shallow
+2013_KAU_06_A,Kauai,main,main,2010,12,shallow,21.8897,-159.6088,0.0404,24.9647,4.5872,0.298612997,68,0.066186,79,shallow_main,shallow
+2013_KAU_06_B,Kauai,main,main,2010,12,shallow,21.8897,-159.6088,0.0404,24.9647,4.5872,0.298612997,68,0.066186,79,shallow_main,shallow
+2013_KAU_08_A,Kauai,main,main,2010,12,shallow,22.1668,-159.68,0.0404,24.9647,2.9412,0.298612997,68,0.066186,79,shallow_main,shallow
+2013_KAU_08_B,Kauai,main,main,2010,12,shallow,22.1668,-159.68,0.0404,24.9647,2.9412,0.298612997,68,0.066186,79,shallow_main,shallow
+2013_KUR_12_A,Kure Atoll,northwest,northwest,2010,10,shallow,28.38238,-178.32452,0.0404,24.9647,5.9524,0.025787966,94,0.122923982,13,shallow_nwhi,shallow
+2013_KUR_12_B,Kure Atoll,northwest,northwest,2010,10,shallow,28.38238,-178.32452,0.0404,24.9647,5.9524,0.025787966,94,0.122923982,13,shallow_nwhi,shallow
+2013_KUR_R33_A,Kure Atoll,northwest,northwest,2010,14,shallow,28.41678,-178.37842,0.0404,24.9647,1.8939,0.025787966,94,0.122923982,13,shallow_nwhi,shallow
+2013_LIS_18_ABC,Lisianski,northwest,northwest,2010,8,shallow,26.004283,-173.994028,0.0404,24.9647,0.4216,0.037383178,225,0.046618,12,shallow_nwhi,shallow
+2013_LIS_R10_A,Lisianski,northwest,northwest,2010,15,shallow,25.94462,-173.95361,0.0404,24.9647,0.495,0.037383178,225,0.046618,12,shallow_nwhi,shallow
+2013_LIS_R10_B,Lisianski,northwest,northwest,2010,15,shallow,25.94462,-173.95361,0.0404,24.9647,0.495,0.037383178,225,0.046618,12,shallow_nwhi,shallow
+2013_LIS_R10_C,Lisianski,northwest,northwest,2010,15,shallow,25.94462,-173.95361,0.0404,24.9647,0.495,0.037383178,225,0.046618,12,shallow_nwhi,shallow
+2013_LIS_R14_A,Lisianski,northwest,northwest,2010,15,shallow,26.07841509,-173.9970114,0.0404,24.9647,0.2625,0.037383178,225,0.046618,12,shallow_nwhi,shallow
+2013_LIS_R14_B,Lisianski,northwest,northwest,2010,15,shallow,26.07841509,-173.9970114,0.0404,24.9647,0.2625,0.037383178,225,0.046618,12,shallow_nwhi,shallow
+2013_LIS_R14_C,Lisianski,northwest,northwest,2010,15,shallow,26.07841509,-173.9970114,0.0404,24.9647,0.2625,0.037383178,225,0.046618,12,shallow_nwhi,shallow
+2013_MAI_01_A,Maui,main,main,2010,12,shallow,20.76226207,-155.9797715,0.0404,24.9647,2.8249,0.277059065,62,0.049138,86,shallow_main,shallow
+2013_MAI_01_B,Maui,main,main,2010,12,shallow,20.76226207,-155.9797715,0.0404,24.9647,2.8249,0.277059065,62,0.049138,86,shallow_main,shallow
+2013_MAI_01_C,Maui,main,main,2010,12,shallow,20.76226207,-155.9797715,0.0404,24.9647,2.8249,0.277059065,62,0.049138,86,shallow_main,shallow
+2013_OAH_12_A,Oahu,main,main,2010,15,shallow,21.41212947,-157.7097973,0.0404,24.9647,1.4245,0.142110959,111,0.058619,89,shallow_main,shallow
+2013_OAH_12_B,Oahu,main,main,2010,15,shallow,21.41212947,-157.7097973,0.0404,24.9647,1.4245,0.142110959,111,0.058619,89,shallow_main,shallow
+2013_OAH_12_C,Oahu,main,main,2010,15,shallow,21.41212947,-157.7097973,0.0404,24.9647,1.4245,0.142110959,111,0.058619,89,shallow_main,shallow
+2013_PHR_33_A,Pearl and Hermes Reef,northwest,northwest,2010,14,shallow,27.78543745,-175.8235427,0.0404,24.9647,8.1967,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2013_PHR_33_B,Pearl and Hermes Reef,northwest,northwest,2010,14,shallow,27.78543745,-175.8235427,0.0404,24.9647,8.1967,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2013_PHR_33_C,Pearl and Hermes Reef,northwest,northwest,2010,14,shallow,27.78543745,-175.8235427,0.0404,24.9647,8.1967,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2013_PHR_R26_A,Pearl and Hermes Reef,northwest,northwest,2010,14,shallow,27.785833,-175.780283,0.0404,24.9647,6.4935,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2013_PHR_R26_B,Pearl and Hermes Reef,northwest,northwest,2010,14,shallow,27.785833,-175.780283,0.0404,24.9647,6.4935,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2013_PHR_R26_C,Pearl and Hermes Reef,northwest,northwest,2010,14,shallow,27.785833,-175.780283,0.0404,24.9647,6.4935,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2013_PHR_R42_A,Pearl and Hermes Reef,northwest,northwest,2010,15,shallow,27.753133,-175.948767,NA,NA,NA,NA,NA,NA,NA,shallow_nwhi,shallow
+2016_FFS_40_A,French Frigate Shoals,northwest,northwest,2013,14,shallow,23.6369,-166.18527,0.0444,25.9651,4.5455,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2016_FFS_40_B,French Frigate Shoals,northwest,northwest,2013,14,shallow,23.6369,-166.18527,0.0444,25.9651,4.5455,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2016_FFS_40_C,French Frigate Shoals,northwest,northwest,2013,14,shallow,23.6369,-166.18527,0.0444,25.9651,4.5455,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2016_FFS_41_A,French Frigate Shoals,northwest,northwest,2013,14,shallow,23.7924,-166.2538,0.0444,25.9651,0.3571,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2016_FFS_41_B,French Frigate Shoals,northwest,northwest,2013,14,shallow,23.7924,-166.2538,0.0444,25.9651,0.3571,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2016_FFS_41_C,French Frigate Shoals,northwest,northwest,2013,14,shallow,23.7924,-166.2538,0.0444,25.9651,0.3571,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2016_FFS_44_A,French Frigate Shoals,northwest,northwest,2013,17,shallow,23.83517,-166.11679,0.0444,25.9651,3.5211,0.11566092,160,0.087275,12,shallow_nwhi,shallow
+2016_HAW_41_A,Hawaii Island,main,main,2013,13,shallow,20.26824,-155.86038,0.0444,25.9651,4.0323,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_41_B,Hawaii Island,main,main,2013,13,shallow,20.26824,-155.86038,0.0444,25.9651,4.0323,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_43_A,Hawaii Island,main,main,2013,15,shallow,19.24436,-155.90028,0.0444,25.9651,19.2308,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_43_B,Hawaii Island,main,main,2013,15,shallow,19.24436,-155.90028,0.0444,25.9651,19.2308,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_43_C,Hawaii Island,main,main,2013,15,shallow,19.24436,-155.90028,0.0444,25.9651,19.2308,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_46_A,Hawaii Island,main,main,2013,12,shallow,19.48638,-154.81766,0.0444,25.9651,20,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_46_B,Hawaii Island,main,main,2013,12,shallow,19.48638,-154.81766,0.0444,25.9651,20,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_46_C,Hawaii Island,main,main,2013,12,shallow,19.48638,-154.81766,0.0444,25.9651,20,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_48_A,Hawaii Island,main,main,2013,13,shallow,19.06071,-155.55237,0.0444,25.9651,4.902,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_48_B,Hawaii Island,main,main,2013,13,shallow,19.06071,-155.55237,0.0444,25.9651,4.902,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_HAW_48_C,Hawaii Island,main,main,2013,13,shallow,19.06071,-155.55237,0.0444,25.9651,4.902,0.574070943,155,0.048712,71,shallow_main,shallow
+2016_OAH_21_A,Oahu,main,main,2013,15,shallow,21.30557,-158.12621,0.0444,25.9651,2.9762,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_21_B,Oahu,main,main,2013,15,shallow,21.30557,-158.12621,0.0444,25.9651,2.9762,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_21_C,Oahu,main,main,2013,15,shallow,21.30557,-158.12621,0.0444,25.9651,2.9762,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_22_A,Oahu,main,main,2013,13,shallow,21.47971,-157.783,0.0444,25.9651,0.9009,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_22_B,Oahu,main,main,2013,13,shallow,21.47971,-157.783,0.0444,25.9651,0.9009,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_22_C,Oahu,main,main,2013,13,shallow,21.47971,-157.783,0.0444,25.9651,0.9009,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_23_A,Oahu,main,main,2013,13,shallow,21.28838,-157.86536,0.0444,25.9651,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_23_B,Oahu,main,main,2013,13,shallow,21.28838,-157.86536,0.0444,25.9651,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_OAH_23_C,Oahu,main,main,2013,13,shallow,21.28838,-157.86536,0.0444,25.9651,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow
+2016_PHR_50_A,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.78237,-175.88194,0.0444,25.9651,10,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_50_B,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.78237,-175.88194,0.0444,25.9651,10,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_50_C,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.78237,-175.88194,0.0444,25.9651,10,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_51_A,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.86691,-175.73351,0.0444,25.9651,4.2017,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_51_B,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.86691,-175.73351,0.0444,25.9651,4.2017,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_51_C,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.86691,-175.73351,0.0444,25.9651,4.2017,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_52_A,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.9405,-175.86172,0.0444,25.9651,3.4247,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_52_B,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.9405,-175.86172,0.0444,25.9651,3.4247,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_52_C,Pearl and Hermes Reef,northwest,northwest,2013,15,shallow,27.9405,-175.86172,0.0444,25.9651,3.4247,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_54_A,Pearl and Hermes Reef,northwest,northwest,2013,14,shallow,27.79317,-175.9971,0.0444,25.9651,2.1459,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_54_B,Pearl and Hermes Reef,northwest,northwest,2013,14,shallow,27.79317,-175.9971,0.0444,25.9651,2.1459,0.051838611,153,0.035885,16,shallow_nwhi,shallow
+2016_PHR_54_C,Pearl and Hermes Reef,northwest,northwest,2013,14,shallow,27.79317,-175.9971,0.0444,25.9651,2.1459,0.051838611,153,0.035885,16,shallow_nwhi,shallow
