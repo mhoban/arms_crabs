@@ -16,7 +16,7 @@ Pilumnus_acutifron,species,Pilumnidae,Pilumnus,Pilumnus acutifron
 Pilumnus_nuttingi,species,Pilumnidae,Pilumnus,Pilumnus nuttingi
 Lybia_edmondsoni,species,Xanthidae,Lybia,Lybia edmondsoni
 Platypodia_semigranosa,species,Xanthidae,Platypodia,Platypodia semigranosa
-Leucosiidae_sp595,morphospecies,Leucosiidae,na,Leucosiidae sp595
+Leucosiidae_sp595,morphospecies,Leucosiidae,,Leucosiidae sp595
 Epiactaea_nodulosa,species,Xanthidae,Epiactaea,Epiactaea nodulosa
 Thalamitoides_quadridens,species,Portunidae,Thalamitoides,Thalamitoides quadridens
 Hypselodoris_violabranchia,species,Trapeziidae,Hypselodoris,Hypselodoris violabranchia
@@ -28,7 +28,7 @@ Catoptrus_inequalis,species,Catoptridae,Catoptrus,Catoptrus inequalis
 Cryptodromiopsis_tridens,species,Dromiidae,Cryptodromiopsis,Cryptodromiopsis tridens
 Exopalicus_maculatus,species,Palicidae,Exopalicus,Exopalicus maculatus
 Laleonectes_nipponensis,species,Portunidae,Laleonectes,Laleonectes nipponensis
-Leucosiidae_sp146,morphospecies,Leucosiidae,na,Leucosiidae sp146
+Leucosiidae_sp146,morphospecies,Leucosiidae,,Leucosiidae sp146
 Liomera_bella,species,Xanthidae,Liomera,Liomera bella
 Medaeus_ornatus,species,Xanthidae,Medaeus,Medaeus ornatus
 Pilodius_sp903,morphospecies,Pilumnidae,Pilodius,Pilodius sp903
@@ -44,7 +44,7 @@ Lophozozymus_dodone,species,Xanthidae,Lophozozymus,Lophozozymus dodone
 Hyastenus_sp2074,morphospecies,Epialtidae,Hyastenus,Hyastenus sp2074
 Thalamita_seurati,species,Portunidae,Thalamita,Thalamita seurati
 Daldorfia_dimorpha,species,Parthenopidae,Daldorfia,Daldorfia dimorpha
-Pilumnus_sp2010,NA,Pilumnidae,Pilumnus,Pilumnus sp2010
+Pilumnus_sp2010,morphospecies,Pilumnidae,Pilumnus,Pilumnus sp2010
 Schizophroida_hilensis,species,Majidae,Schizophroida,Schizophroida hilensis
 Paramedaeus_simplex,species,Xanthidae,Paramedaeus,Paramedaeus simplex
 Heteronucia_spinifera,species,Leucosiidae,Heteronucia,Heteronucia spinifera
@@ -52,7 +52,7 @@ Parapilumnus_sp2049,morphospecies,Acidopsidae,Parapilumnus,Parapilumnus sp2049
 Simocarcinus_simplex,species,Epialtidae,Simocarcinus,Simocarcinus simplex
 Thalamita_sp2042,morphospecies,Portunidae,Thalamita,Thalamita sp2042
 Thalamita_picta,species,Portunidae,Thalamita,Thalamita picta
-Dromiidae_sp3061,morphospecies,Dromiidae,na,Dromiidae sp3061
+Dromiidae_sp3061,morphospecies,Dromiidae,,Dromiidae sp3061
 Percnon_abbreviatum,species,Percnidae,Percnon,Percnon abbreviatum
 Charybdis_Charybdis_hawaiensis,species,Portunidae,Charybdis,Charybdis Charybdis hawaiensis
 Medaeus_elegans,species,Xanthidae,Medaeus,Medaeus elegans
@@ -84,21 +84,21 @@ Platypodia_sp821,morphospecies,Xanthidae,Platypodia,Platypodia sp821
 Menaethius_monocerus,species,Epialtidae,Menaethius,Menaethius monocerus
 Pilodius_areolatus,species,Xanthidae,Pilodius,Pilodius areolatus
 Thalamita_admete,species,Portunidae,Thalamita,Thalamita admete
-Xanthidae_sp182,morphospecies,Xanthidae,na,Xanthidae sp182
+Xanthidae_sp182,morphospecies,Xanthidae,,Xanthidae sp182
 Xanthias_lamarcki,species,Xanthidae,Xanthias,Xanthias lamarcki
 Actaeodes_hirsutissimus,species,Xanthidae,Actaeodes,Actaeodes hirsutissimus
-Grapsidae_sp785,NA,Grapsidae,na,Grapsidae sp785
+Grapsidae_sp785,morphospecies,Grapsidae,,Grapsidae sp785
 Lophozozymus_pulchellus,species,Xanthidae,Lophozozymus,Lophozozymus pulchellus
-Cryptochiridae_sp1256,morphospecies,Cryptochiridae,na,Cryptochiridae sp1256
+Cryptochiridae_sp1256,morphospecies,Cryptochiridae,,Cryptochiridae sp1256
 Aethra_edentata,species,Aethridae,Aethra,Aethra edentata
-Xanthidae_sp1076,morphospecies,Xanthidae,na,Xanthidae sp1076
+Xanthidae_sp1076,morphospecies,Xanthidae,,Xanthidae sp1076
 Palmyria_palmyrensis,species,Domeciidae,Palmyria,Palmyria palmyrensis
-Pilumnidae_sp1117,morphospecies,Pilumnidae,na,Pilumnidae sp1117
-Leucosiidae_sp1165,morphospecies,Leucosiidae,na,Leucosiidae sp1165
+Pilumnidae_sp1117,morphospecies,Pilumnidae,,Pilumnidae sp1117
+Leucosiidae_sp1165,morphospecies,Leucosiidae,,Leucosiidae sp1165
 Jacforus_cavatus,species,Xanthidae,Jacforus,Jacforus cavatus
-Xanthidae_sp1044,morphospecies,Xanthidae,na,Xanthidae sp1044
-Calappidae_sp1107,morphospecies,Calappidae,na,Calappidae sp1107
+Xanthidae_sp1044,morphospecies,Xanthidae,,Xanthidae sp1044
+Calappidae_sp1107,morphospecies,Calappidae,,Calappidae sp1107
 Trapezia_flavopunctata,species,Trapeziidae,Trapezia,Trapezia flavopunctata
-Xanthidae_sp1105,morphospecies,Xanthidae,na,Xanthidae sp1105
+Xanthidae_sp1105,morphospecies,Xanthidae,,Xanthidae sp1105
 Menaethius_monoceros,species,Epialtidae,Menaethius,Menaethius monoceros
 Micippa_sp1400,morphospecies,Majidae,Micippa,Micippa sp1400

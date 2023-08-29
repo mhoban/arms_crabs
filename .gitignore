@@ -39,3 +39,12 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+output/
+
+*.old
+resources/pandoc-crossref
+resources/import
+
+paolo/
+old/

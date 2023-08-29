@@ -1,0 +1,144 @@
+---
+title: "It's easier to move sideways"
+author:
+  - Mykle L. Hoban:
+      institute:
+        - himb
+      equal_contributor: yes
+      correspondence: yes
+      email: "mhoban@hawaii.edu"
+  - Kaleonani K.C. Hurley:
+      institute: [himb, nerr]
+      equal_contributor: yes
+  - Molly A. Timmers:
+      institute: [himb, natgeo]
+  - Kerry Reardon:
+      institute: noaa
+  - Robert J. Toonen:
+      institute: himb
+institute:
+  - himb: Hawai‘i Institute of Marine Biology
+  - nerr: He‘eia National Estuarine Research Reserve
+  - natgeo: National Geographic Pristine Seas
+  - noaa: National Oceanic and Atmospheric Administration
+abstract:
+  Shallow coral reefs are extensively studied, and although scleractinian corals have been recorded to 165 m, little is known about other mesophotic coral reef ecosystem (MCE) inhabitants. Brachyuran crabs fill many ecological and trophic niches on reefs, making them ideal candidates for evaluating species composition among depths. Here we ask if MCEs host the same communities as the shallower reefs spread across the entire 2400 km Hawaiian Archipelago. We deployed Autonomous Reef Monitoring Structures (ARMS) for two years among shallow sites (12 m) across the latitudinal gradient of the Hawaiian Archipelago to compare directly with a depth gradient (12, 30, 60, and 90 m) south of Oʻahu island. A total of 2284 individual crabs representing 90 morphospecies (19 families) were found. Assemblage composition was not statistically significantly different among shallow sites spread across the archipelago but was significantly different and highly stratified across the depth gradient.  We show that 90 m of depth is a more potent determinant of brachyuran community composition than the latitudinal, geographic (high vs low islands), or anthropogenic impact (human population size) gradient across the archipelago. Deeper reefs host significantly different brachyuran communities than shallow ones in Hawai’i, and only 3 of 90 morphospecies (~3%) occurring across the entire depth range (mesophotic to shallow) were sampled. Further research on the cryptic reef-dwelling fauna is needed for identifying areas of unique biodiversity, as well as boundaries between depth-stratified reef ecosystems.
+bibliography: resources/citations.bib
+csl: resources/vancouver.csl
+output:
+  word_document:
+    pandoc_args:
+      - "--filter=resources/pandoc-crossref"
+      - "--lua-filter=resources/scholarly-metadata.lua"
+      - "--lua-filter=resources/author-info-blocks.lua"
+      - "--reference-doc=resources/ref.docx"
+    keep_md: yes
+tblPrefix: Table
+figPrefix:
+  - "Fig."
+  - "Figs."
+---
+
+\newpage
+
+```{r setup, include=FALSE}
+library(fs)
+library(here)
+
+knitr::opts_chunk$set(echo = FALSE)
+source("crabs.R")
+if (!exists("crabs_done")) {
+  crabs_done <<- FALSE
+}
+if (!crabs_done) {
+  setup_crabs()
+  crabs_done <<- TRUE
+}
+
+format_range <- function(vals) {
+  f <- range(vals)
+  str_glue("{f[1]}--{f[2]}")
+}
+
+format_species <- function(spp) {
+  if (spp$found) {
+    str_glue("*{spp$species}* {spp$authority}")
+  } else {
+    s <- str_split(spp$species," ")[[1]]
+    str_glue("*{s[1]}* {s[2]}")
+  }
+}
+
+num <- function(x,accuracy=0.01) {
+  scales::number(x,big.mark = ",",decimal.mark = ".",accuracy=accuracy)
+}
+
+dir_create(here("cache"))
+if (file_exists(here("cache","all_summary.rds"))) {
+  all_summary <<- read_rds(here("cache","all_summary.rds"))
+} else {
+  all_summary <<- sample_summary(crabs_untransformed)
+  write_rds(all_summary,here("cache","all_summary.rds"))
+}
+if (file_exists(here("cache","deep_summary.rds"))) {
+  deep_summary <<- read_rds(here("cache","deep_summary.rds"))
+} else {
+  deep_summary <<- sample_summary(crabs_untransformed %>% subset_samples(shallow_deep == "deep"))
+  write_rds(deep_summary,here("cache","deep_summary.rds"))
+}
+```
+
+# Introduction
+
+## Sample Collection
+
+Brachyuran crab assemblages were sampled from benthic coral reef habitat in the Hawaiian Archipelago using Autonomous Reef Monitoring Structures (ARMS). ARMS are standardized collection devices designed to mimic coral reef structural complexity to attract settlement of reef cryptofauna [@brainardAutonomousReefMonitoring2009; @zimmermanArtificialReefMatrix2004]. They are constructed from 10 gray type 1 PVC plates (23 cm x 23 cm) stacked in an alternating series of open and semi-enclosed layers (figure xxx, ARMS unit). The stack is fastened to a larger base plate (35 cm x 45 cm) which can be attached to the benthos upon deployment [@brainardAutonomousReefMonitoring2009; @hurleyAssessmentShallowMesophotic2016; @knowltonCoralReefBiodiversity2010; @zimmermanArtificialReefMatrix2004].
+
+A total of 89 ARMS units were deployed over the course of six years (2010–2016; see Table xxx  for deployment and recovery schedules). Units were deployed by NOAA scuba divers during Pacific Reef Assessment and Monitoring Program (RAMP) research cruises in shallow coral reef habitat (12–16 m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) (Table 1). The sites in the MHI were at Hawaiʻi Island, Maui, Oʻahu, and Kauaʻi. The sites in the NWHI were at Lalo (French Frigate Shoals), Kapou (Lisianski), Manawai (Pearl & Hermes), and Hōlanikū (Kure Atoll) (Figure xxx, site map). To explore the effects of depth on crab community structure, we also present data from a previous study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], which included a total of 27 units deployed off O‘ahu from 2009–2012 in 12–90 m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m. Shallow units were deployed according to standard NOAA methodology, whereas units ≥ 30 m were deployed and recovered using technical mixed-gas closed-circuit rebreather diving (Table 1). 
+
+ARMS units were retrieved by encapsulating them in-situ in a mesh-lined crate (100 μm pore size) to prevent escape of motile organisms. Once returned to ship or shore, they were placed in containers of aerated, filtered seawater, crates were removed, and units were systematically disassembled plate-by-plate. Seawater surrounding disassembled units was sieved through 2 mm, 500 μm, and 100 μm mesh-size geologic sieves [see @lerayDNABarcodingMetabarcoding2015 for processing details), and retained macroorganisms were preserved in 95% ethanol. All adult brachyuran crabs (≥ 5 mm) were photographed, identified to morphospecies, and preserved in 95% ethanol (Fig. 2d). Individual preserved specimens were accessioned into the invertebrate zoology collections at the Florida Museum of Natural History (catalog numbers xxx–xxx ).
+
+## Data analysis
+
+Unless otherwise specified, all analyses were performed using R version 4.1.2 [@rcoreteamLanguageEnvironmentStatistical2021]. Community data were loaded and encapsulated into data objects using the R package phyloseq [@mcmurdiePhyloseqPackageReproducible2013] and multivariate community analyses were performed using the package vegan [@oksanenVeganCommunityEcology2022] on Bray-Curtis dissimilarities of Hellinger-transformed species abundance matrices [@legendreEcologicallyMeaningfulTransformations2001; @raoReviewCanonicalCoordinates1995].
+
+To examine patterns of crab diversity across the islands, we calculated alpha diversity statistics for ARMS units across the archipelago and examined how those values varied between the MHI and NWHI as well as the effects of environmental factors. We calculated species richness and Simpson diversity using the ‘estimate_richness’ function from phyloseq (Simpson = $1-\sum_{i=1}^{R}p_i^2$, where R is the total number of species, and pi is the proportional abundance of each species). Alpha diversity was compared between MHI and NWHI using two-sample t-tests, both with and without the inclusion of mesophotic ARMS units. To explore the effects of environmental factors on alpha diversity across the islands, we used a linear mixed-effect model, with Simpson diversity or richness as response variables, the environmental variables listed below as fixed effects, and island nested within region (MHI vs NWHI) as random effects. Models were generated using the ‘lmer’ function from the lme4 package [@batesFittingLinearMixedEffects2015]. 
+
+We used the distance-based redundancy analysis method (dbRDA; a form of multivariate multiple regression) implemented in the ‘dbrda’ function from vegan to examine the relative importance of environmental variables on crab community variation across the Hawaiian Islands. We first assessed the importance of each environmental variable individually using marginal tests. Then, a stepwise forward selection procedure (using the function ‘ordiR2step’) was used to find the suite of environmental variables that best explained the dissimilarity among sites with regard to crab community composition. Colinearity between traits was assessed by calculating variance inflation factors (VIF) using the function ‘vif.cca’ from complete and reduced models and discarding variables where VIF > 10. Significance levels were assessed with the function ‘anova’ using permutation tests with 9,999 permutations. All continuous environmental variables used for dbRDA were scaled to unit variance. We used the permutational analysis of variance (PERMANOVA) method in the ‘adonis2’ function from vegan to assess variation among sites and/or depths across the islands, with 9,999 permutations to assess significance in both term-based and marginal tests.
+
+## Environmental variables
+
+Potential environmental factors affecting the community structure of brachyuran crabs on shallow reefs were assembled from published literature [@selkoeDNACoralReef2016] and the Pacific Islands Ocean Observing System (PacIOOS) (Table 2). Environmental factors were assembled only for shallow sites sampled during RAMP cruises. 
+
+# Results
+
+## Diversity summary
+
+### All ARMS
+
+The `r nsamples(crabs_untransformed)` ARMS units deployed across the Hawaiian Islands (in `r format_range(crab_data$depth)` m depth) yielded a total of `r num(sum(sample_sums(crabs_untransformed)))` adult crabs. Sampling units contained `r num(all_summary$abundance_mean,0.1)` ± `r num(all_summary$abundance_sd,0.1)` (mean ± SD) individuals per unit, and abundance ranged from `r format_range(all_summary$abundance_range)` individuals. Crabs were identified to `r sum(unlist(all_summary$types_breakdown))` distinct types (including `r all_summary$types_breakdown$species` species and `r all_summary$types_breakdown$morphospecies` morphospecies) in `r all_summary$taxonomy_breakdown$genera` genera and `r all_summary$taxonomy_breakdown$families` families, which accounted for ~36% of the known crab diversity reported from Hawaiian waters [@castroCatalogAnomuranBrachyuran2011]. The four most common species were: Chlorodiella laevissima (Dana, 1852) (with 610 individuals on 59 units), Perinia tumida Dana, 1851 (268 individuals on 67 units), Percnon abbreviatum (Dana, 1851) (with 121 individuals on 47 units), and Dynomene hispida (Latreille in Milbert, 1812) (114 individuals on 49 units). Twenty-two species occurred in a single unit across all sites (singletons), accounting for ~21% of total recovered crab species. 
+
+### Mesophotic ARMS
+
+The 27 units deployed at mesophotic depths ≥ 30 m on O‘ahu yielded both fewer species and fewer individuals compared to the complete dataset, with 271 crabs overall, a total of 39 distinct types (11 species, 28 morphospecies), 15.1 ± 6.2 individuals per unit, and abundance ranging from 7–31 crabs. The four most abundant species in the deep ARMS did not overlap with those from the complete dataset: Chlorodiella sp2 (46 individuals from 16 units), Epiactaea nodulosa (White, 1848) (40 individuals from 10 units), Catoptrus inaequalis (Rathbun, 1906) (17 individuals from 8 units), and Pilumnus sp2018 (12 individuals from 7 units). There were 11 singletons, which proportionally accounted for ~28% of species found on deep ARMS.
+
+## Alpha diversity
+
+### Summary
+
+Overall species richness for the complete dataset was 7.8 ± 3.1 species per unit (Simpson diversity: 0.74 ± 0.14). Overall species richness for shallow ARMS < 30 m was 7.7 ± 3.2 species per unit (Simpson diversity: 0.73 ± 0.15). Overall species richness for mesophotic ARMS ≥ 30 m was 8.4 ± 2.5 species per unit (Simpson diversity: 0.82 ± 0.04). 
+
+### Comparisons
+
+For the complete dataset, there was no significant difference in observed species richness between the MHI and NWHI (two-sample t-test: t = 1.06, DF = 106.43, p = 0.29), but Simpson diversity was significantly different, although mean values were similar with 0.78 ± 0.10 in the MHI and 0.70 ± 0.17 in the NWHI (two-sample t-test: t = 2.72, DF = 74.88, p = 0.008). When only shallow arms < 30 m were considered, neither comparison was significant (richness: t = 0.77, DF = 94.47, p = 0.44; Simpson: t  = 1.93, DF = 84.76, p = 0.06).
+
+### Effects of environmental variables
+
+
+# Discussion
+
+# References 
+
+::: {#refs}
+:::
+

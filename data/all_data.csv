@@ -33,7 +33,7 @@ main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_E,OAH_SUC_302,1,Dyno
 main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_E,OAH_SUC_1314,1,Lybia_edmondsoni,Xanthidae,Lybia,species
 main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_E,OAH_SUC_306,1,Platypodia_semigranosa,Xanthidae,Platypodia,species
 main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_F,OAH_SUC_356,2,Dynomene_hispida,Dynomenidae,Dynomene,species
-main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_F,OAH_SUC_363,2,Leucosiidae_sp595,Leucosiidae,na,morphospecies
+main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_F,OAH_SUC_363,2,Leucosiidae_sp595,Leucosiidae,,morphospecies
 main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_F,OAH_SUC_376,1,Perinia_tumida,Epialtidae,Perinia,species
 main,OAH,2009,2011,12,21.28875,-157.86555,2011_OAH_ARMS_G02_F,OAH_SUC_359,1,Xanthias_latifrons,Xanthidae,Xanthias,species
 main,OAH,2009,2011,12,21.28836,-157.8656,2011_OAH_ARMS_G03_A,OAH_SUC_117,1,Carupa_tenuipes,Portunidae,Carupa,species
@@ -68,7 +68,7 @@ mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1031,1,Chlorodiella
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1009,1,Cryptodromiopsis_tridens,Dromiidae,Cryptodromiopsis,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1025,1,Exopalicus_maculatus,Palicidae,Exopalicus,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1011,1,Laleonectes_nipponensis,Portunidae,Laleonectes,species
-mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1010,1,Leucosiidae_sp146,Leucosiidae,na,morphospecies
+mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1010,1,Leucosiidae_sp146,Leucosiidae,,morphospecies
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1002,1,Liomera_bella,Xanthidae,Liomera,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1026,1,Medaeus_ornatus,Xanthidae,Medaeus,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1027,1,Pilodius_sp903,Pilumnidae,Pilodius,morphospecies
@@ -208,7 +208,7 @@ mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2089,1,Chlorodiella_
 mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2079,1,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
 mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2088,1,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
 mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2094,1,Laleonectes_nipponensis,Portunidae,Laleonectes,species
-mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2081,1,Leucosiidae_sp146,Leucosiidae,na,morphospecies
+mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2081,1,Leucosiidae_sp146,Leucosiidae,,morphospecies
 mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2091,1,Medaeus_ornatus,Xanthidae,Medaeus,species
 mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2076,1,Paramedaeus_simplex,Xanthidae,Paramedaeus,species
 mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_D,MCE_2082,1,Pilumnus_sp2018,Pilumnidae,Pilumnus,morphospecies
@@ -309,7 +309,7 @@ mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_E,MCE_3027,1,Hyastenus_sp
 mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_E,MCE_3029,1,Hyastenus_sp1050,Epialtidae,Hyastenus,morphospecies
 mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_E,MCE_3035,1,Pilumnus_acutifrons,Pilumnidae,Pilumnus,species
 mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_E,MCE_3037,1,Thalamita_picta,Portunidae,Thalamita,species
-mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_F,MCE_3061,1,Dromiidae_sp3061,Dromiidae,na,morphospecies
+mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_F,MCE_3061,1,Dromiidae_sp3061,Dromiidae,,morphospecies
 mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_F,MCE_3064,1,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
 mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_F,MCE_3065,1,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
 mce,OAH,2010,2012,90,21.265817,-157.851617,2012_MCE_90_F,MCE_3068,1,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
@@ -411,7 +411,7 @@ northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS-845,2,Catoptru
 northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS-868,1,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS-869,2,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS-870,4,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
-northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS_848,1,Leucosiidae_sp146,Leucosiidae,na,morphospecies
+northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS_848,1,Leucosiidae_sp146,Leucosiidae,,morphospecies
 northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS-847,2,Perinia_tumida,Epialtidae,Perinia,species
 northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS_850,1,Platypodia_actoeoides,Xanthidae,Platypodia,species
 northwest,FFS,2010,2013,9,23.836467,-166.266833,2013_FFS_33_C,FFS-846,2,Thalamitoides_quadridens,Portunidae,Thalamitoides,species
@@ -450,7 +450,7 @@ northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS_591,1,Dynomene_
 northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS-589,2,Exopalicus_maculatus,Palicidae,Exopalicus,species
 northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS_611,1,Gaillardiellus_superciliaris,Xanthidae,Gaillardiellus,species
 northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS_604,1,Garthiella_aberrans,Xanthidae,Garthiella,species
-northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS_595,2,Leucosiidae_sp595,Leucosiidae,na,morphospecies
+northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS_595,2,Leucosiidae_sp595,Leucosiidae,,morphospecies
 northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS-577,1,Lupocyclus_quinquedentatus,Portunidae,Lupocyclus,species
 northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS-582,1,Lybia_edmondsoni,Xanthidae,Lybia,species
 northwest,FFS,2010,2013,10,23.62792,-166.13538,2013_FFS_34_C,FFS_590,2,Medaeus_elegans,Xanthidae,Medaeus,species
@@ -642,7 +642,7 @@ northwest,LIS,2010,2013,8,26.004283,-173.994028,2013_LIS_18_ABC,LIS_180,1,Platyp
 northwest,LIS,2010,2013,8,26.004283,-173.994028,2013_LIS_18_ABC,LIS_185,1,Platypodia_actoeoides,Xanthidae,Platypodia,species
 northwest,LIS,2010,2013,8,26.004283,-173.994028,2013_LIS_18_ABC,LIS_184,1,Polydectus_cupulifer,Xanthidae,Polydectus,species
 northwest,LIS,2010,2013,8,26.004283,-173.994028,2013_LIS_18_ABC,LIS-183,1,Thalamita_admete,Portunidae,Thalamita,species
-northwest,LIS,2010,2013,8,26.004283,-173.994028,2013_LIS_18_ABC,LIS_182,1,Xanthidae_sp182,Xanthidae,na,morphospecies
+northwest,LIS,2010,2013,8,26.004283,-173.994028,2013_LIS_18_ABC,LIS_182,1,Xanthidae_sp182,Xanthidae,,morphospecies
 northwest,LIS,2010,2013,15,25.94462,-173.95361,2013_LIS_R10_A,LIS_237,1,Catoptrus_inaequalis,Portunidae,Catoptrus,species
 northwest,LIS,2010,2013,15,25.94462,-173.95361,2013_LIS_R10_A,LIS-225,5,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 northwest,LIS,2010,2013,15,25.94462,-173.95361,2013_LIS_R10_A,LIS-226,3,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
@@ -691,7 +691,7 @@ main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-144,1,Catoptrus
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-136,2,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-160,1,Daldorfia_dimorpha,Parthenopidae,Daldorfia,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-137,1,Dynomene_hispida,Dynomenidae,Dynomene,species
-main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI_146,1,Leucosiidae_sp146,Leucosiidae,na,morphospecies
+main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI_146,1,Leucosiidae_sp146,Leucosiidae,,morphospecies
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-133,1,Lybia_edmondsoni,Xanthidae,Lybia,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-132,2,Percnon_abbreviatum,Percnidae,Percnon,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-135,2,Perinia_tumida,Epialtidae,Perinia,species
@@ -793,7 +793,7 @@ northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR-766,3,Chloro
 northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR-767,2,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR-768,2,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR_759,1,Dynomene_hispida,Dynomenidae,Dynomene,species
-northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR_785,1,Grapsidae_sp785,Grapsidae,na,
+northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR_785,1,Grapsidae_sp785,Grapsidae,,
 northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR_746,1,Laleonectes_nipponensis,Portunidae,Laleonectes,species
 northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR_765,1,Liomera_supernodosa,Xanthidae,Liomera,species
 northwest,PHR,2010,2013,14,27.785833,-175.780283,2013_PHR_R26_A,PHR-774,3,Lybia_edmondsoni,Xanthidae,Lybia,species
@@ -872,7 +872,7 @@ northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_B,FFS_1215,2,Dynomene_
 northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_B,FFS_1214,1,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
 northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_B,FFS_1217,4,Percnon_abbreviatum,Percnidae,Percnon,species
 northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_C,FFS_1254,1,Carupa_tenuipes,Portunidae,Carupa,species
-northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_C,FFS_1256,1,Cryptochiridae_sp1256,Cryptochiridae,na,morphospecies
+northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_C,FFS_1256,1,Cryptochiridae_sp1256,Cryptochiridae,,morphospecies
 northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_C,FFS_1252,2,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
 northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_C,FFS_1253,1,Percnon_abbreviatum,Percnidae,Percnon,species
 northwest,FFS,2013,2016,14,23.6369,-166.18527,2016_FFS_40_C,FFS_1255,2,Perinia_tumida,Epialtidae,Perinia,species
@@ -919,7 +919,7 @@ main,HAW,2013,2016,13,20.26824,-155.86038,2016_HAW_41_B,HAW_1445,1,Pilumnus_nutt
 main,HAW,2013,2016,13,20.26824,-155.86038,2016_HAW_41_B,HAW_1448,2,Pseudoliomera_variolosa,Xanthidae,Pseudoliomera,species
 main,HAW,2013,2016,13,20.26824,-155.86038,2016_HAW_41_B,HAW_1446,3,Schizophroida_hilensis,Majidae,Schizophroida,species
 main,HAW,2013,2016,13,20.26824,-155.86038,2016_HAW_41_B,HAW_1449,1,Tweedieia_laysani,Xanthidae,Tweedieia,species
-main,HAW,2013,2016,13,20.26824,-155.86038,2016_HAW_41_B,HAW_1451,8,Xanthidae_sp1076,Xanthidae,na,morphospecies
+main,HAW,2013,2016,13,20.26824,-155.86038,2016_HAW_41_B,HAW_1451,8,Xanthidae_sp1076,Xanthidae,,morphospecies
 main,HAW,2013,2016,15,19.24436,-155.90028,2016_HAW_43_A,HAW_1268,1,Carupa_tenuipes,Portunidae,Carupa,species
 main,HAW,2013,2016,15,19.24436,-155.90028,2016_HAW_43_A,HAW_1264,1,Liocarpilodes_integerrimus,Xanthidae,Liocarpilodes,species
 main,HAW,2013,2016,15,19.24436,-155.90028,2016_HAW_43_A,HAW_1267,4,Pilumnus_nuttingi,Pilumnidae,Pilumnus,species
@@ -936,13 +936,13 @@ main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1122,2,Chlorodiella_
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1123,3,Dynomene_hispida,Dynomenidae,Dynomene,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1118,1,Percnon_abbreviatum,Percnidae,Percnon,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1121,1,Perinia_tumida,Epialtidae,Perinia,species
-main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1117,1,Pilumnidae_sp1117,Pilumnidae,na,morphospecies
+main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1117,1,Pilumnidae_sp1117,Pilumnidae,,morphospecies
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1116,7,Thalamitoides_quadridens,Portunidae,Thalamitoides,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_A,HAW_1124,1,Xanthias_latifrons,Xanthidae,Xanthias,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1164,1,Carupa_tenuipes,Portunidae,Carupa,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1166,1,Dynomene_hispida,Dynomenidae,Dynomene,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1163,1,Juxtaxanthias_intonsus,Xanthidae,Juxtaxanthias,species
-main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1165,1,Leucosiidae_sp1165,Leucosiidae,na,morphospecies
+main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1165,1,Leucosiidae_sp1165,Leucosiidae,,morphospecies
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1171,1,Palmyria_palmyrensis,Domeciidae,Palmyria,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1160,2,Percnon_abbreviatum,Percnidae,Percnon,species
 main,HAW,2013,2016,12,19.48638,-154.81766,2016_HAW_46_B,HAW_1162,4,Perinia_tumida,Epialtidae,Perinia,species
@@ -971,8 +971,8 @@ main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_B,HAW_1041,4,Carupa_tenuip
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_B,HAW_1042,1,Dynomene_hispida,Dynomenidae,Dynomene,species
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_B,HAW_1043,1,Paramedaeus_simplex,Xanthidae,Paramedaeus,species
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_B,HAW_1040,2,Xanthias_latifrons,Xanthidae,Xanthias,species
-main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_B,HAW_1044,2,Xanthidae_sp1044,Xanthidae,na,morphospecies
-main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1107,1,Calappidae_sp1107,Calappidae,na,morphospecies
+main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_B,HAW_1044,2,Xanthidae_sp1044,Xanthidae,,morphospecies
+main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1107,1,Calappidae_sp1107,Calappidae,,morphospecies
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1074,4,Carupa_tenuipes,Portunidae,Carupa,species
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1071,2,Dynomene_hispida,Dynomenidae,Dynomene,species
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1068,2,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
@@ -983,8 +983,8 @@ main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1067,3,Percnon_abbre
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1077,1,Perinia_tumida,Epialtidae,Perinia,species
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1091,1,Thalamita_picta,Portunidae,Thalamita,species
 main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1069,1,Trapezia_flavopunctata,Trapeziidae,Trapezia,species
-main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1076,3,Xanthidae_sp1076,Xanthidae,na,morphospecies
-main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1105,1,Xanthidae_sp1105,Xanthidae,na,morphospecies
+main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1076,3,Xanthidae_sp1076,Xanthidae,,morphospecies
+main,HAW,2013,2016,13,19.06071,-155.55237,2016_HAW_48_C,HAW_1105,1,Xanthidae_sp1105,Xanthidae,,morphospecies
 main,OAH,2013,2016,15,21.30557,-158.12621,2016_OAH_21_A,OAH_754,1,Dynomene_hispida,Dynomenidae,Dynomene,species
 main,OAH,2013,2016,15,21.30557,-158.12621,2016_OAH_21_A,OAH_753,1,Paractaea_rufopunctata,Xanthidae,Paractaea,species
 main,OAH,2013,2016,15,21.30557,-158.12621,2016_OAH_21_A,OAH_748,3,Percnon_abbreviatum,Percnidae,Percnon,species
@@ -1050,7 +1050,7 @@ main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_708,1,Carupa_tenuipe
 main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_701,1,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_707,1,Cryptodromiopsis_tridens,Dromiidae,Cryptodromiopsis,species
 main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_706,2,Dynomene_hispida,Dynomenidae,Dynomene,species
-main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_705,1,Leucosiidae_sp595,Leucosiidae,na,morphospecies
+main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_705,1,Leucosiidae_sp595,Leucosiidae,,morphospecies
 main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_700,2,Percnon_abbreviatum,Percnidae,Percnon,species
 main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_702,2,Pilumnus_nuttingi,Pilumnidae,Pilumnus,species
 main,OAH,2013,2016,13,21.28838,-157.86536,2016_OAH_23_C,OAH_704,1,Schizophroida_hilensis,Majidae,Schizophroida,species
