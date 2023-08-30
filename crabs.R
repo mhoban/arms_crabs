@@ -13,6 +13,7 @@ library(phyloseq)
 library(vegan)
 library(ggrepel)
 library(here)
+library(worrms)
 
 # to check model assumptions
 library(performance)
@@ -255,43 +256,47 @@ taxa_tibble <- function(ps,otu_col="otu") {
 # data prep ---------------------------------------------------------------
 
 setup_crabs <- function() {
+  cc <- list()
   # load our main phyloseq object and hellinger-transform it
-  crabs_untransformed <<- load_ps(
+  cc$crabs_untransformed <- load_ps(
     here("data","crabs.csv"),"unit",
     here("data","taxonomy.csv"),"otu",
     here("data","metadata.csv")
   ) 
-    crabs <<- crabs_untransformed %>%
+  
+  cc$crabs <- cc$crabs_untransformed %>%
     ps_standardize("hellinger")
     # this is the shallow subset
-  crabs_shallow <<- crabs %>%
+  cc$crabs_shallow <- cc$crabs %>%
     subset_samples(region != "mce") 
     # we're gonna mess with the sample data a bit
   # first, get rid of rows that have NAs
-  crab_data_shallow <<- crabs_shallow %>%
+  cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%
     drop_na()
     # make sure we drop samples that had NAs in their sample data
-  crabs_shallow <<- prune_samples(sample_names(crabs_shallow) %in% crab_data_shallow$unit,crabs_shallow)
+  cc$crabs_shallow <- prune_samples(sample_names(cc$crabs_shallow) %in% cc$crab_data_shallow$unit,cc$crabs_shallow)
     # now we select the columns containing the environmental variables
   # we care about and scale the numeric ones to unit variance
-  crab_data_shallow <<- crabs_shallow %>%
+  cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%
     select(unit,region,island,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
     mutate(across(where(is.numeric),~as.numeric(scale(.x)))) %>%
     column_to_rownames("unit") 
     # reassociate the new sample data
-  sample_data(crabs_shallow) <<- crab_data_shallow
+  sample_data(cc$crabs_shallow) <- cc$crab_data_shallow
     # precalculate the bray-curtis distance for all crabs
-  crab_dist <<- distance(crabs,"bray")
+  cc$crab_dist <- distance(cc$crabs,"bray")
   # pull out the otu table
-  crab_otus <<- otu_table(crabs)
+  cc$crab_otus <- otu_table(cc$crabs)
   # get a nice tibble of the sample data
-  crab_data <<- sample_tibble(crabs)
+  cc$crab_data <- sample_tibble(cc$crabs)
     # likewise for the shallow subset
-  crab_dist_shallow <<- distance(crabs_shallow,"bray")
-  crab_otus_shallow <<- otu_table(crabs_shallow)
-  crab_data_shallow <<- sample_tibble(crabs_shallow)
+  cc$crab_dist_shallow <- distance(cc$crabs_shallow,"bray")
+  cc$crab_otus_shallow <- otu_table(cc$crabs_shallow)
+  cc$crab_data_shallow <- sample_tibble(cc$crabs_shallow)
+  
+  return(cc)
 }
 
 sample_summary <- function(ps) {
@@ -315,27 +320,36 @@ sample_summary <- function(ps) {
     sd()
   
   # get 5 most common species
-  ss$top_5 <- ps %>%
+  top5 <- ps %>%
     taxa_sums() %>%
     sort() %>%
     rev() %>%
     head(5) 
   
-  otus <- ss$top_5 %>%
+  otus <- top5 %>%
     names() %>%
     str_replace_all("_"," ") 
   
-  ss$top5_units <- ps %>% 
-    subset_taxa(species %in% otus) %>%
+  ss$top5_n <- top5
+  
+  
+  to_keep <- ps %>%
+    taxa_tibble() %>%
+    filter(species %in% otus) %>%
+    pull(otu)
+  
+  # ss$top5_units <- ps %>% 
+  #   subset_taxa(species %in% otus) %>%
+  ss$top5_units <- prune_taxa(to_keep,ps) %>%
     ps_standardize("pa") %>%
     taxa_sums() %>% 
     sort() %>%
     rev()
   
   # make it the same order as the top 5 species
-  ss$top5_units <- ss$top5_units[match(names(ss$top5_units),names(ss$top_5))]
+  ss$top5_units <- ss$top5_units[match(names(ss$top5_units),names(top5))]
   
-  ss$taxonomy <- wm_records_taxamatch(otus) %>%
+  ss$top5 <- wm_records_taxamatch(otus) %>%
     map2(otus,~{
       if (nrow(.x) > 0) {
         .x <- .x %>% 
@@ -378,92 +392,76 @@ sample_summary <- function(ps) {
   return(ss)
 }
 
+alpha_diversity <- function(ps,measures=c("Observed","Simpson")) {
+  
+  ad <- list()
+  
+  # skip fisher because it's broken
+  richness <- ps %>%
+    estimate_richness(measures = measures) %>%
+    as_tibble(rownames="sample") %>%
+    mutate(sample=str_replace(sample,"^X",""))
+  
+  cd <- ps %>%
+    sample_tibble()
+  
+  all_richness <- richness %>%
+    inner_join(cd,by="sample") %>%
+    mutate(island = fct_reorder(island,-lat))
+  
+  ad$richness_table <- all_richness
+  ad$richness <- mean(all_richness$Observed)
+  ad$richness_sd <- sd(all_richness$Observed)
+  ad$simpson <- mean(all_richness$Simpson)
+  ad$simpson_sd <- sd(all_richness$Simpson)
+  
+  ri <- all_richness %>%
+    group_by(island_group) %>%
+    summarise(richness = mean(Observed), richness_sd = sd(Observed), simpson = mean(Simpson), simpson_sd = sd(Simpson))
+  ad$richness_main <- ri %>%
+    filter(island_group == "main") %>%
+    select(-island_group) %>%
+    as.list()
+  ad$richness_nwhi <- ri %>%
+    filter(island_group == "northwest") %>%
+    select(-island_group) %>%
+    as.list()
+  
+  try(ad$t_r_island <- t.test(Observed ~ island_group, data=all_richness),silent=TRUE)
+  try(ad$t_s_island <- t.test(Simpson ~ island_group, data=all_richness),silent=TRUE)
+  
+  # m <- lm(Observed ~ island_group, data=all_richness)
+  # summary(m)
+  # check_model(m)
+  # 
+  # m <- lm(Simpson ~ island_group, data=all_richness)
+  # summary(m)
+  # check_model(m)
+  # 
+  # kruskal.test(Simpson ~ island_group, data = all_richness)
+  # wilcox.test(Simpson ~ island_group, data = all_richness)
+  # 
+  # t.test(Observed ~ shallow_deep, data=all_richness)
+  # t.test(Simpson ~ shallow_deep, data=all_richness)
+  # f <- lm(Simpson ~ 1 + I(shallow_deep == "deep"),data=all_richness)
+  # summary(f)
+  # confint(f)
+  # 
+  # # environmental variables and alpha diversity
+  # 
+  # scaled_richness <- all_richness %>%
+  #   mutate(
+  #     across(c(lat,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact),~as.numeric(scale(.x)))
+  #   )
+  # # lme_richness <- lmer(Observed ~ lat + depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact + (1|region/island), data=scaled_richness)
+  # lme_richness <- lmer(Observed ~ lat + depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact + (1|region) + (1|island), data=scaled_richness)
+  return(ad)
+}
+
 # start here
 
 if (run_things) {
 # alpha diversity / richness ----------------------------------------------
-
-# skip fisher because it's broken
-richness <- crabs_untransformed %>%
-  # estimate_richness(measures = c("Observed", "Chao1", "ACE", "Shannon", "Simpson", "InvSimpson")) %>%
-  estimate_richness(measures = c("Observed", "Simpson")) %>%
-  as_tibble(rownames="sample") %>%
-  mutate(sample=str_replace(sample,"^X",""))
-
-cd <- crabs_untransformed %>%
-  sample_tibble()
-
-all_richness <- richness %>%
-  inner_join(cd,by="sample") %>%
-  mutate(island = fct_reorder(island,-lat))
-
-shallow_richness <- all_richness %>%
-  filter(shallow_deep == "shallow")
-
-deep_richness <- all_richness %>%
-  filter(shallow_deep == "deep")
-
-cat("overall alpha diversity summary:\n")
-all_richness %>%
-  mutate(thing = "everything") %>%
-  group_by(thing) %>%
-  summarise(richness = mean(Observed), richness_sd = sd(Observed), simpson = mean(Simpson), simpson_sd = sd(Simpson))
-
-cat("overall alpha diversity summary by island group:\n")
-all_richness %>%
-  group_by(island_group) %>%
-  summarise(richness = mean(Observed), richness_sd = sd(Observed), simpson = mean(Simpson), simpson_sd = sd(Simpson))
-
-cat("shallow alpha diversity summary:\n")
-shallow_richness %>%
-  mutate(thing = "everything") %>%
-  group_by(thing) %>%
-  summarise(richness = mean(Observed), richness_sd = sd(Observed), simpson = mean(Simpson), simpson_sd = sd(Simpson))
-
-cat("shallow alpha diversity summary by island group:\n")
-shallow_richness %>%
-  group_by(island_group) %>%
-  summarise(richness = mean(Observed), richness_sd = sd(Observed), simpson = mean(Simpson), simpson_sd = sd(Simpson))
-
-cat("deep alpha diversity summary:\n")
-deep_richness %>%
-  mutate(thing = "everything") %>%
-  group_by(thing) %>%
-  summarise(richness = mean(Observed), richness_sd = sd(Observed), simpson = mean(Simpson), simpson_sd = sd(Simpson))
-
-t.test(Observed ~ island_group, data=all_richness)
-t.test(Simpson ~ island_group, data=all_richness)
-
-m <- lm(Observed ~ island_group, data=all_richness)
-summary(m)
-check_model(m)
-
-m <- lm(Simpson ~ island_group, data=all_richness)
-summary(m)
-check_model(m)
-
-kruskal.test(Simpson ~ island_group, data = all_richness)
-wilcox.test(Simpson ~ island_group, data = all_richness)
-
-t.test(Observed ~ shallow_deep, data=all_richness)
-t.test(Simpson ~ shallow_deep, data=all_richness)
-f <- lm(Simpson ~ 1 + I(shallow_deep == "deep"),data=all_richness)
-summary(f)
-confint(f)
-
-# environmental variables and alpha diversity
-
-scaled_richness <- all_richness %>%
-  mutate(
-    across(c(lat,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact),~as.numeric(scale(.x)))
-  )
-# lme_richness <- lmer(Observed ~ lat + depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact + (1|region/island), data=scaled_richness)
-lme_richness <- lmer(Observed ~ lat + depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact + (1|region) + (1|island), data=scaled_richness)
-
-
-
-
-
 # do the  dbRDA analysis ---------------------------------------------------
 
 # establish our upper and lower bounds for forward model selection

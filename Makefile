@@ -16,7 +16,11 @@ all: docx
 force: clean docx
 
 export OSASCRIPT
-open: clean docx
+force-open: clean docx
+	@echo "$$OSASCRIPT" | osascript
+	@open $(DOCX_FILES)
+	
+open: docx
 	@echo "$$OSASCRIPT" | osascript
 	@open $(DOCX_FILES)
 
