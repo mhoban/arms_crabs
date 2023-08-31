@@ -1,0 +1,11 @@
+﻿Environmental Driver,Description,Source
+Site depth (m),Depth at which ARMS units were deployed,NOAA CRED
+Latitude,ARMS unit deployment latitude,NOAA CRED
+Longitude,ARMS unit deployment longitude,NOAA CRED
+Chlorophyll-A,"Sea surface chlorophyll A derived from satellite imagery, 200--400 m offshore",PacIOOS
+SST (&deg;C),"Sea surface temparature, measured 200--400 m offshore",PacIOOS
+Island slope,"Bathymetric slope index, defined as the horizontal distance from shore to the 50 m isobath",PacIOOS
+Coral cover (%),Satellite-derived coral coverage. Defined as the number of pixels with more than 10% cover in IKONOS satellite imagery covering the 0--30 m depth range. Expressed as a percentage of the total number of pixels analyzed,[@selkoeDNACoralReef2016]
+Nearest neighbor,"Shortest path distance in km between the approximate centroids of the two nearest islands, calculated using Google Earth",[@selkoeDNACoralReef2016]
+Larval connectivity,Incoming centrality metric calculated from modeled larval connectivity estimated from an oceanographic biophysical model parameterized for the species and habitat array,[@selkoeDNACoralReef2016]
+Human impacts,Dimensionless measure of cumulative human impacts,[@selkoeDNACoralReef2016]

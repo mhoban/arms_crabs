@@ -1,5 +1,7 @@
 SHELL := bash
 DOCX_FILES := output/$(strip $(patsubst %.Rmd, %.docx, $(wildcard *.Rmd)))
+TABLES = $(wildcard data/tables/*.csv)
+REFDOC = resources/ref.docx
 
 define OSASCRIPT
 tell application "Microsoft Word"
@@ -24,9 +26,9 @@ open: docx
 	@echo "$$OSASCRIPT" | osascript
 	@open $(DOCX_FILES)
 
-docx: $(DOCX_FILES)
+docx: $(DOCX_FILES) 
 
-output/%.docx: %.Rmd
+output/%.docx: %.Rmd $(TABLES) $(REFDOC)
 	@echo building $@
 	@R --slave -e 'rmarkdown::render("$<",output_file="$@")'
 

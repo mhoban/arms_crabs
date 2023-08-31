@@ -264,6 +264,28 @@ setup_crabs <- function() {
     here("data","metadata.csv")
   ) 
   
+  island_transform <- tribble(
+    ~island,~hawaiian_name,
+    "Kure Atoll","Hōlanikū",
+    "Pearl and Hermes Reef","Manawai",
+    "Lisianski","Kapou",
+    "French Frigate Shoals","Lalo",
+    "Kauai","Kaua‘i",
+    "Oahu","O‘ahu",
+    "Maui","Maui",
+    "Hawaii Island","Hawai‘i Island"
+  )
+  
+  cd <- sample_tibble(cc$crabs_untransformed) %>%
+    left_join(island_transform,by="island") %>%
+    mutate(
+      island = fct_reorder(island,-lat),
+      hawaiian_name = fct_reorder(hawaiian_name,-lat)
+    ) %>%
+    column_to_rownames("sample")
+  
+  sample_data(cc$crabs_untransformed) <- cd
+  
   cc$crabs <- cc$crabs_untransformed %>%
     ps_standardize("hellinger")
     # this is the shallow subset

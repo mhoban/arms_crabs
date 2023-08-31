@@ -25,8 +25,8 @@ institute:
   - noaa: National Oceanic and Atmospheric Administration
 abstract:
   Shallow coral reefs are extensively studied, and although scleractinian corals have been recorded to 165 m, little is known about other mesophotic coral reef ecosystem (MCE) inhabitants. Brachyuran crabs fill many ecological and trophic niches on reefs, making them ideal candidates for evaluating species composition among depths. Here we ask if MCEs host the same communities as the shallower reefs spread across the entire 2400 km Hawaiian Archipelago. We deployed Autonomous Reef Monitoring Structures (ARMS) for two years among shallow sites (12 m) across the latitudinal gradient of the Hawaiian Archipelago to compare directly with a depth gradient (12, 30, 60, and 90 m) south of Oʻahu island. A total of 2284 individual crabs representing 90 morphospecies (19 families) were found. Assemblage composition was not statistically significantly different among shallow sites spread across the archipelago but was significantly different and highly stratified across the depth gradient.  We show that 90 m of depth is a more potent determinant of brachyuran community composition than the latitudinal, geographic (high vs low islands), or anthropogenic impact (human population size) gradient across the archipelago. Deeper reefs host significantly different brachyuran communities than shallow ones in Hawai&#x02BB;i, and only 3 of 90 morphospecies (~3%) occurring across the entire depth range (mesophotic to shallow) were sampled. Further research on the cryptic reef-dwelling fauna is needed for identifying areas of unique biodiversity, as well as boundaries between depth-stratified reef ecosystems.
-bibliography: resources/citations.bib
-csl: resources/vancouver.csl
+bibliography: references/citations.bib
+csl: references/vancouver.csl
 output:
   word_document:
     pandoc_args:
@@ -34,7 +34,7 @@ output:
       - "--lua-filter=resources/scholarly-metadata.lua"
       - "--lua-filter=resources/author-info-blocks.lua"
       - "--reference-doc=resources/ref.docx"
-    keep_md: false
+    keep_md: true
 tblPrefix: Table
 figPrefix:
   - "Fig."
@@ -55,6 +55,7 @@ knitr::opts_chunk$set(
   warning=FALSE
 )
 
+library(pander)
 library(fs)
 library(here)
 library(english)
@@ -105,6 +106,29 @@ top_list <- function(species,n,units,len=4) {
     str_c(", and ",ss[len])
 }
 
+print_table <- function(tbl,id="",caption="") {
+  if (!grepl("^: ",caption)) {
+    caption <- paste0(": ",caption)
+  }
+  
+  if (inherits(tbl,"character")) {
+    if (id == "") {
+      id <- sub(pattern = "(.*?)\\..*$", replacement = "\\1", basename(file))
+    }
+    tbl <- read.csv(tbl,check.names=FALSE,stringsAsFactors=FALSE)
+  } else if (inherits(tbl,"data.frame")) {
+    if (id == "") stop("please specify table id")
+  } else {
+    stop("'tbl' must be a character or a data frame")
+  }
+  
+  caption <- sprintf("%s {#tbl:%s}",caption,id)
+  
+  table_str <- capture.output(pander::pandoc.table(tbl,keep.line.breaks=TRUE,caption=NULL,style="grid",split.cells=Inf,split.tables=Inf,justify='left',missing=''))
+  table_str <- table_str[table_str != ""]
+  cat(paste0(table_str,collapse="\n"),"\n\n",caption,"\n\n",sep="")
+}
+
 cc$crabs_deep <- cc$crabs_untransformed %>% subset_samples(shallow_deep == "deep")
 cc$crabs_deep <- prune_taxa(taxa_sums(cc$crabs_deep) > 0,cc$crabs_deep)
 cc$crabs_shallow <- cc$crabs_untransformed %>% subset_samples(shallow_deep == "shallow")
@@ -137,15 +161,37 @@ shallow_alpha <- alpha_diversity(cc$crabs_shallow)
 
 Brachyuran crab assemblages were sampled from benthic coral reef habitat in the Hawaiian Archipelago using Autonomous Reef Monitoring Structures (ARMS). ARMS are standardized collection devices designed to mimic coral reef structural complexity to attract settlement of reef cryptofauna [@brainardAutonomousReefMonitoring2009; @zimmermanArtificialReefMatrix2004]. They are constructed from 10 gray type 1 PVC plates (23 cm $\times$ 23 cm) stacked in an alternating series of open and semi-enclosed layers (figure xxx, ARMS unit). The stack is fastened to a larger base plate (35 cm $\times$ 45 cm) which can be attached to the benthos upon deployment [@brainardAutonomousReefMonitoring2009; @hurleyAssessmentShallowMesophotic2016; @knowltonCoralReefBiodiversity2010; @zimmermanArtificialReefMatrix2004].
 
-A total of 89 ARMS units were deployed over the course of six years (2010–2016; see Table xxx  for deployment and recovery schedules). Units were deployed by NOAA scuba divers during Pacific Reef Assessment and Monitoring Program (RAMP) research cruises in shallow coral reef habitat (12–16 m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) (Table 1). The sites in the MHI were at Hawai&#x02BB;i Island, Maui, O&#x02BB;ahu, and Kaua&#x02BB;i. The sites in the NWHI were at Lalo (French Frigate Shoals), Kapou (Lisianski), Manawai (Pearl & Hermes), and Hōlanikū (Kure Atoll) ([@fig:site_map]). To explore the effects of depth on crab community structure, we also present data from a previous study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], which included a total of 27 units deployed off O&#x02BB;ahu from 2009–2012 in 12–90 m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m. Shallow units were deployed according to standard NOAA methodology, whereas units $\geq$ 30 m were deployed and recovered using technical mixed-gas closed-circuit rebreather diving (Table 1). 
+A total of 89 ARMS units were deployed over the course of six years (2010--2016). Units were deployed by NOAA scuba divers during Pacific Reef Assessment and Monitoring Program (RAMP) research cruises in shallow coral reef habitat (12–16 m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) ([@tbl:arms_table]). The sites in the MHI were at Hawai&#x02BB;i Island, Maui, O&#x02BB;ahu, and Kaua&#x02BB;i. The sites in the NWHI were at Lalo (French Frigate Shoals), Kapou (Lisianski), Manawai (Pearl & Hermes), and Hōlanikū (Kure Atoll) ([@fig:site_map]). To explore the effects of depth on crab community structure, we also present data from a previous study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], which included a total of 27 units deployed off O&#x02BB;ahu from 2009–2012 in 12–90 m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m ([@tbl:arms_table]). Shallow units were deployed according to standard NOAA methodology, whereas units $\geq$ 30 m were deployed and recovered using technical mixed-gas closed-circuit rebreather diving. 
+
+```{r arms-table,results="asis"}
+arms_schedule <- cc$crabs_untransformed %>%
+  sample_tibble() %>%
+  separate_wider_regex(sample,patterns=c(recovery_year="^[0-9]+","_",sample=".*"))  %>%
+  select(sample,everything()) %>%
+  unite("range",deployment_year,recovery_year,sep="--") %>%
+  mutate(
+    island = case_when(
+      str_remove_all(hawaiian_name,'[^a-zA-Z ]') != island ~ as.character(str_glue("{hawaiian_name} ({island})")),
+      TRUE ~ as.character(hawaiian_name)
+    ),
+    island = fct_reorder(island,-lat)
+  ) %>%
+  count(island,range) %>%
+  pivot_wider(names_from="range",values_from="n")  %>%
+  select(island,order(colnames(.))) %>%
+  mutate(across(-island,~replace_na(.x,0)))
+print_table(arms_schedule,"arms_table","ARMS unit sampling schedule (number of units)")  
+# print_table(here("data","tables","arms_deployment.csv"),"arms_table","ARMS unit sampling schedule (number of units)")
+```
 
 ```{r site-map, fig.cap='Sampling map (Papahānaumokuākea Marine National Monument shaded in light blue)', results="asis", dev="svg", fig.width=9, fig.height=6}
 library(sf)
 library(rnaturalearth)
 
-crab_sites <- cc$crab_data %>%
-  distinct(island,island_group,lat,lon,.keep_all = FALSE) %>%
-  mutate( island = fct_reorder(island,-lat) ) %>%
+crab_sites <- cc$crabs_untransformed %>%
+  sample_tibble() %>%
+  distinct(hawaiian_name,island_group,lat,lon,.keep_all = FALSE) %>%
+  # mutate( island = fct_reorder(island,-lat) ) %>%
   st_as_sf(coords=c("lon","lat"),crs=4326, remove=F) #%>%
 
 hawaii <- ne_states("united states of america",returnclass = "sf") %>%
@@ -172,24 +218,6 @@ box_after <- box_before %>%
 pmnm <- st_read(here("data","gis","pmnm.shp"),quiet = TRUE) %>%
   st_transform(transformer)
 
-island_transform <- tribble(
-  ~island,~new_name,
-  "Kure Atoll","Hōlanikū",
-  "Pearl and Hermes Reef","Manawai",
-  "Lisianski","Kapou",
-  "French Frigate Shoals","Lalo",
-  "Kauai","Kaua‘i",
-  "Oahu","O‘ahu",
-  "Maui","Maui",
-  "Hawaii Island","Hawai‘i Island"
-)
-
-cs <- crab_sites %>%
-  left_join(island_transform,by="island") %>%
-  mutate(
-    new_name = fct_reorder(new_name,-lat)
-  )
-
 plotz <- ggplot() +
   # geom_contour(data=bath_proj,mapping=aes(x=V1,y=V2,z = V3),  color="#cecece") +
   # geom_raster(data=bpr,aes(x=x,y=y,fill=z)) +
@@ -198,7 +226,7 @@ plotz <- ggplot() +
   geom_sf(data=hawaii %>% st_transform(transformer), color="black", fill="green", linewidth=0.4) +
   scale_fill_brewer(palette="Accent",name="Island") +
   geom_sf(data=pmnm,fill="#6ed8f6",alpha=0.1) +
-  geom_sf(data=cs %>% st_transform(transformer),aes(fill=new_name),size=3,shape=21,color="black") +
+  geom_sf(data=crab_sites %>% st_transform(transformer),aes(fill=hawaiian_name),size=3,shape=21,color="black") +
   coord_sf(xlim=box_after[c(1,3)],ylim=box_after[c(2,4)]) +
   scale_x_continuous(breaks = -seq(180, 155, -5)) +
   theme_minimal() +
@@ -230,7 +258,11 @@ We used the distance-based redundancy analysis method (dbRDA; a form of multivar
 
 ## Environmental variables
 
-Potential environmental factors affecting the community structure of brachyuran crabs on shallow reefs were assembled from published literature [@selkoeDNACoralReef2016] and the Pacific Islands Ocean Observing System (PacIOOS) (Table 2). Environmental factors were assembled only for shallow sites sampled during RAMP cruises. 
+Potential environmental factors affecting the community structure of brachyuran crabs on shallow reefs were assembled from published literature [@selkoeDNACoralReef2016] and the Pacific Islands Ocean Observing System (PacIOOS) ([@tbl:env_table]). Environmental factors were assembled only for shallow sites sampled during RAMP cruises. 
+
+```{r env-table,results="asis"}
+print_table(here("data","tables","environmental_variables.csv"),"env_table","Potential environmental drivers of crab community structure, assembled from PacIOOS and @selkoeDNACoralReef2016")
+```
 
 # Results
 
