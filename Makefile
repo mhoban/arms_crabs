@@ -36,3 +36,4 @@ output/%.docx: %.Rmd $(TABLES) $(REFDOC)
 clean:
 	@echo cleaning up...
 	@$(RM) -f $(DOCX_FILES)
+	@$(RM) -f output/figures/*.svg

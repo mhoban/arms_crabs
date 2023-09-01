@@ -2,24 +2,24 @@
 # all of these can be directly installed except for phyloseq, which is a bioconductor package
 # phyloseq isn't directly necessary, but it's what I used for all my eDNA stuff and it conveniently
 # wraps the datasets, so I'm using it here
-library(tidyverse)
+# library(tidyverse)
 # to install phyloseq in regular R, do this:
 
 # if (!require("BiocManager", quietly = TRUE))
 #   install.packages("BiocManager")
 
 # BiocManager::install("phyloseq")
-library(phyloseq) 
-library(vegan)
-library(ggrepel)
-library(here)
-library(worrms)
+# library(phyloseq) 
+# library(vegan)
+# library(ggrepel)
+# library(here)
+# library(worrms)
 
 # to check model assumptions
-library(performance)
+# library(performance)
 
 # for linear mixed effects models
-library(lme4)
+# library(lme4)
 
 # set the random seed
 set.seed(31337)
@@ -117,7 +117,7 @@ plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,
 # do a pairwise PERMANOVA analysis by some factor
 pairwise_adonis <- function(comm, factors, permutations = 1000, correction = "fdr", method = "bray") {
   # get possible pairwise factor combinations
-  factor_combos <- combn(unique(factors), 2)
+  factor_combos <- combn(unique(as.character(factors)), 2)
   # map through factor combinations and run model for each pair,
   # dumping the output into a tibble
   model_output <- map_dfr(array_branch(factor_combos,2), ~{
@@ -125,7 +125,7 @@ pairwise_adonis <- function(comm, factors, permutations = 1000, correction = "fd
     
     # get our factor specific community or distance matrix
     if (inherits(comm,'dist')) {
-      dd <- as.matrix(comm)[factors %in% .x, factors %in% .x]
+      dd <- as.dist(as.matrix(comm)[factors %in% .x, factors %in% .x])
     } else {
       comm <- as(comm,'matrix')
       dd <- vegdist(comm[factors %in% .x,], method = method)
@@ -302,7 +302,7 @@ setup_crabs <- function() {
   # we care about and scale the numeric ones to unit variance
   cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%
-    select(unit,region,island,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
+    select(unit,region,island_group,island,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
     mutate(across(where(is.numeric),~as.numeric(scale(.x)))) %>%
     column_to_rownames("unit") 
     # reassociate the new sample data

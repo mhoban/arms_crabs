@@ -1,7 +1,7 @@
 ﻿Environmental Driver,Description,Source
-Site depth (m),Depth at which ARMS units were deployed,NOAA CRED
-Latitude,ARMS unit deployment latitude,NOAA CRED
-Longitude,ARMS unit deployment longitude,NOAA CRED
+Site depth (m),Depth at which ARMS units were deployed,NOAA NCRMP
+Latitude,ARMS unit deployment latitude,NOAA NCRMP
+Longitude,ARMS unit deployment longitude,NOAA NCRMP
 Chlorophyll-A,"Sea surface chlorophyll A derived from satellite imagery, 200--400 m offshore",PacIOOS
 SST (&deg;C),"Sea surface temparature, measured 200--400 m offshore",PacIOOS
 Island slope,"Bathymetric slope index, defined as the horizontal distance from shore to the 50 m isobath",PacIOOS
