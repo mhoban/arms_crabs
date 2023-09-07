@@ -1,65 +1,56 @@
 library(BiodiversityR)
 
-
-crabdata <- sample_data(crabs) %>%
-  as("data.frame")
-crabmatrix <- otu_table(crabs) %>%
-  as("matrix") %>%
+otus <- otu_table(cc$crabs) %>%
+  as.data.frame()
+cd <- cc$crab_data %>%
+  mutate(sample_group = factor(sample_group,ordered=FALSE)) %>%
   as.data.frame()
 
-crabdata <- crabdata %>%
-  dplyr::select(dplyr::where(~!any(is.na(.x)))) %>%
-  mutate(across(where(is.character),as.factor))
 
 
-cap <- CAPdiscrim(
-  crabmatrix ~ island_group + sample_group,
-  data=crabdata,
-  dist="bray",
-  axes=2,
-  m=10,
-  mmax=10,
-  add=FALSE#,
-  # permutations = 99
-)
+# cap <- CAPdiscrim(otus ~ sample_group, data=cd, dist="bray", axes=2, m=0, add=TRUE,permutations = 10)
+cap <- CAPdiscrim(otus ~ island_group + depth_zone, data=cd, dist="bray", axes=2, m=0, add=TRUE)
+cap <- CAPdiscrim(otus ~ sample_group, data=cd, dist="bray", axes=2, m=0, add=TRUE)
 
-cd <- crabdata %>%
-  as_tibble(rownames="sample")
+var <- cap$manova$Eigenvalues / sum(cap$manova$Eigenvalues)
+var <- list(x = var[1], y = var[2])
 
-capscores <- scores(cap) %>%
-  as_tibble(rownames="sample")
-
-capdata <- cap$PCoA %>%
-  as_tibble(rownames="sample",.name_repair = ~c("pcoa1","pcoa2")) %>%
-  left_join(cd,by="sample") %>%
-  left_join(capscores,by="sample")
-
-# quartz()
-ggplot(capdata,aes(x=pcoa1,y=pcoa2)) + 
-  geom_point(aes(shape=island_group,color=sample_group),size=3) +
-  stat_ellipse(aes(group=sample_group,color=sample_group),level=0.95)
-
-ggplot(capdata,aes(x=LD1,y=LD2)) + 
-  geom_point(aes(shape=island_group,color=sample_group)) +
-  stat_ellipse(aes(group=sample_group,color=sample_group),level=0.95) +
-  scale_y_reverse()
-
-
-plot1 <- ordiplot(cap, type="none")
-ordisymbol(plot1, crabdata, "sample_group", legend=TRUE)
-
-# plot change in classification success against m
-plot(seq(1:14), rep(-1000, 14), xlim=c(1, 14), ylim=c(0, 100), xlab="m", 
-     ylab="classification success (percent)", type="n")
-for (mseq in 1:14) {
-  CAPdiscrim.result <- CAPdiscrim(dune~Management, data=dune.env, 
-                                  dist="bray", axes=2, m=mseq)
-  points(mseq, CAPdiscrim.result$percent)
+nice <- function(s) {
+  
 }
 
+pcoa <- cap$x %>%
+  as_tibble(rownames="sample") %>%
+  left_join(cd,by="sample") %>%
+  mutate(
+    sample_group = str_replace(sample_group,"shallow","Shallow"),
+    sample_group = str_replace(sample_group,"main","(MHI)"),
+    sample_group = str_replace(sample_group,"nwhi","(NWHI)"),
+    sample_group = str_split(sample_group,"((?<=[0-9])(?=[a-zA-Z]))|(_)") %>%
+      map_chr(~str_c(.x,collapse=" ")),
+    sample_group = fct_reorder(sample_group,depth)
+  )
 
-crab_data <- crab_data %>%
-  mutate(sample_group = case_when(
-    startsWith(sample_group,"deep") ~ depth_zone,
-    TRUE ~ sample_group
-  ))
+pal <- c("Shallow (MHI)" = "#ffb400", "Shallow (NWHI)" = "#9080ff","30 m" = "#d87939", "60 m" = "#04c3c8", "90 m" = "#04738d")
+
+# ggplot(pcoa,aes(x=LD1,y=LD2,color=sample_group)) + 
+#   stat_ellipse(geom="polygon",aes(fill=sample_group,color=NULL),level=0.95,alpha=0.1) +
+#   geom_point()  +
+#   scale_color_manual(values=pal) + 
+#   scale_fill_manual(values=pal)
+
+ggplot(pcoa,aes(x=LD1,y=LD2,fill=sample_group)) + 
+  stat_ellipse(geom="polygon",level=0.95,alpha=0.1,show.legend = FALSE) +
+  geom_point(color="black",shape=21,size=5)  +
+  # scale_color_manual(values=pal) + 
+  scale_fill_manual(values=pal,name="Sample group") +
+  xlab(str_glue("Linear discriminant 1 [{scales::percent(var$x,0.1)}]")) +
+  ylab(str_glue("Linear discriminant 2 [{scales::percent(var$y,0.1)}]")) +
+  theme_bw() +
+  theme(
+    legend.key = element_blank(),
+    panel.grid = element_blank()
+  )
+
+
+

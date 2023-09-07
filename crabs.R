@@ -28,6 +28,7 @@ run_things <- FALSE
 
 # functions ---------------------------------------------------------------
 
+
 # plot an ordination with various options
 plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,scale=1,labelsize=5,pointsize=3,...) {
   
@@ -321,7 +322,7 @@ setup_crabs <- function() {
   return(cc)
 }
 
-sample_summary <- function(ps) {
+sample_summary <- function(ps,top_n=5) {
   ss <- list() 
   
   # basic numbers
@@ -342,52 +343,51 @@ sample_summary <- function(ps) {
     sd()
   
   # get 5 most common species
-  top5 <- ps %>%
+  top <- ps %>%
     taxa_sums() %>%
     sort() %>%
     rev() %>%
-    head(5) 
+    head(top_n) 
   
-  otus <- top5 %>%
+  otus <- top %>%
     names() %>%
-    str_replace_all("_"," ") 
+    set_names(.,str_replace_all(.,"_"," "))
   
-  ss$top5_n <- top5
+  ss$top_n <- top
   
   
   to_keep <- ps %>%
     taxa_tibble() %>%
-    filter(species %in% otus) %>%
+    filter(species %in% names(otus)) %>%
     pull(otu)
   
-  # ss$top5_units <- ps %>% 
-  #   subset_taxa(species %in% otus) %>%
-  ss$top5_units <- prune_taxa(to_keep,ps) %>%
+  ss$top_units <- prune_taxa(to_keep,ps) %>%
     ps_standardize("pa") %>%
     taxa_sums() %>% 
     sort() %>%
     rev()
   
   # make it the same order as the top 5 species
-  ss$top5_units <- ss$top5_units[match(names(ss$top5_units),names(top5))]
+  ss$top_units <- ss$top_units[match(names(ss$top_units),names(top))]
   
-  ss$top5 <- wm_records_taxamatch(otus) %>%
-    map2(otus,~{
+  ss$top <- wm_records_taxamatch(names(otus)) %>%
+    map2(names(otus),~{
       if (nrow(.x) > 0) {
         .x <- .x %>% 
           filter(rank == "Species") %>%
           select(species = scientificname, authority) %>%
           slice(1)  %>%
-          mutate(found = TRUE)
+          mutate(found = TRUE,otu = otus[.y])
       } 
       if (nrow(.x) == 0) {
-        .x <- list(species = .y, authority = "", found = FALSE)
+        .x <- list(species = .y, authority = NA, found = FALSE, otu=otus[.y])
       }
       return(as.list(.x))
     })
   
   
   ts <- ps %>% taxa_sums()
+
   ss$singleton_count <- sum(ts == 1)
   
   ss$singleton_species <-  ts[ts == 1] %>%
