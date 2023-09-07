@@ -327,7 +327,7 @@ PERM <<- 999
 
 Brachyuran crab assemblages were sampled from benthic coral reef habitat in the Hawaiian Archipelago using Autonomous Reef Monitoring Structures (ARMS). ARMS are standardized collection devices designed to mimic coral reef structural complexity to attract settlement of reef cryptofauna [@brainardAutonomousReefMonitoring2009; @zimmermanArtificialReefMatrix2004]. They are constructed from 10 gray type 1 PVC plates (23 cm $\times$ 23 cm) stacked in an alternating series of open and semi-enclosed layers ([@fig:fig_arms]). The stack is fastened to a larger base plate (35 cm $\times$ 45 cm) which can be attached to the benthos upon deployment [@brainardAutonomousReefMonitoring2009; @hurleyAssessmentShallowMesophotic2016; @knowltonCoralReefBiodiversity2010; @zimmermanArtificialReefMatrix2004]. 
 
-![An Autonomous reef monitoring structure (ARMS) unit deployed on a reef in the Red Sea (photo credit: Michael Berumen, used with permission)](data/images/berumen_uncropped.png){#fig:fig_arms}
+![An autonomous reef monitoring structure (ARMS) unit deployed on a reef in the Red Sea (photo credit: Michael Berumen, used with permission)](data/images/arms_example.png){#fig:fig_arms}
 
 A total of 89 ARMS units were deployed over the course of six years (2010--2016). Units were deployed by NOAA scuba divers during Pacific Reef Assessment and Monitoring Program (RAMP) research cruises in shallow coral reef habitat (12–16 m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) ([@tbl:arms_table]). The sites in the MHI were at Hawai&#x02BB;i Island, Maui, O&#x02BB;ahu, and Kaua&#x02BB;i. The sites in the NWHI were at Lalo (French Frigate Shoals), Kapou (Lisianski), Manawai (Pearl & Hermes), and Hōlanikū (Kure Atoll) ([@fig:fig_map]). To explore the effects of depth on crab community structure, we also present data from a previous study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], which included a total of 27 units deployed off O&#x02BB;ahu from 2009–2012 in 12–90 m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m ([@tbl:arms_table]). Shallow units were deployed according to standard NOAA methodology, whereas units $\geq$ 30 m were deployed and recovered using technical mixed-gas closed-circuit rebreather diving. 
 
@@ -341,6 +341,10 @@ arms_schedule <- cc$crabs_untransformed %>%
     island = case_when(
       str_remove_all(hawaiian_name,'[^a-zA-Z ]') != island ~ as.character(str_glue("{hawaiian_name} ({island})")),
       TRUE ~ as.character(hawaiian_name)
+    ),
+    island = case_when(
+      island == "O‘ahu" ~ str_glue("{hawaiian_name} ({shallow_deep})"),
+      TRUE ~ island
     ),
     island = fct_reorder(island,-lat)
   ) %>%
