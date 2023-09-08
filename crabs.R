@@ -104,7 +104,8 @@ plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,
         color = "black", 
         arrow = arrowhead
       ) + 
-      geom_text_repel(
+      # geom_text_repel(
+      geom_text(
         mapping = label_map, 
         size = labelsize,  
         data = arrowdf, 
@@ -451,6 +452,8 @@ alpha_diversity <- function(ps,measures=c("Observed","Simpson")) {
   
   try(ad$t_r_island <- t.test(Observed ~ island_group, data=all_richness),silent=TRUE)
   try(ad$t_s_island <- t.test(Simpson ~ island_group, data=all_richness),silent=TRUE)
+  try(ad$t_r_depth <- t.test(Observed ~ shallow_deep, data=all_richness),silent=TRUE)
+  try(ad$t_s_depth <- t.test(Simpson ~ shallow_deep, data=all_richness),silent=TRUE)
   
   # m <- lm(Observed ~ island_group, data=all_richness)
   # summary(m)

@@ -2,6 +2,8 @@ SHELL := bash
 DOCX_FILES := output/$(strip $(patsubst %.Rmd, %.docx, $(wildcard *.Rmd)))
 TABLES = $(wildcard data/tables/*.csv)
 REFDOC = resources/ref.docx
+CITES = references/citations.bib
+CITESTYLE = references/style.csl
 
 define OSASCRIPT
 tell application "Microsoft Word"
@@ -28,12 +30,13 @@ open: docx
 
 docx: $(DOCX_FILES) 
 
-output/%.docx: %.Rmd $(TABLES) $(REFDOC)
+output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE)
 	@echo building $@
 	@R --slave -e 'rmarkdown::render("$<",output_file="$@")'
 
 .PHONY: clean
 clean:
 	@echo cleaning up...
+	@$(RM) -f cache/*
 	@$(RM) -f $(DOCX_FILES)
 	@$(RM) -f output/figures/*.svg
