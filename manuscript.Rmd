@@ -207,9 +207,9 @@ top_list <- function(species,n,units,len=4,fig=NULL) {
   s1 <- map_chr(species,format_species)
   s2 <- map2_chr(n,units,~{
     if (is.null(fig)) {
-      str_glue("(with {.x} individuals on {.y} units)")
+      str_glue("({.x} individuals on {.y} units)")
     } else {
-      str_glue("(with {.x} individuals on {.y} units; [@fig:{fig}[]{{{{}}}}{{.y}}])")
+      str_glue("({.x} individuals on {.y} units; [@fig:{fig}[]{{{{}}}}{{.y}}])")
     }
   })
   if (!is.null(fig)) {
@@ -297,12 +297,16 @@ island_pal <- c(
 
   "French Frigate Shoals" = "#fff1f1",
   "Lalo" = "#fff1f1",
+  "Lalo (French Frigate Shoals)" = "#fff1f1",
   "Lisianski" = "#6fdc8c",
   "Kapou" = "#6fdc8c",
+  "Kapou (Lisianski)" = "#6fdc8c",
   "Pearl and Hermes Reef" = "#4589ff",
   "Manawai" = "#4589ff",
+  "Manawai (Pearl and Hermes Reef)" = "#4589ff",
   "Kure Atoll" = "#d12771",
-  "Hōlanikū" = "#d12771"
+  "Hōlanikū" = "#d12771",
+  "Hōlanikū (Kure Atoll)" = "#d12771"
 )
 island_group_pal <- c(
   "main" = "#ffb400",
@@ -331,9 +335,19 @@ sample_depth_pal <- c(
 
 PERM <<- 999
 
+model_terms <- read_csv(here("data","tables","environmental_variables.csv"))
 ```
 
 # 1. Introduction {-}
+
+Natural communities are structured by a suite of biotic and abiotic factors including geography, habitat complexity, environment, productivity, and species interactions (among many others) [@begonEcologyIndividualsEcosystems2021]. Such complexity makes direct comparisons of processes structuring communities over large geographic scales challenging. Marine communities experience unique influences and present particular research challenges, however studies have largely concluded that factors structuring marine communities differ from those in terrestrial habitats [@steeleComparisonTerrestrialMarine1985; @kinlanPropaguleDispersalMarine2003; @raffaelliMarineTerrestrialEcologists2005; @grosbergBiodiversityWaterLand2012; @knappDriversBiodiversityChange2017]. Among the best studied of aquatic ecosystems is the littoral zone lying between the low-tide line and the upper limit of aquatic species on the shore where the habitat is exposed to air during low tide events that provide easy and consistent research access for humans. Classical studies of vertical zonation across the intertidal have contributed much of our understanding of the mechanisms of biotic zonation and community structure in marine environments [@raffaelliIntertidalEcology2012; @birdTideWaveMarks2013]. Such studies point to an inseparable combination of physical and biological factors, including physiological tolerance [@someroThermalPhysiologyVertical2002] and species interactions [@brunoHabitatModificationFacilitation2001; @mengeRockyIntertidalCommunities2001] that together determine the structure of intertidal communities [@dennyPhysicalProcessesThat2001]. Although there are exceptions [e.g., @woottonIndirectEffectsPrey1992; @bertnessTestingRelativeContribution1999], the generalization has emerged that biotic factors typically determine the lower limit whereas physical factors set the upper limit of the depth distribution of intertidal communities [@connellInfluenceInterspecificCompetition1961; @connellEffectsCompetitionPredation1961; @paineIntertidalCommunityStructure1974].
+
+No such generalization has emerged for the processes structuring coral reef communities [@moraEcologyFishesCoral2015; @sheppardBiologyCoralReefs2017], with hypotheses ranging from the Neutral Theory of Biodiversity [@hubbellUnifiedNeutralTheory2011] and Lottery Recruitment [@saleStockRecruitRelationshipsRegional1982] to competitive networks [@bussCompetitiveNetworksNontransitive1979] and fine-scale resource partitioning driven by predators and herbivores structuring coral reef communities [@abramsRecruitmentLotteriesCoexistence1984; @hixonPredationPreyRefuges1993]. Zooxanthellate corals are the ecosystem engineers of reef habitats but are restricted to specific areas characterized by a relatively narrow range of chemical and physical environmental variables (i.e., tropical and subtropical warm waters, oligotrophic conditions, 32-40 PSU salinity, and sufficient incident light, which decreases rapidly below ~30 m depth). Shallow coral reef ecosystems cover less than 0.2% of the seafloor and in such a small area they hold the 32-38% of all marine species [@fisherSpeciesRichnessCoral2015]. Yet the drivers of high biodiversity and the mechanisms by which diversity is maintained on coral reefs remains a subject of considerable debate [@carrBiodiversityPopulationRegulation2002; @connollyIndoPacificBiodiversityCoral2003; @almanyDoesIncreasedHabitat2004; @bellwoodEnvironmentalGeometricConstraints2005, 2006; @dornelasCoralReefDiversity2006; @grahamImportanceStructuralComplexity2013; @komyakovaRelativeImportanceCoral2013]. 
+
+Recent advances in underwater explorations have shown that light-dependent reefs extend well beyond the 30 m depth limit imposed by scuba exploration of coral reefs down to 150 m in some locations [@kahngDeepestZooxanthellateScleractinian2006]. These mesophotic coral ecosystems (MCEs) are typically defined as those extending from ~40 to 150 m depth [@hindersteinThemeSectionMesophotic2010; @kahngCommunityEcologyMesophotic2010], and were believed to experience dampened disturbances in comparison to shallow reefs and could therefore act as deep water refugia for shallow reef species threatened by anthropogenic impacts [@bongaertsAssessingDeepReef2010; @smithDepthRefugiumCatastrophic2014; @holsteinFertileFathomsDeep2015; @muirSpeciesIdentityDepth2017]. However, recent literature describing species compositions along depth gradients reveal a more complex picture among taxa and locations because some groups may use mesophotic reefs as a refuge in some places, while others show community turnover with depth such that MCE habitats are ecologically distinct from adjacent shallow water coral reefs [@hurleyAssessmentShallowMesophotic2016; @smithCaribbeanMesophoticCoral2016; @semmlerAreMesophoticCoral2017; @bongaertsDeepReefsAre2017; @rochaMesophoticCoralEcosystems2018]. Further, there are a range of connections depending on the taxa – large, mobile organisms like fish tend to have more shared species across depth than sedentary organisms such as corals and algae, but even among the fishes the community structure of MCEs is often distinct [@kaneHighLevelsMesophotic2014; @pyleComprehensiveInvestigationMesophotic2016 ; @asherMesophoticDepthGradients2017; @fukunagaChangesMesophoticReef2017; @colemanShiftingReefFish2018; @pinheiroDeepReefFishes2019]. Although the majority of coral reef biodiversity consists of the algal and invertebrate cryptobenthic organisms living on and within the reef structure [@fautinOverviewMarineBiodiversity2010; @knowltonCoralReefBiodiversity2010; @fisherSpeciesRichnessCoral2015], the studies listed above focus almost exclusively on the corals and fishes which are more easily surveyed.
+
+Studies comparing community structure either along a depth gradient or across a latitudinal gradients have been criticized because they may confound multiple aspects of physical environments with habitat area or habitat complexity that covary across the measured gradient in such surveys [e.g., @bellwoodRegionalScaleAssemblyRules2001; @grahamEffectsMarineReserve2003; @connollyCommunityStructureCorals2005; @ewersConfoundingFactorsDetection2006; @fletcherRoleHabitatArea2007a; ). Here, we use standardized habitat modules, autonomous reef monitoring structures or ARMS [@zimmermanArtificialReefMatrix2004; @brainardAutonomousReefMonitoring2009], to sample brachyuran crab communities collected from across the Hawaiian Archipelago and test which suite of environmental or anthropogenic drivers are most important in structuring coral reef infauna communities. The Hawaiian Archipelago is made up of both high islands to atolls stretching across 2500 km in the Pacific Ocean, and is typically regarded as two regions: the main Hawaiian Islands (MHI) are the 8 high volcanic islands, and the Northwestern Hawaiian Islands (NWHI) are the low islands and atolls north and west of Kauaʻi.  We compared shallow reef crab communities gathered from across the archipelago based on the nested groupings of island versus region (MHI vs NWHI) spanning roughly 9 degrees of latitude and 24 degrees of longitude that encompass a wide range of physical and anthropogenic gradients [@selkoeMapHumanImpacts2009, 2016). Given the number and magnitude of differences between these regions, we hypothesized that species diversity would be different between regions (MHI vs NWHI). We therefore looked at community composition along the latitudinal gradient and investigated community composition in response to physical gradients (depth, temperature), biological gradients (coral cover, chlorophyll concentration), geological gradients (island slope, distances between neighboring islands), and anthropogenic gradients (human population count, human impacts). We hypothesized that the communities found across the latitudinal gradient encompassing all of these environmental variables would show fewer differences between individual islands or atolls, but would be greatest between the two regions, MHI and NWHI.  Finally, to investigate whether a latitudinal gradient or depth gradient would be a stronger force in driving community composition, we compared the reef crab assemblage from across the shallow reefs in the Hawaiian Archipelago to reef crab assemblages across a mesophotic depth gradient. 
+
 
 # 2. Materials and Methods {-}
 
@@ -343,39 +357,22 @@ Brachyuran crab assemblages were sampled from benthic coral reef habitat in the 
 
 ![An autonomous reef monitoring structure (ARMS) unit deployed on a reef in the Red Sea (photo credit: Michael Berumen, used with permission)](data/images/arms_example.png){#fig:fig_arms}
 
-A total of 89 ARMS units were deployed over the course of six years (2010--2016). Units were deployed by NOAA scuba divers during Pacific Reef Assessment and Monitoring Program (RAMP) research cruises in shallow coral reef habitat (12–16 m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) ([@tbl:arms_table]). The sites in the MHI were at Hawai&#x02BB;i Island, Maui, O&#x02BB;ahu, and Kaua&#x02BB;i. The sites in the NWHI were at Lalo (French Frigate Shoals), Kapou (Lisianski), Manawai (Pearl & Hermes), and Hōlanikū (Kure Atoll) ([@fig:fig_map]). To explore the effects of depth on crab community structure, we also present data from a previous study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], which included a total of 27 units deployed off O&#x02BB;ahu from 2009–2012 in 12–90 m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m ([@tbl:arms_table]). Shallow units were deployed according to standard NOAA methodology, whereas units $\geq$ 30 m were deployed and recovered using technical mixed-gas closed-circuit rebreather diving [see @hurleyAssessmentShallowMesophotic2016]. 
+A total of 89 ARMS units were deployed over the course of six years (2010--2016). Units were deployed by NOAA scuba divers during Pacific Reef Assessment and Monitoring Program (RAMP) research cruises in shallow coral reef habitat (12–16 m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) ([@fig:fig_map; @tbl:arms_table]). <!--The sites in the MHI were at Hawai&#x02BB;i Island, Maui, O&#x02BB;ahu, and Kaua&#x02BB;i. The sites in the NWHI were at Lalo (French Frigate Shoals), Kapou (Lisianski), Manawai (Pearl & Hermes), and Hōlanikū (Kure Atoll) ([@fig:fig_map]). -->To explore the effects of depth on crab community structure, we also present data from a previous study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], which included a total of 27 units deployed off O&#x02BB;ahu from 2009–2012 in 12–90 m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m ([@tbl:arms_table]). Shallow units were deployed according to standard NOAA methodology, whereas units $\geq$ 30 m were deployed and recovered using technical mixed-gas closed-circuit rebreather diving [see @hurleyAssessmentShallowMesophotic2016]. 
 
-```{r arms-table,results="asis", dependson="init"}
-arms_schedule <- cc$crabs_untransformed %>%
-  sample_tibble() %>%
-  separate_wider_regex(sample,patterns=c(recovery_year="^[0-9]+","_",sample=".*"))  %>%
-  select(sample,everything()) %>%
-  unite("range",deployment_year,recovery_year,sep="--") %>%
-  mutate(
-    island = case_when(
-      str_remove_all(hawaiian_name,'[^a-zA-Z ]') != island ~ as.character(str_glue("{hawaiian_name} ({island})")),
-      TRUE ~ as.character(hawaiian_name)
-    ),
-    island = case_when(
-      island == "O‘ahu" ~ str_glue("{hawaiian_name} ({shallow_deep})"),
-      TRUE ~ island
-    ),
-    island = fct_reorder(island,-lat)
-  ) %>%
-  count(island,range) %>%
-  pivot_wider(names_from="range",values_from="n")  %>%
-  select(island,order(colnames(.))) %>%
-  mutate(across(-island,~replace_na(.x,0)))
-print_table(arms_schedule,"arms_table","ARMS unit deployment schedule (number of units)",accuracy=1) 
-```
-
-```{r site-map, fig.cap='Sampling map (Papahānaumokuākea Marine National Monument shaded in light blue)', results="asis", fig.width=9, fig.height=6, dependson="init"}
+```{r site-map, fig.cap='Sampling map (Papahānaumokuākea Marine National Monument is shaded in light blue)', results="asis", fig.width=9, fig.height=6, dependson="init"}
 library(sf)
 library(rnaturalearth)
 
 crab_sites <- cc$crabs_untransformed %>%
   sample_tibble() %>%
-  distinct(hawaiian_name,island_group,lat,lon,.keep_all = FALSE) %>%
+  distinct(hawaiian_name,island,island_group,lat,lon,.keep_all = FALSE) %>%
+  mutate(
+    island = case_when(
+      str_remove_all(hawaiian_name,'[^a-zA-Z ]') != island ~ as.character(str_glue("{hawaiian_name} ({island})")),
+      TRUE ~ as.character(hawaiian_name)
+    ),
+    island = fct_reorder(island,-lat)
+  ) %>%
   # mutate( island = fct_reorder(island,-lat) ) %>%
   st_as_sf(coords=c("lon","lat"),crs=4326, remove=F) #%>%
 
@@ -410,7 +407,7 @@ ggplot() +
   # scale_fill_gradient2(low="dodgerblue4", mid="gainsboro", high="darkgreen") +
   geom_sf(data=hawaii %>% st_transform(transformer), color="black", fill="green", linewidth=0.4) +
   geom_sf(data=pmnm,fill="#6ed8f6",alpha=0.1) +
-  geom_sf(data=crab_sites %>% st_transform(transformer),aes(fill=hawaiian_name),size=3,shape=21,color="black") +
+  geom_sf(data=crab_sites %>% st_transform(transformer),aes(fill=island),size=3,shape=21,color="black") +
   scale_fill_manual(values=island_pal,name="Island") +
   coord_sf(xlim=box_after[c(1,3)],ylim=box_after[c(2,4)]) +
   scale_x_continuous(breaks = -seq(180, 155, -5)) +
@@ -421,22 +418,46 @@ ggplot() +
 cat("{#fig:fig_map}")
 ```
 
-ARMS units were retrieved by encapsulating them in-situ in a mesh-lined crate (100 μm pore size) to prevent escape of motile organisms. Once returned to the surface, they were placed in containers of aerated, filtered seawater, crates were removed, and units were systematically disassembled plate-by-plate. Seawater surrounding disassembled units was sieved through 2 mm, 500 μm, and 100 μm mesh-size geologic sieves [see @lerayDNABarcodingMetabarcoding2015 for processing details], and retained macroorganisms were preserved in 95% ethanol. All adult brachyuran crabs ($\geq$ 5 mm) were photographed, identified to morphospecies, and preserved in 95% ethanol (Fig. 2d). Individual preserved specimens were accessioned into the invertebrate zoology collections at the Florida Museum of Natural History (catalog numbers xxx–xxx). 
+```{r arms-table,results="asis", dependson="init"}
+arms_schedule <- cc$crabs_untransformed %>%
+  sample_tibble() %>%
+  separate_wider_regex(sample,patterns=c(recovery_year="^[0-9]+","_",sample=".*"))  %>%
+  select(sample,everything()) %>%
+  unite("range",deployment_year,recovery_year,sep="--") %>%
+  mutate(
+    island = case_when(
+      str_remove_all(hawaiian_name,'[^a-zA-Z ]') != island ~ as.character(str_glue("{hawaiian_name} ({island})")),
+      TRUE ~ as.character(hawaiian_name)
+    ),
+    island = case_when(
+      island == "O‘ahu" ~ str_glue("{hawaiian_name} ({shallow_deep})"),
+      TRUE ~ island
+    ),
+    island = fct_reorder(island,-lat)
+  ) %>%
+  count(island,range) %>%
+  pivot_wider(names_from="range",values_from="n")  %>%
+  select(island,order(colnames(.))) %>%
+  mutate(across(-island,~replace_na(.x,0)))
+print_table(arms_schedule,"arms_table","ARMS unit deployment schedule (number of units)",accuracy=1) 
+```
+
+ARMS units were retrieved by encapsulating them in-situ in a mesh-lined crate (100 μm pore size) to prevent escape of motile organisms. Once returned to the surface, they were placed in containers of aerated, filtered seawater, crates were removed, and units were systematically disassembled plate-by-plate. Seawater surrounding disassembled units was sieved through 2 mm, 500 μm, and 100 μm mesh-size geologic sieves [see @lerayDNABarcodingMetabarcoding2015 for processing details], and retained macroorganisms were preserved in 95% ethanol. All adult brachyuran crabs ($\geq$ 5 mm) were photographed, identified to morphospecies, and preserved in 95% ethanol. Individual preserved specimens were accessioned into the invertebrate zoology collections at the Florida Museum of Natural History (catalog numbers xxx–xxx). 
 
 ## Data analysis {-}
 
 Unless otherwise specified, all analyses were performed using `R` version 4.1.2 [@rcoreteamLanguageEnvironmentStatistical2021]. Community data were loaded and encapsulated into data objects using the R package `phyloseq` [@mcmurdiePhyloseqPackageReproducible2013] and multivariate community analyses were performed using the package `vegan` [@oksanenVeganCommunityEcology2022] on Bray-Curtis dissimilarities of Hellinger-transformed species abundance matrices [@legendreEcologicallyMeaningfulTransformations2001; @raoReviewCanonicalCoordinates1995]. 
 
-To examine patterns of crab diversity across the islands, we calculated alpha diversity statistics for ARMS units across the archipelago and examined how those values varied between the MHI and NWHI as well as the effects of environmental factors. We calculated species richness and Simpson diversity using the `estimate_richness` function from phyloseq (Simpson = $1-\sum_{i=1}^{R}p_i^2$, where R is the total number of species, and $\mathrm{p}_i$ is the proportional abundance of each species). Alpha diversity was compared between MHI and NWHI using two-sample t-tests, both with and without the inclusion of mesophotic ARMS units. To explore the effects of environmental factors on alpha diversity across the islands, we used a linear mixed-effect model, with Simpson diversity or richness as response variables, the environmental variables listed below as fixed effects, and island nested within region (MHI vs NWHI) as random effects. Models were generated using the `lmer` function from the `lme4` package [@batesFittingLinearMixedEffects2015]. 
+To examine patterns of crab diversity across the islands, we used `estimate_richness` to calculate species richness and Simpson (Simpson = $1-\sum_{i=1}^{R}p_i^2$, where R is the total number of species, and $\mathrm{p}_i$ is the proportional abundance of each species). Diversity was compared between MHI and NWHI using two-sample t-tests, both with and without the inclusion of mesophotic samples. <!--To explore environmental influences on alpha diversity, we used a linear mixed-effect model with Simpson or richness as response variables, the environmental variables listed below as fixed effects, and island nested within island group (MHI vs NWHI) as random effects. Models were generated using the `lmer` function from the `lme4` package [@batesFittingLinearMixedEffects2015]. -->
 
-We used the distance-based redundancy analysis method (dbRDA; a form of multivariate multiple regression) implemented in the `dbrda` function from vegan to examine the relative importance of environmental variables on crab community variation across the Hawaiian Islands. We first assessed the importance of each environmental variable individually using marginal tests. Then, a stepwise forward selection procedure (using the function `ordiR2step`) was used to find the suite of environmental variables that best explained the dissimilarity among sites with regard to crab community composition. Colinearity between traits was assessed by calculating variance inflation factors (VIF) using the function `vif.cca` from complete and reduced models and discarding variables where VIF > 10. Significance levels were assessed with the function `anova` using permutation tests with `r num(PERM,1)` permutations. All continuous environmental variables used for dbRDA were scaled to unit variance. We assessed community variation among groups using the `betadisper` and `adonis2` functions from vegan. These functions implement analysis of multivariate homogeneity of group dispersions (PERMDISP) and multivariate permutational analysis of variance (PERMANOVA), respectively. The PERMDISP method is used to assess variability within groups and PERMANOVA is used to assess differences among groups. We assessed significance with permutational tests, using `r num(PERM,1)` permutations. Crab community variation among sampling groups (shallow MHI vs NWHI and O&#x02BB;ahu 30 m, 60 m, 90 m) was further examined and visualized using canonical analysis of principal coordinates (CAP) based on discriminant analysis [@andersonCanonicalAnalysisPrincipal2003] as implemented in the `CAPdiscrim` function in the `BiodiversityR` package [@kindtTreeDiversityAnalysis2005]. 
+We used distance-based redundancy analysis (dbRDA; a form of multivariate multiple regression) with `dbrda` to examine the relative contribution of environmental variables to crab community variation across the islands. We first used a stepwise forward selection procedure (`ordiR2step`) to find the variables that best explained community dissimilarity. Then, we sequentially removed variables with the largest variance inflation factors (VIF; calculated using `vif.cca`) until all values were <3, indicating variables were sufficiently uncorrelated. Model significance was assessed using permutation tests with `r num(PERM,1)` permutations (function `anova`). Continuous variables were scaled to unit variance. We assessed variation among groups using the `betadisper` and `adonis2`. These functions implement analysis of multivariate homogeneity of group dispersions (PERMDISP) and multivariate permutational analysis of variance (PERMANOVA) respectively. PERMDISP is used to assess variability within groups and PERMANOVA is used to assess differences among groups. Significance was assessed with permutation tests in both cases. Variation among sampling groups (shallow MHI, shallow NWHI, O&#x02BB;ahu 30 m, 60 m, 90 m) was further examined and visualized using canonical analysis of principal coordinates (CAP) based on discriminant analysis [@andersonCanonicalAnalysisPrincipal2003] as implemented in the `CAPdiscrim` function in `BiodiversityR` [@kindtTreeDiversityAnalysis2005]. 
 
 ## Environmental variables {-}
 
-Potential environmental factors affecting the community structure of brachyuran crabs on shallow reefs were assembled from published literature [@selkoeDNACoralReef2016], NOAA's National Coral Reef Monitoring Program (NCRMP), and the Pacific Islands Ocean Observing System (PacIOOS) ([@tbl:env_table]). Environmental factors were assembled only for shallow sites sampled during RAMP cruises. 
+Potential environmental drivers of shallow crab community structure were assembled from published literature [@selkoeDNACoralReef2016], NOAA's National Coral Reef Monitoring Program (NCRMP), and the Pacific Islands Ocean Observing System (PacIOOS) ([@tbl:env_table]). Due to logistical limitations, environmental factors are only available for shallow samples.
 
 ```{r env-table,results="asis", dependson="init"}
-print_table(here("data","tables","environmental_variables.csv"),"env_table","Potential environmental drivers of crab community structure, assembled from PacIOOS and @selkoeDNACoralReef2016",hide="variable")
+print_table(model_terms,"env_table","Potential environmental drivers of crab community structure, assembled from PacIOOS and @selkoeDNACoralReef2016",hide="variable")
 ```
 
 # 3. Results {-}
@@ -445,13 +466,13 @@ print_table(here("data","tables","environmental_variables.csv"),"env_table","Pot
 
 ### All ARMS {-}
 
-The `r nsamples(cc$crabs_untransformed)` ARMS units deployed across the Hawaiian Islands (in `r format_range(cc$crab_data$depth)` m depth) yielded a total of `r num(sum(sample_sums(cc$crabs_untransformed)),1)` adult crabs. Sampling units contained `r num(all_summary$abundance_mean,0.1)` $\pm$ `r num(all_summary$abundance_sd,0.1)` (mean $\pm$ SD) individuals per unit, and abundance ranged from `r format_range(all_summary$abundance_range)` individuals. Crabs were identified to `r sum(unlist(all_summary$types_breakdown))` distinct types (including `r all_summary$types_breakdown$species` species and `r all_summary$types_breakdown$morphospecies` morphospecies) in `r all_summary$taxonomy_breakdown$genera` genera and `r all_summary$taxonomy_breakdown$families` families, which accounted for ~36% of the known crab diversity reported from Hawaiian waters [@castroCatalogAnomuranBrachyuran2011]. The four most abundant species were: `r with(all_summary,top_list(top,top_n,top_units,fig="fig_crabs"))`. `r str_to_sentence(as.english(all_summary$singleton_count))` species occurred in a single unit across all sites (singletons), accounting for ~`r num(all_summary$singleton_count/ntaxa(cc$crabs_untransformed)*100,1)`% of total recovered crab species. 
+The `r nsamples(cc$crabs_untransformed)` ARMS units deployed across the Hawaiian Islands (in `r format_range(cc$crab_data$depth)` m depth) yielded a total of `r num(sum(sample_sums(cc$crabs_untransformed)),1)` adult crabs. Units contained `r num(all_summary$abundance_mean,0.1)` $\pm$ `r num(all_summary$abundance_sd,0.1)` (mean $\pm$ SD) individuals, and abundance ranged from `r format_range(all_summary$abundance_range)`. Crabs were identified to `r sum(unlist(all_summary$types_breakdown))` distinct types (including `r all_summary$types_breakdown$species` species and `r all_summary$types_breakdown$morphospecies` morphospecies) in `r all_summary$taxonomy_breakdown$genera` genera and `r all_summary$taxonomy_breakdown$families` families, which accounted for ~36% of the known crab diversity reported from Hawaiian waters [@castroCatalogAnomuranBrachyuran2011]. The four most abundant species were: `r with(all_summary,top_list(top,top_n,top_units,fig="fig_crabs"))`. `r str_to_sentence(english(all_summary$singleton_count))` species occurred in a single unit across all sites (singletons), accounting for ~`r num(all_summary$singleton_count/ntaxa(cc$crabs_untransformed)*100,1)`% of total recovered crab species. 
 
 ![The four most abundant crab species found across all deployed ARMS units. (A) *Chlorodiella laevissima*. (B) *Perinia tumida*. (C) *Percnon abbreviatum*. (D) *Dynomene hispida*. Photo credit: Florida Museum of Natural History, licensed [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/)](data/images/4crabs.png){#fig:fig_crabs}
 
 ### Mesophotic ARMS {-}
 
-The `r nsamples(cc$crabs_deep)` units deployed at mesophotic depths $\geq$ 30 m on O&#x02BB;ahu yielded both fewer species and fewer individuals compared to the complete dataset, with `r num(sum(sample_sums(cc$crabs_deep)),1)` crabs overall, a total of `r sum(unlist(deep_summary$types_breakdown))` distinct types (`r deep_summary$types_breakdown$species` species and `r deep_summary$types_breakdown$morphospecies` morphospecies), `r num(deep_summary$abundance_mean,0.1)` $\pm$ `r num(deep_summary$abundance_sd,0.1)` individuals per unit, and abundance ranging from `r format_range(deep_summary$abundance_range)` crabs. The four most abundant species in the deep ARMS did not overlap with those from the complete dataset: `r with(deep_summary,top_list(top,top_n,top_units))`. There were `r deep_summary$singleton_count` singletons, which proportionally accounted for ~`r num(deep_summary$singleton_count/ntaxa(cc$crabs_deep)*100,1)`% of species found on deep ARMS. 
+The `r nsamples(cc$crabs_deep)` units deployed at mesophotic depths $\geq$ 30 m on O&#x02BB;ahu yielded fewer species and individuals compared to the complete dataset, with `r num(sum(sample_sums(cc$crabs_deep)),1)` crabs overall, `r sum(unlist(deep_summary$types_breakdown))` distinct types (`r deep_summary$types_breakdown$species` species and `r deep_summary$types_breakdown$morphospecies` morphospecies), `r num(deep_summary$abundance_mean,0.1)` $\pm$ `r num(deep_summary$abundance_sd,0.1)` individuals per unit, and abundance ranging from `r format_range(deep_summary$abundance_range)`. The four most abundant species in the deep ARMS did not overlap with those from the complete dataset: `r with(deep_summary,top_list(top,top_n,top_units))`. There were `r deep_summary$singleton_count` singletons, which proportionally accounted for ~`r num(deep_summary$singleton_count/ntaxa(cc$crabs_deep)*100,1)`% of species found on deep ARMS. 
 
 ## Alpha diversity {-}
 
@@ -461,7 +482,7 @@ Overall mean species richness for the complete dataset was `r num(all_alpha$rich
 
 ### Comparisons {-}
 
-For the complete dataset, there was no significant difference in observed species richness between the MHI and NWHI `r t_test(all_alpha$t_r_island)`, but Simpson diversity was significantly different, although mean values were similar with `r num(all_alpha$richness_main$richness,0.1)` $\pm$ `r num(all_alpha$richness_main$richness_sd,0.1)` in the MHI and `r num(all_alpha$richness_nwhi$richness,0.1)` $\pm$ `r num(all_alpha$richness_nwhi$richness_sd,0.1)` in the NWHI ([@fig:fig_alpha[]{}A]; `r t_test(all_alpha$t_s_island,plain=TRUE)`). Simpson diversity was significantly different between shallow and deep samples ([@fig:fig_alpha[]{}B]; `r t_test(all_alpha$t_s_depth,plain=TRUE)`) but richness was not (`r t_test(all_alpha$t_r_depth,plain=TRUE)`). When only shallow arms \< 30 m were considered, neither comparison was significant (richness: `r t_test(shallow_alpha$t_r_island,plain=TRUE)`; Simpson: `r t_test(shallow_alpha$t_s_island,plain=TRUE)`). 
+For the complete dataset, there was no significant difference in observed species richness between the MHI and NWHI `r t_test(all_alpha$t_r_island)`, but Simpson diversity was significantly different, although mean values were similar with `r num(all_alpha$richness_main$richness,0.1)` $\pm$ `r num(all_alpha$richness_main$richness_sd,0.1)` in the MHI and `r num(all_alpha$richness_nwhi$richness,0.1)` $\pm$ `r num(all_alpha$richness_nwhi$richness_sd,0.1)` in the NWHI ([@fig:fig_alpha[]{}A]; `r t_test(all_alpha$t_s_island,plain=TRUE)`). When only shallow arms \< 30 m were considered, neither comparison was significant (richness: `r t_test(shallow_alpha$t_r_island,plain=TRUE)`; Simpson: `r t_test(shallow_alpha$t_s_island,plain=TRUE)`). Simpson diversity was significantly different between shallow and deep samples ([@fig:fig_alpha[]{}B]; `r t_test(all_alpha$t_s_depth,plain=TRUE)`) but richness was not (`r t_test(all_alpha$t_r_depth,plain=TRUE)`).  
 
 ```{r alpha-box, fig.cap='Box plots of Simpson diversity by (A) island group and (B) sampling depth. Notches represent nonparametric confidence intervals about the median', results="asis", dev="svg", fig.width=8, fig.height=4, dependson="init"}
 library(patchwork)
@@ -491,6 +512,21 @@ cat("{#fig:fig_alpha}")
 ## Brachyuran community structure {-}
 
 ```{r rda-analysis, results="hide", dependson="init"}
+library(formula.tools)
+
+reduce_model <- function(m,vif_limit=3) {
+  vifs <- vif.cca(m)
+  if (any(vifs > vif_limit)) {
+    v <- vifs[-which(vifs == max(vifs))[1]]
+    m_lhs <- capture.output(print(lhs(m$call$formula)))
+    f <- str_glue("{m_lhs} ~ {str_c(names(v),collapse=' + ')}") %>%
+      as.formula()
+    return(reduce_model(dbrda(f,data=cc$crab_data_shallow,distance = "bray")))
+  } else {
+    return(m)
+  }
+}
+
 db_upr <- dbrda(cc$crab_otus_shallow ~ depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact,data=cc$crab_data_shallow,distance="bray")
 db_lwr <- dbrda(cc$crab_otus_shallow  ~ 1,data=cc$crab_data_shallow,distance="bray")
 
@@ -501,45 +537,56 @@ db_modl <- ordiR2step(db_lwr,db_upr,trace=FALSE)
 # see marginal effects of model terms
 # anova(db_modl,by="margin")
 
-
-# vif.cca(db_upr)
-vifs <- vif.cca(db_modl)
+# get rid of variables with VIF > 3
+db_modl <- reduce_model(db_modl,vif_limit=3)
 
 # warning: the following *may* be sketchy:
 # dbRDA doesn't automatically give you species scores, so let's assign them
 # but the community data needs to be transformed to make sense
 # see https://github.com/vegandevs/vegan/issues/254 for information on the transformation below
-sppscores(db_modl) <- sqrt(decostand(cc$crab_otus_shallow, "total")/2) 
+# sppscores(db_modl) <- sqrt(decostand(cc$crab_otus_shallow, "total")/2) 
+# 
+# # this was to grab the 4 most abundant species overall
+# top_species <- names(head(rev(sort(taxa_sums(cc$crabs_shallow))),n=4))
+# 
+# # extract the species scores for the species we want
+# species_scores <- scores(db_modl,display="species") %>%
+#   as_tibble(rownames = "species") %>%
+#   filter(species %in% top_species)
 
-# this was to grab the 4 most abundant species overall
-top_species <- names(head(rev(sort(taxa_sums(cc$crabs_shallow))),n=4))
-
-# extract the species scores for the species we want
-species_scores <- scores(db_modl,display="species") %>%
-  as_tibble(rownames = "species") %>%
-  filter(species %in% top_species)
-
-model_terms <- read_csv(here("data","tables","environmental_variables.csv")) %>%
-  select(variable,driver=`Environmental Driver`)
-
-rda_table <- anova(db_modl,by="term") %>%
+  
+modl_perm <- anova(db_modl,by="margin") %>%
   broom::tidy() %>%
-  inner_join(model_terms,by=c("term" = "variable")) %>%
+  arrange(desc(statistic))
+
+rda_table <- modl_perm %>%
+  inner_join(model_terms %>% select(variable,driver=`Environmental Driver`),by=c("term" = "variable")) %>%
   select(-term) %>%
   select(Term=driver,DF=df,`Sum of Squares`=SumOfSqs,`F-statistic`=statistic,`p-value`=p.value)
 
-abs_r2 <- diff(c(0,db_modl$anova$R2.adj))
+# TODO: check this, this might be wrong!
+nterm <- length(attr(db_modl$terms,"term.label"))
+
+drivers <- rda_table %>%
+  slice(1:2) %>%
+  select(term=Term,stat=`F-statistic`,pval=`p-value`)  %>%
+  mutate(term=str_to_lower(term))
 ```
 ### Environmental drivers {-}
 
-The best dbRDA model (`r permanova(db_modl,stat="F")`) explained `r pc(RsquareAdj(db_modl)$adj.r.squared,0.01)` (adjusted $\mathrm{R}^2$) of the variability in crab communities across the archipelago ([@fig:fig_rda]). Seven of the 10 environmental variables tested were significant ([@tbl:rda_table]). The drivers contributing most to the explained variation were chlorophyll-A ($\mathrm{R}^2$ = `r num(abs_r2[1],0.01)`) and human impacts ($\mathrm{R}^2$ = `r num(abs_r2[2],0.01)`).
+The best dbRDA model (`r permanova(db_modl,stat="F")`) explained `r pc(RsquareAdj(db_modl)$adj.r.squared,0.01)` (adjusted $\mathrm{R}^2$) of the variability in crab communities across the archipelago ([@fig:fig_rda]). `r str_to_sentence(english(nterm))` of the 10 environmental variables tested were significant. The drivers contributing most to explained variation were `r drivers$term[1]` (F = `r num(drivers$stat[1],0.01)`) and `r drivers$term[2]` (F = `r num(drivers$stat[2],0.01)`) ([@tbl:rda_table]). 
 
 ```{r rda, fig.cap="Distance-based redundancy analysis (dbRDA) plot showing significant environmental drivers of crab community variation across the Hawaiian Islands.", results="asis", fig.width=9, fig.height=6, dependson="rda-analysis"}
-rda_plotz <- plot_ord(cc$crabs_shallow,db_modl,scale=2,color="island_group") + 
-  stat_ellipse(geom="polygon",aes(group=island_group,fill=island_group),color=NA,alpha=0.1) +
+termz <- model_terms %>%
+  select(variable,display=`Environmental Driver`)
+
+# rda_plotz <- plot_ord(cc$crabs_shallow,db_modl,scale=2,color="island_group",labelsize=3,term_map=termz) + 
+rda_plotz <- plot_ord(cc$crabs_shallow,db_modl,scale=2,color="island_group",labelsize=3,term_map=termz) + 
+  stat_ellipse(geom="polygon",aes(group=island_group,fill=island_group),color=NA,alpha=0.1,show.legend = FALSE) +
   geom_point(aes(fill=island_group),shape=21,color="black",size=3) +
   plotz_theme() + 
-  scale_fill_manual(values=island_group_pal)
+  scale_fill_manual(name="Island group",values=island_group_pal,labels = c("Main","Northwest")) +
+  guides(color = "none")
 
 xvar <- eigenvals(db_modl)/sum(eigenvals(db_modl))
 r2 <- RsquareAdj(db_modl)$adj.r.squared
@@ -604,9 +651,7 @@ The apparent difference in effect size is much more pronounced in the ANOSIM, bu
 for all samples than it is for just shallow samples.
 -->
 
-Shallow crab community structure was significantly different between island groups (MHI vs. NWHI) (`r permanova(anova_region,0.01)`) as well as among individual islands (`r permanova(anova_island,0.01)`; see [@fig:fig_pairwise] for results of pairwise comparisons). There was no significant difference in community dispersion between the MHI and NWHI (`r permdisp(bd_region)`). When mesophotic ($\geq$ 30 m) ARMS units were included, there were significant differences among depth zones (\< 30 m, 30 m, 60 m, 90 m) (`r permanova(anova_depth,0.01)`) and community dispersion (`r permdisp(bd_depth)`). However, community dispersion was not different among depth zones $\geq$ 30 m (`r permdisp(bd_deep)`). Although crab communities varied significantly among both depth zones and island groups when examining the complete dataset (`r permanova(anova_both,0.01)`), depth explained `r num(effect_ratio,0.1)` times variability than island group (based on model $\mathrm{R}^2$). In the CAP analysis, ARMS units were correctly assigned to sampling groups `r pc(cap_depth$percent/100,0.1)` of the time. The first two axes explained `r pc(cap_var$x,0.1)` and `r pc(cap_var$y,0.1)` of the variation, respectively. The mesophotic samples from O&#x02BB;ahu grouped separately from the shallow samples collected across the entire ~2,500 km of the Hawaiian Islands ([@fig:fig_cap]). In addition, there was as much variability across the 30--90 m samples as across all shallow samples, with the 30 m samples spread out along the LD2 (y) axis and the 60 m and 90 m samples forming a tight group ([@fig:fig_cap]).
-
-
+Shallow crab community structure was significantly different between island groups (MHI vs. NWHI) (`r permanova(anova_region,0.01)`) as well as among individual islands (`r permanova(anova_island,0.01)`; see [@fig:fig_pairwise] for results of pairwise comparisons). There was no significant difference in community dispersion between the MHI and NWHI (`r permdisp(bd_region)`). When mesophotic ($\geq$ 30 m) ARMS units were included, there were significant differences among depth zones (\< 30 m, 30 m, 60 m, 90 m) (`r permanova(anova_depth,0.01)`) and community dispersion (`r permdisp(bd_depth)`). However, community dispersion was not different among depth zones $\geq$ 30 m (`r permdisp(bd_deep)`). Although crab communities varied significantly among both depth zones and island groups when examining the complete dataset (`r permanova(anova_both,0.01)`), depth explained `r num(effect_ratio,0.1)` times more variability than island group (based on model $\mathrm{R}^2$). In the CAP analysis, ARMS units were correctly assigned to sampling groups `r pc(cap_depth$percent/100,0.1)` of the time. The first two axes explained `r pc(cap_var$x,0.1)` and `r pc(cap_var$y,0.1)` of the variation, respectively. The $\geq$ 30 m samples from O&#x02BB;ahu grouped separately from the shallow samples collected across the entire ~2,500 km of the Hawaiian Islands ([@fig:fig_cap]). In addition, there was as much variability across the 30--90 m samples as across all shallow samples, with the 30 m samples spread out primarily along the LD2 (y) axis and the 60 m and 90 m samples forming a tight group ([@fig:fig_cap]).
 
 ```{r cap, fig.cap="Canonical analysis of principal coordinates (CAP) plot showing variation in brachyuran crab communities by island group and depth zone. Ellipses represent 95% confidence intervals for sample groups.", results="asis", fig.width=9, fig.height=6, dependson="cap-analysis"}
 # make the sample group look nice
@@ -637,9 +682,6 @@ ggplot(pcoa,aes(x=LD1,y=LD2,fill=sample_group)) +
   plotz_theme()
 cat("{#fig:fig_cap}")
 ```
-
-### Effects of environmental variables {-}
-
 
 # 4. Discussion {-}
 
@@ -703,5 +745,5 @@ cat("{#fig:fig_pairwise}")
 \newpage
 
 ```{r rda-table,results="asis",dependson="rda-analysis"}
-print_table(rda_table,"rda_table","Significant terms in the dbRDA analysis of crab community variation across the Hawaiian Archipelago",hdr_case="none",accuracy=0.001) 
+print_table(rda_table,"rda_table","Significant (marginal) terms in the dbRDA analysis of crab community variation across the Hawaiian Archipelago",hdr_case="none",accuracy=0.001) 
 ```

@@ -1,5 +1,5 @@
 ﻿Environmental Driver,Description,Source,variable
-Site depth (m),Depth at which ARMS units were deployed,NOAA NCRMP,depth
+Site depth,Depth at which ARMS units were deployed,NOAA NCRMP,depth
 Latitude,ARMS unit deployment latitude,NOAA NCRMP,lat
 Longitude,ARMS unit deployment longitude,NOAA NCRMP,lon
 Chlorophyll-A,"Sea surface chlorophyll A derived from satellite imagery, 200--400 m offshore",PacIOOS,chl

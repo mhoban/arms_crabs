@@ -30,7 +30,7 @@ run_things <- FALSE
 
 
 # plot an ordination with various options
-plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,scale=1,labelsize=5,pointsize=3,...) {
+plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,scale=1,labelsize=5,pointsize=3,term_map=NULL,...) {
   
   # map classnames to axis names
   axes <- c(
@@ -79,6 +79,19 @@ plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,
         filter(str_detect(labels,pattern))
     }
     
+    arrowdf <- arrowdf %>%
+      mutate(
+        hjust = if_else(.data[[str_c(axis,"1")]] < 0,1,0),
+        xnudge = if_else(.data[[str_c(axis,"1")]] < 0,-0.02,0.02)
+      )
+    
+    if (!is.null(term_map)) {
+      arrowdf <- arrowdf %>%
+        inner_join(term_map,by=c("labels" = "variable")) %>%
+        select(-labels) %>%
+        rename(labels=display)
+    }
+    
     # Define the arrow aesthetic mappings
     # map for arrowheads
     arrow_map <- aes(xend = .data[[str_c(axis,"1")]], # this is where we use our mapped axis name
@@ -88,11 +101,12 @@ plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,
                      shape = NULL, 
                      color = NULL)
     # map for arrow labels
-    label_map <- aes(x = 1.3 * .data[[str_c(axis,"1")]], 
-                     y = 1.3 * .data[[str_c(axis,"2")]], 
+    label_map <- aes(x = .data[[str_c(axis,"1")]]+xnudge, 
+                     y = .data[[str_c(axis,"2")]], 
                      shape = NULL, 
                      color = NULL, 
-                     label = labels)
+                     label = labels,
+                     hjust = hjust)
     # make a little arrowhead
     arrowhead = arrow(length = unit(0.02, "npc"))
     # add the arrows to the plot
@@ -105,12 +119,14 @@ plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,
         arrow = arrowhead
       ) + 
       # geom_text_repel(
-      geom_text(
+      # geom_text(
+      geom_label(
         mapping = label_map, 
         size = labelsize,  
         data = arrowdf, 
         show.legend = FALSE,
-        color='black'
+        color='black',
+        fill="grey96"
       ) 
   }
   return(plotz)
@@ -481,290 +497,4 @@ alpha_diversity <- function(ps,measures=c("Observed","Simpson")) {
   # # lme_richness <- lmer(Observed ~ lat + depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact + (1|region/island), data=scaled_richness)
   # lme_richness <- lmer(Observed ~ lat + depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact + (1|region) + (1|island), data=scaled_richness)
   return(ad)
-}
-
-# start here
-
-if (run_things) {
-# alpha diversity / richness ----------------------------------------------
-# do the  dbRDA analysis ---------------------------------------------------
-
-# establish our upper and lower bounds for forward model selection
-# upper is all the terms, lower is none of the terms
-db_upr <- dbrda(crab_otus_shallow ~ depth + chl + sst + slope + coral_cover + closest_island + larval_connectivity + human_impact,data=crab_data_shallow,distance="bray")
-db_lwr <- dbrda(crab_otus_shallow  ~ 1,data=crab_data_shallow,distance="bray")
-
-# do our forward selection to find the best model
-# set trace to TRUE if you want to see a bunch of output
-db_modl <- ordiR2step(db_lwr,db_upr,trace=FALSE)
-
-# see marginal effects of model terms
-anova(db_modl,by="margin")
-
-
-vif.cca(db_upr)
-vif.cca(db_modl)
-
-# warning: the following *may* be sketchy:
-# dbRDA doesn't automatically give you species scores, so let's assign them
-# but the community data needs to be transformed to make sense
-# see https://github.com/vegandevs/vegan/issues/254 for information on the transformation below
-sppscores(db_modl) <- sqrt(decostand(crab_otus_shallow, "total")/2) 
-
-# this was to grab the 10 most abundant species overall
-top_species <- names(head(rev(sort(taxa_sums(crabs_shallow)))))
-# but instead, we're just using the same species as the RDA from the initial manuscript
-other_species <- c("Carupa_tenuipes","Dynomene_hispida","Percnon_abbreviatum","Xanthias_latifrons","Chlorodiella_laevissima","Garthiella_aberrans","Perinia_tumida")
-
-# extract the species scores for the species we want
-species_scores <- scores(db_modl,display="species") %>%
-  as_tibble(rownames = "species") %>%
-  filter(species %in% other_species)
-
-# plot the ordination without species
-dbrda_shallow_env <- plot_ord(crabs_shallow,db_modl,arrows=TRUE,sig=TRUE,scale=3,type="samples",color="region") + 
-  stat_ellipse()
-dbrda_shallow_env 
-
-# plot the ordination with species
-dbrda_shallow_env_spp <- plot_ord(crabs_shallow,db_modl,arrows=TRUE,sig=TRUE,scale=3,type="samples",color="region") + 
-  stat_ellipse() +
-  geom_point(aes(x=dbRDA1,y=dbRDA2),color="black",data=species_scores) +
-  geom_text_repel(aes(x=dbRDA1,y=dbRDA2,label=species),color="black",data=species_scores) 
-dbrda_shallow_env_spp
-
-# save the ordinations
-ggsave(plot=dbrda_shallow_env_spp,filename=here("..","manuscript","reanalysis figures","dbRDA_shallow_reduced_spp.pdf"),device=cairo_pdf,width=12,height=9,units="in")
-ggsave(plot=dbrda_shallow_env,filename=here("..","manuscript","reanalysis figures","dbRDA_shallow_reduced.pdf"),device=cairo_pdf,width=12,height=9,units="in")
-
-
-
-# do the CAP analysis for the complete dataset ----------------------------
-
-# this turns out to be roughly the same thing as the dbRDA, but not as good
-# the CAP that PRIMER does is different. So let's mostly ignore this section
-# we can do this directly through phyloseq
-
-cap_obj <- ordinate(
-  crabs,
-  method = "CAP",
-  distance = "bray",
-  binary = FALSE,
-  formula = ~region + island_group + sample_group
-  # formula = ~region + depth_zone + island_group
-  # formula = ~island_group + region + depth_zone
-  # formula = ~island_group + depth_zone + region
-  # formula = ~depth_zone + island_group + region
-  # formula = ~depth_zone + region + depth_zone
-)
-
-# see marginal effects of terms
-anova(cap_obj,by="margin")
-
-# plot it
-cap_region_depth  <- plot_ordination(crabs,cap_obj,type="samples",color="sample_group",shape="depth_zone") +
-  geom_point(size=3) + 
-  stat_ellipse(aes(group=sample_group))
-cap_region_depth 
-
-# and save it
-ggsave(plot=cap_region_depth,filename=here("..","manuscript","reanalysis figures","CAP_region_depth.pdf"),device=cairo_pdf,width=12,height=9,units="in")
-
-
-# a couple little PCoA ordinations ----------------------------------------
-
-# do and plot the pcoa for island region vs depth zone
-pcoa <- ordinate(crabs_untransformed,"PCoA","bray")
-pcoa_region_depth <- plot_ordination(crabs_untransformed,pcoa,color="sample_group",shape="depth_zone") + 
-  geom_point(size=3) + 
-  stat_ellipse(aes(group=sample_group),level=0.95) + 
-  scale_y_reverse()
-pcoa_region_depth 
-# save the plot
-ggsave(plot=pcoa_region_depth,filename=here("..","manuscript","reanalysis figures","PCoA_region_depth.pdf"),device=cairo_pdf,width=12,height=9,units="in")
-
-
-# pcoa for just the shallow guys
-pcoa <- ordinate(crabs_shallow,"PCoA","bray")
-pcoa_shallow <- plot_ordination(crabs_shallow,pcoa,color="region") + 
-  stat_ellipse(aes(group=region))
-pcoa_shallow 
-
-# do some PERMANOVA analyses ----------------------------------------------
-
-# permanova tests for region and island, shallow crabs
-anova_region <- adonis2(crab_dist_shallow ~ region,data=crab_data_shallow,permutations=999)
-anova_island <- adonis2(crab_dist_shallow ~ island,data=crab_data_shallow,permutations=999)
-
-# beta dispersion test for region, shallow crabs
-pd <- betadisper(crab_dist_shallow,crab_data_shallow$region)
-anova(pd,permutations=999)
-# plot the confidence interval for the beta dispersion estimate
-plot(TukeyHSD(pd))
-
-
-
-# here's a pairwise PERMANOVA by region, for some reason
-pairwise_adonis(crab_otus,crab_data$region,correction = "fdr")
-
-
-# combined model by margin of island group (main,northwest) vs sample group (shallow main, deep main, shallow northwest)
-combined_model_margin <- adonis2(crab_dist ~ island_group + sample_group, data=crab_data,by="margin")
-combined_model_margin 
-
-adonis2(crab_dist ~ sample_group + island_group, data=crab_data)
-adonis2(crab_dist ~ island_group * sample_group, data=crab_data)
-
-# the same thing by term, I guess
-combined_model_term <- adonis2(crab_dist ~ island_group + sample_group, data=crab_data,by="term")
-combined_model_term 
-
-# what if we try this same thing as a dbRDA?
-combined_model_db <- dbrda(crab_dist ~ island_group + sample_group, data=crab_data)
-
-# show the significance by margin and term
-anova(combined_model_db,by="margin",permutations = 999)
-anova(combined_model_db,by="term",permutations = 999)
-
-# plot the dbrda (it won't work becauuse we have the wrong sample data)
-plot_ordination(crabs,combined_model_db,color="sample_group",shape="depth_zone") +
-  stat_ellipse(aes(group=sample_group))
-
-# summary data for all ARMS -----------------------------------------------
-cc <- crabs_untransformed
-
-cat("total individuals:\n")
-cc %>%
-  sample_sums() %>%
-  sum()
-
-cat("abundance range:\n")
-cc %>%
-  sample_sums() %>%
-  range()
-
-cat("abundance mean:\n")
-cc %>%
-  sample_sums() %>%
-  mean()
-
-cat("abundance SD:\n")
-cc %>%
-  sample_sums() %>%
-  sd()
-
-# get 5 most common species
-
-
-cat("most abundant 5 species:\n")
-top_5 <- cc %>%
-  taxa_sums() %>%
-  sort() %>%
-  rev() %>%
-  head(5) 
-top_5
-
-otus <- top_5 %>%
-  names() %>%
-  str_replace_all("_"," ") -> otus
-
-cat("number of units where top 5 species occur:\n")
-cc %>% 
-  subset_taxa(species %in% otus) %>%
-  ps_standardize("pa") %>%
-  taxa_sums() 
-
-cat("number of singletons:\n")
-ts <- cc %>% taxa_sums()
-sum(ts == 1)
-
-shallow_singletons <- enframe(ts[ts == 1]) %>%
-  arrange(name)
-
-
-tt <- cc %>%
-  taxa_tibble() %>%
-  mutate(thing = "everything")
-
-cat("taxonomy breakdown by id type:\n")
-tt %>%
-  group_by(taxon_level) %>%
-  summarise(families = n_distinct(family), genera = n_distinct(genus), species = n_distinct(species))
-
-cat("general taxonomy breakdown:\n")
-tt %>%
-  group_by(thing) %>%
-  summarise(families = n_distinct(family), genera = n_distinct(genus), species = n_distinct(species))
-
-# summary data for deep ARMS ----------------------------------------------
-
-cc <- crabs_untransformed %>%
-  subset_samples(depth_zone != "shallow")
-
-cc <- prune_taxa(taxa_sums(cc) > 0,cc)
-
-cat("total individuals:\n")
-cc %>%
-  sample_sums() %>%
-  sum()
-
-cat("abundance range:\n")
-cc %>%
-  sample_sums() %>%
-  range()
-
-cat("abundance mean:\n")
-cc %>%
-  sample_sums() %>%
-  mean()
-
-cat("abundance SD:\n")
-cc %>%
-  sample_sums() %>%
-  sd()
-
-# get 5 most common species
-
-
-cat("most abundant 5 species:\n")
-top_5 <- cc %>%
-  taxa_sums() %>%
-  sort() %>%
-  rev() %>%
-  head(5) 
-top_5
-
-otus <- top_5 %>%
-  names() %>%
-  str_replace_all("_"," ") -> otus
-
-cat("number of units where top 5 species occur:\n")
-cc %>% 
-  subset_taxa(species %in% otus) %>%
-  ps_standardize("pa") %>%
-  taxa_sums() 
-
-cat("number of singletons:\n")
-ts <- cc %>% taxa_sums()
-sum(ts == 1)
-sum(ts == 1) / sum(ts > 0)
-
-deep_singletons <- enframe(ts[ts == 1]) %>%
-  arrange(name)
-
-
-tt <- cc %>%
-  taxa_tibble() %>%
-  mutate(thing = "everything")
-
-cat("taxonomy breakdown by id type:\n")
-tt %>%
-  group_by(taxon_level) %>%
-  summarise(families = n_distinct(family), genera = n_distinct(genus), species = n_distinct(species))
-
-cat("general taxonomy breakdown:\n")
-tt %>%
-  group_by(thing) %>%
-  summarise(families = n_distinct(family), genera = n_distinct(genus), species = n_distinct(species))
-
 }
