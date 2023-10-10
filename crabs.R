@@ -471,6 +471,16 @@ alpha_diversity <- function(ps,measures=c("Observed","Simpson")) {
   try(ad$t_r_depth <- t.test(Observed ~ shallow_deep, data=all_richness),silent=TRUE)
   try(ad$t_s_depth <- t.test(Simpson ~ shallow_deep, data=all_richness),silent=TRUE)
   
+  try(ad$k_r_island <- kruskal.test(Observed ~ island_group, data=all_richness),silent=TRUE)
+  try(ad$k_s_island <- kruskal.test(Simpson ~ island_group, data=all_richness),silent=TRUE)
+  try(ad$k_r_depth <- kruskal.test(Observed ~ shallow_deep, data=all_richness),silent=TRUE)
+  try(ad$k_s_depth <- kruskal.test(Simpson ~ shallow_deep, data=all_richness),silent=TRUE)
+  
+  try(ad$w_r_island <- wilcox.test(Observed ~ island_group, data=all_richness),silent=TRUE)
+  try(ad$w_s_island <- wilcox.test(Simpson ~ island_group, data=all_richness),silent=TRUE)
+  try(ad$w_r_depth <- wilcox.test(Observed ~ shallow_deep, data=all_richness),silent=TRUE)
+  try(ad$w_s_depth <- wilcox.test(Simpson ~ shallow_deep, data=all_richness),silent=TRUE)
+  
   # m <- lm(Observed ~ island_group, data=all_richness)
   # summary(m)
   # check_model(m)

@@ -5,7 +5,7 @@ Longitude,ARMS unit deployment longitude,NOAA NCRMP,lon
 Chlorophyll-A,"Sea surface chlorophyll A derived from satellite imagery, 200--400 m offshore",PacIOOS,chl
 SST (&deg;C),"Sea surface temparature, measured 200--400 m offshore",PacIOOS,sst
 Island slope,"Bathymetric slope index, defined as the horizontal distance from shore to the 50 m isobath",PacIOOS,slope
-Coral cover (%),Satellite-derived coral coverage. Defined as the number of pixels with more than 10% cover in IKONOS satellite imagery covering the 0--30 m depth range. Expressed as a percentage of the total number of pixels analyzed,[@selkoeDNACoralReef2016],coral_cover
+Coral cover (%),Satellite-derived coral cover. Defined as the number of pixels with more than 10% cover in IKONOS satellite imagery covering the 0--30 m depth range. Expressed as a percentage of the total number of pixels analyzed,[@selkoeDNACoralReef2016],coral_cover
 Nearest neighbor,"Shortest path distance in km between the approximate centroids of the two nearest islands, calculated using Google Earth",[@selkoeDNACoralReef2016],closest_island
 Larval connectivity,Incoming centrality metric calculated from modeled larval connectivity estimated from an oceanographic biophysical model parameterized for the species and habitat array,[@selkoeDNACoralReef2016],larval_connectivity
 Human impacts,Dimensionless measure of cumulative human impacts,[@selkoeDNACoralReef2016],human_impact
