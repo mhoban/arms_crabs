@@ -320,7 +320,7 @@ setup_crabs <- function() {
   # we care about and scale the numeric ones to unit variance
   cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%
-    select(unit,region,island_group,island,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
+    select(unit,region,island_group,island,lat,lon,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
     mutate(across(where(is.numeric),~as.numeric(scale(.x)))) %>%
     column_to_rownames("unit") 
     # reassociate the new sample data
