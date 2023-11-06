@@ -120,7 +120,8 @@ plot_ord <- function(ps,ord,arrows=TRUE,sig=FALSE,by="term",perm=999,alpha=0.05,
       ) + 
       # geom_text_repel(
       # geom_text(
-      geom_label(
+      # geom_label(
+      geom_richtext(
         mapping = label_map, 
         size = labelsize,  
         data = arrowdf, 
@@ -320,7 +321,8 @@ setup_crabs <- function() {
   # we care about and scale the numeric ones to unit variance
   cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%
-    select(unit,region,island_group,island,lat,lon,depth,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
+    select(-sst,-chl) %>%
+    select(unit,region,island_group,island,lat,lon,depth,chl=chl_sat,sst=sst_sat,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
     mutate(across(where(is.numeric),~as.numeric(scale(.x)))) %>%
     column_to_rownames("unit") 
     # reassociate the new sample data
