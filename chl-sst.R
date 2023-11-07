@@ -6,6 +6,9 @@ library(lubridate)
 library(httr)
 library(fs)
 
+# set random seed for consistency
+set.seed(31337)
+
 
 ## download SST and CHL data from NASA and aggregate it by ARMS sampling site
 
