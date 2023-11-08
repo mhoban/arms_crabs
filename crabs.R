@@ -317,7 +317,7 @@ setup_crabs <- function() {
     drop_na()
     # make sure we drop samples that had NAs in their sample data
   cc$crabs_shallow <- prune_samples(sample_names(cc$crabs_shallow) %in% cc$crab_data_shallow$unit,cc$crabs_shallow)
-    # now we select the columns containing the environmental variables
+  # now we select the columns containing the environmental variables
   # we care about and scale the numeric ones to unit variance
   cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%
