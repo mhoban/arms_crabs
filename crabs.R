@@ -322,7 +322,9 @@ setup_crabs <- function() {
   cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%
     select(-sst,-chl) %>%
-    select(unit,region,island_group,island,lat,lon,depth,chl=chl_sat,sst=sst_sat,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
+    # select(unit,region,island_group,island,lat,lon,depth,chl=chl_sat,sst=sst_sat,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
+    select(unit,region,island_group,island,lat,lon,depth,chl=chlorophyll_oracle,sst=sst_sat,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
+    # select(unit,region,island_group,island,lat,lon,depth,chl=chl_new,sst=sst_new,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
     mutate(across(where(is.numeric),~as.numeric(scale(.x)))) %>%
     column_to_rownames("unit") 
     # reassociate the new sample data
