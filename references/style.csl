@@ -112,9 +112,9 @@
           <date-part name="year" suffix=" "/>
         </date>
       </if>
-      <else>
+      <else-if type="dataset" match="none">
         <text term="in press" suffix=". " text-case="capitalize-first"/>
-      </else>
+      </else-if>
     </choose>
   </macro>
   <macro name="access">
@@ -125,9 +125,12 @@
       <else-if variable="URL">
         <group suffix=".">
           <choose>
-            <if type="article-newspaper article-magazine dataset book webpage thesis" match="any">
+            <if type="article-newspaper article-magazine book webpage thesis" match="any">
               <text variable="URL" prefix="See "/>
             </if>
+            <else-if type="dataset" match="any">
+              <text variable="URL" prefix=""/>
+            </else-if>
           </choose>
           <choose>
             <if type="webpage">
