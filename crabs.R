@@ -1,26 +1,3 @@
-# required libraries
-# all of these can be directly installed except for phyloseq, which is a bioconductor package
-# phyloseq isn't directly necessary, but it's what I used for all my eDNA stuff and it conveniently
-# wraps the datasets, so I'm using it here
-# library(tidyverse)
-# to install phyloseq in regular R, do this:
-
-# if (!require("BiocManager", quietly = TRUE))
-#   install.packages("BiocManager")
-
-# BiocManager::install("phyloseq")
-# library(phyloseq) 
-# library(vegan)
-# library(ggrepel)
-# library(here)
-# library(worrms)
-
-# to check model assumptions
-# library(performance)
-
-# for linear mixed effects models
-# library(lme4)
-
 # set the random seed
 set.seed(31337)
 
