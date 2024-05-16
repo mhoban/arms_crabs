@@ -171,6 +171,7 @@
           <group prefix=" " delimiter=" " suffix=",">
             <text term="in" text-case="capitalize-first"/>
             <text variable="container-title" font-style="italic"/>
+            <text variable="event-title"/>
             <text macro="editor"/>
           </group>
           <group prefix=" " delimiter=" " suffix=".">

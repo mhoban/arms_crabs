@@ -2,7 +2,7 @@ SHELL := bash
 DOCX_FILES := output/$(strip $(patsubst %.Rmd, %.docx, $(wildcard *.Rmd)))
 TABLES = $(wildcard data/tables/*.csv)
 REFDOC = resources/ref.docx
-CITES = references/citations.bib
+CITES = references/citations.json
 CITESTYLE = references/style.csl
 
 define OSASCRIPT
