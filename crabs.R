@@ -300,7 +300,7 @@ setup_crabs <- function() {
     sample_tibble(sample_col = "unit") %>%
     select(-sst,-chl) %>%
     # select(unit,region,island_group,island,lat,lon,depth,chl=chl_sat,sst=sst_sat,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
-    select(unit,region,island_group,island,hawaiian_name,lat,lon,depth,chl=chlorophyll_oracle,sst=sst_sat,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
+    select(unit,region,island_group,recovery_year,island,hawaiian_name,lat,lon,depth,chl=chlorophyll_oracle,sst=sst_sat,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
     # select(unit,region,island_group,island,lat,lon,depth,chl=chl_new,sst=sst_new,slope,coral_cover,closest_island,larval_connectivity,human_impact) %>%
     mutate(across(where(is.numeric),~as.numeric(scale(.x)))) %>%
     column_to_rownames("unit") 
@@ -412,7 +412,7 @@ sample_summary <- function(ps,top_n=5) {
   return(ss)
 }
 
-alpha_diversity <- function(ps,measures=c("Observed","Simpson")) {
+alpha_diversity <- function(ps,measures=c("Observed","InvSimpson")) {
   
   ad <- list()
   
@@ -420,6 +420,7 @@ alpha_diversity <- function(ps,measures=c("Observed","Simpson")) {
   richness <- ps %>%
     estimate_richness(measures = measures) %>%
     as_tibble(rownames="sample") %>%
+    rename(Simpson = InvSimpson) %>%
     mutate(sample=str_replace(sample,"^X",""))
   
   cd <- ps %>%
