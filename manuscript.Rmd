@@ -53,7 +53,7 @@ header-includes:
 ---
 <!--word count: Proceedings B publishes articles up to 12 pages, including figures and tables, with no more than 10 000 words. The word count includes the title page, author names, abstract, figure legends, tables and the reference list. As a rough guide, 10 000 words = 12 pages without additional figures; 850 words = 1 page and 2-4 small figures = 1 page. For example, an acceptable paper could be made up of 9 000 words and 4 small figures or 8500 words, 2 large figures and 4 small figures.-->
 ### Keywords {-}
-<div custom-style="mono">ARMs, mesophotic coral ecosystems, community structure, dispersal, Hawai&#x02BB;i, brachyuran crabs</div>
+<div custom-style="mono">Mesophotic coral ecosystems, community structure, depth gradient, environmental drivers, Hawaii, Autonomous Reef Monitoring Structures</div>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -773,10 +773,13 @@ Further work to investigate drivers of depth zonation could take advantage of es
 Regardless of the exact environmental and ecological drivers at play, our findings suggest that the classical model of intertidal zonation with biotic and abiotic drivers could likely be reversed for coral reef ecosystems. *Lower* limits of mesophotic coral reef ecosystems are likely determined by abiotic factors that correlate with depth, whereas *upper* limits may be driven by ecological interactions. By comparing shallow-water ARMS across the latitudinal, physical and anthropogenic gradients of the Hawaiian Archipelago, we were able to test the relative importance of the significant drivers of community structure. Our analysis corroborates previous work and shows depth is the strongest driver of community structure. We find that a 90 m depth transect at a single site shows greater divergence in canonical space than the full 2,500 km gradient of the Hawaiian Archipelago for shallow-water ARMS. We conclude that some factor(s) that covary with depth exert more influence on the cryptobenthic coral reef community structure than those biotic and abiotic gradients that span the entire Hawaiian Archipelago in shallow-water environments.
 
 # Acknowledgements
-We thank the Coral Reef Conservation Program for supporting the deployment and recovery of the shallow ARMS. We thank the UH Mānoa Dive Safety Office (D. Pence, K. Stender, J. Jones, and C.J. Bradley) for installation and retrieval of the mesophotic ARMS. We thank Joshua Copus and Kevin Flanagan for additional assistance with retrieval and processing of mesophotic ARMS units. We thank the ToBo laboratory members, particularly M. Iacchei, C. Ka&#x02BB;apu-Lyons, and Z. Hee, for discussion, support, and their efforts in the disassembly and sorting of ARMS samples on retrieval. This is contribution #xxx from the Hawai&#x02BB;i Institute of Marine Biology and #xxx from the School of Earth Science and Technology at the University of Hawai&#x02BB;i.
+We thank the NOAA Coral Reef Conservation Program for supporting the deployment and recovery of the shallow ARMS. We thank the UH Mānoa Dive Safety Office (D. Pence, K. Stender, J. Jones, and C.J. Bradley) for installation and retrieval of the mesophotic ARMS. We specially thank K. Flanagan from the UH dive program, whose support was instrumental in the development of the mesophotic ARMS project, and J. Copus, who provided expert mesophotic field support; both were taken too soon. May their memories be a blessing. We thank the members of the ToBo lab, particularly M. Iacchei, C. Ka&#x02BB;apu-Lyons, and Z. Hee, for discussion, support, and their efforts in the disassembly and sorting of ARMS samples on retrieval. This is contribution #xxx from the Hawai&#x02BB;i Institute of Marine Biology and #xxx from the School of Ocean and Earth Science and Technology at the University of Hawai&#x02BB;i.
 
 # Funding
-This work was funded through a combination of grants including NSF OCE 12-60169, NSF GRFP DGE-1329626, and NSF-2048457. In addition, the NOAA Coral Reef Conservation Program funded the Pacific Reef Assessment and Monitoring Program, which included the shallow ARMS deployment in the Hawaiian Archipelago.
+This work was funded through a combination of grants including NSF OCE-1260169, NSF GRFP DGE-1329626, and NSF OCE-2048457. In addition, the NOAA Coral Reef Conservation Program funded the Pacific Reef Assessment and Monitoring Program, which included the shallow ARMS deployment in the Hawaiian Archipelago.
+<!--
+Specimens used in this study were collected under Hawai&#x02BB;i Division of Aquatic Resources Special Activity Permit numbers SAP 2013-47, SAP 2012-63, SAP 2011-01, and SAP 2008-99.
+-->
 
 # References {-}
 
