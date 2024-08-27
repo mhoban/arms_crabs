@@ -78,8 +78,11 @@ library(vegan)
 library(ggrepel)
 library(here)
 library(worrms)
-library(BiodiversityR)
 library(ggtext)
+
+# can't get BiodiversityR to work on new mac, but that's ok because
+# all we need is this one function, which miraculously works on its own!
+source(here("lib","CAPdiscrim.R"))
 
 # set random seed for consistency
 set.seed(31337)
@@ -540,7 +543,8 @@ print_table(model_terms,"env_table","Potential environmental drivers of crab com
 
 ### All ARMS {-}
 
-The `r nsamples(cc$crabs_untransformed)` ARMS units deployed across the Hawaiian Islands (in `r format_range(cc$crab_data$depth)` m depth) yielded a total of `r num(sum(sample_sums(cc$crabs_untransformed)),1)` adult crabs. Units contained `r num(all_summary$abundance_mean,0.1)` $\pm$ `r num(all_summary$abundance_sd,0.1)` (mean $\pm$ SD) individuals, and abundance ranged from `r format_range(all_summary$abundance_range)`. Crabs were identified to `r sum(unlist(all_summary$types_breakdown))` distinct types (`r all_summary$types_breakdown$species` species and `r all_summary$types_breakdown$morphospecies` morphospecies) in `r all_summary$taxonomy_breakdown$genera` genera and `r all_summary$taxonomy_breakdown$families` families, which accounted for ~36% of the known crab diversity reported from Hawaiian waters [@castroCatalogAnomuranBrachyuran2011]. The four most abundant species were: `r with(all_summary,top_list(top,top_n,top_units,fig="fig_crabs"))`. There were `r all_summary$singleton_count` singleton taxa (morpho/species occurring in a single unit across all sites), accounting for ~`r num(all_summary$singleton_count/ntaxa(cc$crabs_untransformed)*100,1)`% of total recovered crab species. <!--`r str_to_sentence(english(all_summary$singleton_count))` species occurred in a single unit across all sites (singletons), accounting for ~`r num(all_summary$singleton_count/ntaxa(cc$crabs_untransformed)*100,1)`% of total recovered crab species.--> 
+<!-- TODO: update number of different types to reflect family/genus/species level rather than species/morphospecies level -->
+The `r nsamples(cc$crabs_untransformed)` ARMS units deployed across the Hawaiian Islands (in `r format_range(cc$crab_data$depth)` m depth) yielded a total of `r num(sum(sample_sums(cc$crabs_untransformed)),1)` adult crabs. Units contained `r num(all_summary$abundance_mean,0.1)` $\pm$ `r num(all_summary$abundance_sd,0.1)` (mean $\pm$ SD) individuals, and abundance ranged from `r format_range(all_summary$abundance_range)`. Crabs were identified to `r sum(unlist(all_summary$types_breakdown))` distinct types (`r all_summary$types_breakdown$species` species and `r all_summary$types_breakdown$morphospecies` morphospecies) in `r all_summary$taxonomy_breakdown$genera` genera and `r all_summary$taxonomy_breakdown$families` families, which accounted for ~36% of the known crab diversity reported from Hawaiian waters [@castroCatalogAnomuranBrachyuran2011]. The four most abundant species were: `r with(all_summary,top_list(top,top_n,top_units,fig="fig_crabs"))`. There were `r all_summary$singleton_count` singleton taxa (morpho/species occurring in a single unit across all sites), accounting for ~`r num(all_summary$singleton_count/ntaxa(cc$crabs_untransformed)*100,1)`% of total recovered crab species.  
 
 ![The four most abundant crab species found across all deployed ARMS units. (a) *Chlorodiella laevissima*. (b) *Perinia tumida*. (c) *Percnon abbreviatum*. (d) *Dynomene hispida*. Photo credit: Florida Museum of Natural History, licensed [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/)](data/images/4crabs.png){#fig:fig_crabs}
 

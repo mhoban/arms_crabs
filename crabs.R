@@ -1,8 +1,8 @@
 # set the random seed
 set.seed(31337)
 
-run_things <- FALSE
-
+# collapse taxonomy and crabs tables by unknowns
+source("collapse_taxonomy.R")
 # functions ---------------------------------------------------------------
 
 
@@ -255,8 +255,10 @@ setup_crabs <- function() {
   cc <- list()
   # load our main phyloseq object and hellinger-transform it
   cc$crabs_untransformed <- load_ps(
-    here("data","crabs.csv"),"unit",
-    here("data","taxonomy.csv"),"otu",
+    here("data","crabs_collapsed.csv"),"unit",
+    here("data","taxonomy_collapsed.csv"),"otu",
+    # here("data","crabs.csv"),"unit",
+    # here("data","taxonomy.csv"),"otu",
     here("data","metadata.csv")
   ) 
   
@@ -323,19 +325,31 @@ setup_crabs <- function() {
 sample_summary <- function(ps,top_n=5) {
   ss <- list() 
   
+  # make otu lookup table
+  otu_lookup <- tax_table(ps) %>%
+    as.data.frame() %>%
+    as_tibble(rownames="otu") %>%
+    select(otu,species) %>%
+    deframe()
+  
   # basic numbers
+  
+  # total number of individuals
   ss$total <- ps %>%
     sample_sums() %>%
     sum()
   
+  # overall range of abundance 
   ss$abundance_range <- ps %>%
     sample_sums() %>%
     range()
   
+  # overall abundance mean
   ss$abundance_mean <- ps %>%
     sample_sums() %>%
     mean()
   
+  # overall abundace sd
   ss$abundance_sd <- ps %>%
     sample_sums() %>%
     sd()
@@ -345,40 +359,37 @@ sample_summary <- function(ps,top_n=5) {
     taxa_sums() %>%
     sort() %>%
     rev() %>%
-    head(top_n) 
-  
-  otus <- top %>%
-    names() %>%
-    set_names(.,str_replace_all(.,"_"," "))
+    head(top_n) %>%
+    set_names(otu_lookup[names(.)])
   
   ss$top_n <- top
   
-  
   to_keep <- ps %>%
     taxa_tibble() %>%
-    filter(species %in% names(otus)) %>%
+    filter(species %in% names(top)) %>%
     pull(otu)
   
   ss$top_units <- prune_taxa(to_keep,ps) %>%
     ps_standardize("pa") %>%
     taxa_sums() %>% 
     sort() %>%
-    rev()
+    rev() %>%
+    set_names(otu_lookup[names(.)])
   
   # make it the same order as the top 5 species
   ss$top_units <- ss$top_units[match(names(ss$top_units),names(top))]
   
-  ss$top <- wm_records_taxamatch(names(otus)) %>%
-    map2(names(otus),~{
+  ss$top <- wm_records_taxamatch(names(top)) %>%
+    map2(names(top),~{
       if (nrow(.x) > 0) {
         .x <- .x %>% 
           filter(rank == "Species") %>%
           select(species = scientificname, authority) %>%
           slice(1)  %>%
-          mutate(found = TRUE,otu = otus[.y])
+          mutate(found = TRUE,otu = otu_lookup[.y])
       } 
       if (nrow(.x) == 0) {
-        .x <- list(species = .y, authority = NA, found = FALSE, otu=otus[.y])
+        .x <- list(species = .y, authority = NA, found = FALSE, otu=otu_lookup[.y])
       }
       return(as.list(.x))
     })
@@ -390,24 +401,23 @@ sample_summary <- function(ps,top_n=5) {
   
   ss$singleton_species <-  ts[ts == 1] %>%
     names() %>%
-    sort()
+    sort() %>%
+    map_chr(~otu_lookup[.x])
   
   tt <- ps %>%
-    taxa_tibble() %>%
-    mutate(thing = "everything")
+    taxa_tibble() 
   
   ss$types_breakdown <- tt %>%
-    group_by(taxon_level) %>%
-    summarise(families = n_distinct(family), genera = n_distinct(genus), species = n_distinct(species)) %>%
-    select(taxon_level,species) %>%
+    count(taxon_level) %>%
     deframe() %>%
     as.list()
   
-  ss$taxonomy_breakdown <- tt %>%
-    group_by(thing) %>%
-    summarise(families = n_distinct(family), genera = n_distinct(genus), species = n_distinct(species)) %>%
-    select(-thing) %>%
-    as.list()
+  ss$taxonomy_breakdown <- list(
+    families = n_distinct(tt$family),
+    genera = n_distinct(tt$genus),
+    species = n_distinct(grep(" sp\\.$",tt$species,invert = TRUE,value=TRUE)),
+    all_species = n_distinct(tt$species)
+  )
   
   return(ss)
 }
