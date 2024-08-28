@@ -3,7 +3,7 @@ Carupa_tenuipes,species,Portunidae,Carupa,Carupa tenuipes
 Dynomene_hispida,species,Dynomenidae,Dynomene,Dynomene hispida
 Tweedieia_laysani,species,Xanthidae,Tweedieia,Tweedieia laysani
 Xanthias_latifrons,species,Xanthidae,Xanthias,Xanthias latifrons
-Aphanodactylus_sp502,morphospecies,Aphanodactylidae,Aphanodactylus,Aphanodactylus sp502
+Selwynia_sp502,morphospecies,Aphanodactylidae,Selwynia,Selwynia sp502
 Garthiella_aberrans,species,Xanthidae,Garthiella,Garthiella aberrans
 Perinia_tumida,species,Epialtidae,Perinia,Perinia tumida
 Pilumnus_oahuensis,species,Pilumnidae,Pilumnus,Pilumnus oahuensis
@@ -34,7 +34,7 @@ Medaeus_ornatus,species,Xanthidae,Medaeus,Medaeus ornatus
 Pilodius_sp903,morphospecies,Pilumnidae,Pilodius,Pilodius sp903
 Pilumnus_acutifrons,species,Pilumnidae,Pilumnus,Pilumnus acutifrons
 Pseudoliomera_variolosa,species,Xanthidae,Pseudoliomera,Pseudoliomera variolosa
-Thalamita_dakini,species,Portunidae,Thalamita,Thalamita dakini
+Thalamita_bevisi,species,Portunidae,Thalamita,Thalamita bevisi
 Hyastenus_sp1050,morphospecies,Epialtidae,Hyastenus,Hyastenus sp1050
 Chlorodiella_laevissima,species,Xanthidae,Chlorodiella,Chlorodiella laevissima
 Liomera_medipacifica,species,Xanthidae,Liomera,Liomera medipacifica
@@ -85,7 +85,7 @@ Menaethius_monocerus,species,Epialtidae,Menaethius,Menaethius monocerus
 Pilodius_areolatus,species,Xanthidae,Pilodius,Pilodius areolatus
 Thalamita_admete,species,Portunidae,Thalamita,Thalamita admete
 Xanthidae_sp182,morphospecies,Xanthidae,,Xanthidae sp182
-Xanthias_lamarcki,species,Xanthidae,Xanthias,Xanthias lamarcki
+Xanthias_lamarckii,species,Xanthidae,Xanthias,Xanthias lamarckii
 Actaeodes_hirsutissimus,species,Xanthidae,Actaeodes,Actaeodes hirsutissimus
 Grapsidae_sp785,morphospecies,Grapsidae,,Grapsidae sp785
 Lophozozymus_pulchellus,species,Xanthidae,Lophozozymus,Lophozozymus pulchellus

@@ -3,7 +3,7 @@ main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_G,OAH_SUC_436,5,Caru
 main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_G,OAH_SUC_435,2,Dynomene_hispida,Dynomenidae,Dynomene,species
 main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_G,OAH_SUC_445,1,Tweedieia_laysani,Xanthidae,Tweedieia,species
 main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_G,OAH_SUC_437,1,Xanthias_latifrons,Xanthidae,Xanthias,species
-main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_H,OAH_SUC_502,2,Aphanodactylus_sp502,Aphanodactylidae,Aphanodactylus,morphospecies
+main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_H,OAH_SUC_502,2,Selwynia_sp502,Aphanodactylidae,Selwynia,morphospecies
 main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_H,OAH_SUC_495,1,Carupa_tenuipes,Portunidae,Carupa,species
 main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_H,OAH_SUC_494,2,Dynomene_hispida,Dynomenidae,Dynomene,species
 main,OAH,2009,2011,12,21.28865,-157.86542,2011_OAH_ARMS_G01_H,OAH_SUC_497,1,Garthiella_aberrans,Xanthidae,Garthiella,species
@@ -83,7 +83,7 @@ mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1030,1,Pilumnus_oah
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1006,1,Platypodia_semigranosa,Xanthidae,Platypodia,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1014,1,Platypodia_semigranosa,Xanthidae,Platypodia,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1024,1,Pseudoliomera_variolosa,Xanthidae,Pseudoliomera,species
-mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1021,1,Thalamita_dakini,Portunidae,Thalamita,species
+mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1021,1,Thalamita_bevisi,Portunidae,Thalamita,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_A,MCE_1020,1,Pilumnus_taeniola,Pilumnidae,Pilumnus,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_B,MCE_1066,1,Chlorodiella_sp2,Xanthidae,Chlorodiella,morphospecies
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_B,MCE_1071,1,Chlorodiella_sp2,Xanthidae,Chlorodiella,morphospecies
@@ -148,9 +148,9 @@ mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1050,1,Hyastenus_sp
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1034,1,Medaeus_ornatus,Xanthidae,Medaeus,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1049,1,Medaeus_ornatus,Xanthidae,Medaeus,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1043,1,Pilumnus_oahuensis,Pilumnidae,Pilumnus,species
-mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1035,1,Thalamita_dakini,Portunidae,Thalamita,species
-mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1044,1,Thalamita_dakini,Portunidae,Thalamita,species
-mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1045,1,Thalamita_dakini,Portunidae,Thalamita,species
+mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1035,1,Thalamita_bevisi,Portunidae,Thalamita,species
+mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1044,1,Thalamita_bevisi,Portunidae,Thalamita,species
+mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1045,1,Thalamita_bevisi,Portunidae,Thalamita,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1039,1,Xanthias_latifrons,Xanthidae,Xanthias,species
 mce,OAH,2010,2012,30,21.284433,-157.868683,2012_MCE_30_F,MCE_1047,1,Xanthias_latifrons,Xanthidae,Xanthias,species
 mce,OAH,2010,2012,60,21.26775,-157.848867,2012_MCE_60_A,MCE_2008,1,Catoptrus_inequalis,Catoptridae,Catoptrus,species
@@ -507,7 +507,7 @@ main,HAW,2010,2013,15,18.96859682,-155.730732,2013_HAW_22_C,HAW-699,2,Perinia_tu
 main,HAW,2010,2013,15,18.96859682,-155.730732,2013_HAW_22_C,HAW-709,5,Thalamitoides_quadridens,Portunidae,Thalamitoides,species
 main,HAW,2010,2013,15,18.96859682,-155.730732,2013_HAW_22_C,HAW-701,2,Tweedieia_laysani,Xanthidae,Tweedieia,species
 main,HAW,2010,2013,15,18.96859682,-155.730732,2013_HAW_22_C,HAW-697,3,Xanthias_latifrons,Xanthidae,Xanthias,species
-main,HAW,2010,2013,15,19.03821667,-155.88255,2013_HAW_24_A,HAW_437,1,Aphanodactylus_sp502,Aphanodactylidae,Aphanodactylus,morphospecies
+main,HAW,2010,2013,15,19.03821667,-155.88255,2013_HAW_24_A,HAW_437,1,Selwynia_sp502,Aphanodactylidae,Selwynia,morphospecies
 main,HAW,2010,2013,15,19.03821667,-155.88255,2013_HAW_24_A,HAW-430,25,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 main,HAW,2010,2013,15,19.03821667,-155.88255,2013_HAW_24_A,HAW-424,1,Daldorfia_dimorpha,Parthenopidae,Daldorfia,species
 main,HAW,2010,2013,15,19.03821667,-155.88255,2013_HAW_24_A,HAW-419,1,Epiactaea_nodulosa,Xanthidae,Epiactaea,species
@@ -686,7 +686,7 @@ northwest,LIS,2010,2013,15,26.07841509,-173.9970114,2013_LIS_R14_C,LIS-293,5,Chl
 northwest,LIS,2010,2013,15,26.07841509,-173.9970114,2013_LIS_R14_C,LIS_281,2,Liomera_supernodosa,Xanthidae,Liomera,species
 northwest,LIS,2010,2013,15,26.07841509,-173.9970114,2013_LIS_R14_C,LIS-289,2,Perinia_tumida,Epialtidae,Perinia,species
 northwest,LIS,2010,2013,15,26.07841509,-173.9970114,2013_LIS_R14_C,LIS_307,1,Zosimus_actaeoides,Xanthidae,Zosimus,species
-northwest,LIS,2010,2013,15,26.07841509,-173.9970114,2013_LIS_R14_C,LIS_308,2,Xanthias_lamarcki,Xanthidae,Xanthias,species
+northwest,LIS,2010,2013,15,26.07841509,-173.9970114,2013_LIS_R14_C,LIS_308,2,Xanthias_lamarckii,Xanthidae,Xanthias,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-144,1,Catoptrus_inaequalis,Portunidae,Catoptrus,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-136,2,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_A,MAI-160,1,Daldorfia_dimorpha,Parthenopidae,Daldorfia,species
@@ -713,7 +713,7 @@ main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_C,MAI-261,1,Perinia_t
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_C,MAI-268,1,Pilumnus_nuttingi,Pilumnidae,Pilumnus,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_C,MAI_281,1,Zosimus_actaeoides,Xanthidae,Zosimus,species
 main,MAI,2010,2013,12,20.76226207,-155.9797715,2013_MAI_01_C,MAI_255,2,Schizophroida_hilensis,Majidae,Schizophroida,species
-main,OAH,2010,2013,15,21.41212947,-157.7097973,2013_OAH_12_A,OAH_447,2,Aphanodactylus_sp502,Aphanodactylidae,Aphanodactylus,morphospecies
+main,OAH,2010,2013,15,21.41212947,-157.7097973,2013_OAH_12_A,OAH_447,2,Selwynia_sp502,Aphanodactylidae,Selwynia,morphospecies
 main,OAH,2010,2013,15,21.41212947,-157.7097973,2013_OAH_12_A,OAH-445,1,Catoptrus_inaequalis,Portunidae,Catoptrus,species
 main,OAH,2010,2013,15,21.41212947,-157.7097973,2013_OAH_12_A,OAH-437,6,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
 main,OAH,2010,2013,15,21.41212947,-157.7097973,2013_OAH_12_A,OAH-438,2,Chlorodiella_laevissima,Xanthidae,Chlorodiella,species
