@@ -1,4 +1,4 @@
-unit,island,region,island_group,deployment_year,recovery_year,depth,depth_zone,lat,lon,chl,sst,slope,coral_cover,closest_island,larval_connectivity,human_impact,sample_group,shallow_deep,sst_sat,chl_sat,sst_new,chl_new,chlorophyll_oracle
+unit,island,region,island_group,deployment_year,recovery_year,depth,depth_zone,lat,lon,chl,sst,slope,coral_cover,closest_island,larval_immigration,human_impact,sample_group,shallow_deep,sst_sat,chl_sat,sst_new,chl_new,chlorophyll_oracle
 2011_OAH_ARMS_G01_G,Oahu,main,main,2009,2011,12,shallow,21.28865,-157.86542,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow,25.294062435626984,0.11396034562896036,25.591665903727215,0.11457548538843793,0.052175
 2011_OAH_ARMS_G01_H,Oahu,main,main,2009,2011,12,shallow,21.28865,-157.86542,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow,25.294062435626984,0.11396034562896036,25.591665903727215,0.11457548538843793,0.052175
 2011_OAH_ARMS_G01_I,Oahu,main,main,2009,2011,12,shallow,21.28865,-157.86542,0.0436,24.9346,4.7619,0.142110959,111,0.058619,89,shallow_main,shallow,25.294062435626984,0.11396034562896036,25.591665903727215,0.11457548538843793,0.052175
