@@ -289,7 +289,12 @@ setup_crabs <- function() {
     # this is the shallow subset
   cc$crabs_shallow <- cc$crabs %>%
     subset_samples(region != "mce") 
-    # we're gonna mess with the sample data a bit
+  
+  # save an unscaled version of the shallow crab metadata
+  cc$crab_data_shallow_unscaled <- cc$crabs_shallow %>%
+    sample_tibble(sample_col = "sample")
+  
+  # we're gonna mess with the sample data a bit
   # first, get rid of rows that have NAs
   cc$crab_data_shallow <- cc$crabs_shallow %>%
     sample_tibble(sample_col = "unit") %>%

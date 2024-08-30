@@ -8,7 +8,6 @@ Garthiella_aberrans,species,Xanthidae,Garthiella,Garthiella aberrans
 Perinia_tumida,species,Epialtidae,Perinia,Perinia tumida
 Pilumnus_oahuensis,species,Pilumnidae,Pilumnus,Pilumnus oahuensis
 Pilumnus_taeniola,species,Pilumnidae,Pilumnus,Pilumnus taeniola
-Charybdis_(Charybdis)_hawaiensis,species,Portunidae,Charybdis,Charybdis (Charybdis) hawaiensis
 Chlorodiella_sp2,morphospecies,Xanthidae,Chlorodiella,Chlorodiella sp2
 Olenothus_sp904,species,Xanthidae,Olenothus,Olenothus sp904
 Lambrachaeus_ramifer,species,Parthenopidae,Lambrachaeus,Lambrachaeus ramifer
@@ -53,7 +52,7 @@ Thalamita_sp2042,morphospecies,Portunidae,Thalamita,Thalamita sp2042
 Thalamita_picta,species,Portunidae,Thalamita,Thalamita picta
 Dromiidae_sp3061,morphospecies,Dromiidae,,Dromiidae sp3061
 Percnon_abbreviatum,species,Percnidae,Percnon,Percnon abbreviatum
-Charybdis_Charybdis_hawaiensis,species,Portunidae,Charybdis,Charybdis Charybdis hawaiensis
+Charybdis_hawaiensis,species,Portunidae,Charybdis,Charybdis hawaiensis
 Medaeus_elegans,species,Xanthidae,Medaeus,Medaeus elegans
 Schizophrys_aspera,species,Majidae,Schizophrys,Schizophrys aspera
 Xanthias_canaliculatus,species,Xanthidae,Xanthias,Xanthias canaliculatus

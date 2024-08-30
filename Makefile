@@ -1,5 +1,6 @@
 SHELL := bash
 DOCX_FILES := output/$(strip $(patsubst %.Rmd, %.docx, $(wildcard *.Rmd)))
+R_FILES := crabs.R lib/CAPdiscrim.R collapse_taxonomy.R
 TABLES = $(wildcard data/tables/*.csv)
 REFDOC = resources/ref.docx
 CITES = references/citations.json
@@ -30,7 +31,7 @@ open: docx
 
 docx: $(DOCX_FILES) 
 
-output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE)
+output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE) $(R_FILES)
 	@echo building $@
 	@R --slave -e 'rmarkdown::render("$<",output_file="$@")'
 
