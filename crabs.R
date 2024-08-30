@@ -255,8 +255,8 @@ setup_crabs <- function() {
   cc <- list()
   # load our main phyloseq object and hellinger-transform it
   cc$crabs_untransformed <- load_ps(
-    here("data","crabs_collapsed.csv"),"unit",
-    here("data","taxonomy_collapsed.csv"),"otu",
+    here("data","generated","crabs_collapsed.csv"),"unit",
+    here("data","generated","taxonomy_collapsed.csv"),"otu",
     # here("data","crabs.csv"),"unit",
     # here("data","taxonomy.csv"),"otu",
     here("data","metadata.csv")

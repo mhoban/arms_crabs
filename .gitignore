@@ -48,4 +48,8 @@ resources/import
 
 old/
 data/images
+data/generated
 ignore/
+manuscript/
+.vscode/
+tmp/

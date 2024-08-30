@@ -44,5 +44,6 @@ taxonomy_collapsed <- taxonomy_collapsed %>% select(otu,taxon_level:species) %>%
   distinct(otu,taxon_level,family,genus,species)
 
 # save the new collapsed tables
-write_csv(taxonomy_collapsed,here("data","taxonomy_collapsed.csv"))
-write_csv(crabs_collapsed,here("data","crabs_collapsed.csv"))
+dir_create(here("data","generated"))
+write_csv(taxonomy_collapsed,here("data","generated","taxonomy_collapsed.csv"))
+write_csv(crabs_collapsed,here("data","generated","crabs_collapsed.csv"))
