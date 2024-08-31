@@ -327,7 +327,7 @@ setup_crabs <- function() {
   return(cc)
 }
 
-sample_summary <- function(ps,top_n=5) {
+sample_summary <- function(ps,top_n=5,taxonomy=NULL) {
   ss <- list() 
   
   # make otu lookup table
@@ -384,20 +384,30 @@ sample_summary <- function(ps,top_n=5) {
   # make it the same order as the top 5 species
   ss$top_units <- ss$top_units[match(names(ss$top_units),names(top))]
   
-  ss$top <- wm_records_taxamatch(names(top)) %>%
-    map2(names(top),~{
-      if (nrow(.x) > 0) {
-        .x <- .x %>% 
-          filter(rank == "Species") %>%
-          select(species = scientificname, authority) %>%
-          slice(1)  %>%
-          mutate(found = TRUE,otu = otu_lookup[.y])
-      } 
-      if (nrow(.x) == 0) {
-        .x <- list(species = .y, authority = NA, found = FALSE, otu=otu_lookup[.y])
-      }
-      return(as.list(.x))
-    })
+  if (is.null(taxonomy)) {
+    ss$top <- wm_records_taxamatch(names(top)) %>%
+      map2(names(top),~{
+        if (nrow(.x) > 0) {
+          .x <- .x %>% 
+            filter(rank == "Species") %>%
+            select(species = scientificname, authority) %>%
+            slice(1)  %>%
+            mutate(found = TRUE,otu = otu_lookup[.y])
+        } 
+        if (nrow(.x) == 0) {
+          .x <- list(species = .y, authority = NA, found = FALSE, otu=otu_lookup[.y])
+        }
+        return(as.list(.x))
+      })
+  } else {
+    ss$top <- taxonomy %>%
+      filter(species %in% names(top)) %>%
+      mutate(found = species == valid_name) %>%
+      select(species,authority=valid_authority,found,otu) %>%
+      slice(match(names(top),species)) %>%
+      split(seq(nrow(.))) %>%
+      map(as.list)
+  }
   
   
   ts <- ps %>% taxa_sums()

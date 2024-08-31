@@ -410,13 +410,6 @@ hawaiian_crabs <- 284
 model_terms <- read_csv(here("data","tables","environmental_variables.csv"))
 ```
 
-```{r summaries, include=FALSE, dependson="init"}
-# generate sample summaries. block should be cached 
-# so worms API calls don't happen every times
-all_summary <- sample_summary(cc$crabs_untransformed,4)
-deep_summary <- sample_summary(cc$crabs_deep,4)
-```
-
 ```{r taxonomy-validation, include=FALSE, dependson="init"}
 # validate taxonomy using worms / get authorities
 crab_taxonomy <- cc$crabs %>%
@@ -445,6 +438,13 @@ crab_taxonomy_validated <- cc$crabs %>%
     )
   ) %>%
   mutate(display_species = format_species(.))
+```
+
+```{r summaries, include=FALSE, dependson="init"}
+# generate sample summaries. block should be cached 
+# so worms API calls don't happen every times
+all_summary <- sample_summary(cc$crabs_untransformed,4,crab_taxonomy_validated)
+deep_summary <- sample_summary(cc$crabs_deep,4,crab_taxonomy_validated)
 ```
 
 <!-- 
@@ -626,7 +626,7 @@ The `r nsamples(cc$crabs_untransformed)` ARMS units deployed across the Hawaiian
 
 ### Mesophotic ARMS {-}
 
-The `r nsamples(cc$crabs_deep)` units deployed at mesophotic depths $\geq$ 30 m on O&#x02BB;ahu yielded fewer species and individuals compared to the complete dataset, with `r num(sum(sample_sums(cc$crabs_deep)),1)` crabs overall, `r sum(unlist(deep_summary$types_breakdown))` distinct taxa (`r deep_summary$types_breakdown$species` species-level identifications, `r deep_summary$types_breakdown$genus` genus, `r deep_summary$types_breakdown$family` family), `r num(deep_summary$abundance_mean,0.1)` $\pm$ `r num(deep_summary$abundance_sd,0.1)` individuals per unit, and abundance ranging from `r format_range(deep_summary$abundance_range)`. The four most abundant taxa in the deep ARMS did not overlap with the most abundant taxa from the complete dataset: `r with(deep_summary,top_list(top,top_n,top_units))`. There were `r deep_summary$singleton_count` singletons, which proportionally accounted for ~`r pc(deep_summary$singleton_count/ntaxa(cc$crabs_deep))` of species found on deep ARMS. 
+The `r nsamples(cc$crabs_deep)` units deployed at mesophotic depths $\geq$ 30 m on O&#x02BB;ahu yielded fewer species and individuals compared to the complete dataset, with `r num(sum(sample_sums(cc$crabs_deep)),1)` crabs overall, `r sum(unlist(deep_summary$types_breakdown))` distinct taxa (`r deep_summary$types_breakdown$species` species-level identifications, `r deep_summary$types_breakdown$genus` genus, `r deep_summary$types_breakdown$family` family), `r num(deep_summary$abundance_mean,0.1)` $\pm$ `r num(deep_summary$abundance_sd,0.1)` individuals per unit, and abundance ranging from `r format_range(deep_summary$abundance_range)`. The four most abundant taxa in the deep ARMS did not overlap with the most abundant taxa from the complete dataset: `r with(deep_summary,top_list(top,top_n,top_units))`. There were `r deep_summary$singleton_count` singletons, which proportionally accounted for ~`r pc(deep_summary$singleton_count/ntaxa(cc$crabs_deep),0.1)` of species found on deep ARMS. 
 
 ## Alpha diversity {-}
 
