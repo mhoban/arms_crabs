@@ -313,7 +313,7 @@ setup_crabs <- function() {
     
     # select(unit,region,island_group,recovery_year,island,hawaiian_name,lat,lon,depth,chl=chlorophyll_oracle,sst=sst_sat,slope,coral_cover,closest_island,larval_immigration,human_impact) %>%
     # select(unit,region,island_group,recovery_year,island,lat,lon,depth,chl=chl_new,sst=sst_new,slope,coral_cover,closest_island,larval_immigration,human_impact) %>%
-    mutate(across(c(where(is.numeric),-recovery_year,-deployment_year),~as.numeric(scale(.x)))) %>%
+    mutate(across(where(is.numeric),~as.numeric(scale(.x)))) %>%
     column_to_rownames("unit") 
     # reassociate the new sample data
   sample_data(cc$crabs_shallow) <- cc$crab_data_shallow

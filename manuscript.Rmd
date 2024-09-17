@@ -32,13 +32,15 @@ csl: references/style.csl
 output:
   word_document:
     pandoc_args:
-      - "--toc-depth=2"
       - "--filter=resources/pandoc-crossref"
+      - "--citeproc"
+      - "--toc-depth=2"
       - "--lua-filter=resources/scholarly-metadata.lua"
       - "--lua-filter=resources/author-info-blocks.lua"
       - "--lua-filter=resources/abstract-section.lua"
       - "--reference-doc=resources/ref.docx"
-    keep_md: false
+      - "--lua-filter=resources/multirefs.lua"
+    keep_md: true
 tblPrefix: table
 figPrefix:
   - "figure"
@@ -49,6 +51,7 @@ chapDelim: ""
 header-includes:
   - \usepackage{bm}
   - \usepackage{upgreek}
+multiref_no_duplicates: true
 ---
 <!--word count: Proceedings B publishes articles up to 12 pages, including figures and tables, with no more than 10 000 words. The word count includes the title page, author names, abstract, figure legends, tables and the reference list. As a rough guide, 10 000 words = 12 pages without additional figures; 850 words = 1 page and 2-4 small figures = 1 page. For example, an acceptable paper could be made up of 9 000 words and 4 small figures or 8500 words, 2 large figures and 4 small figures.-->
 ### Keywords {-}
@@ -607,7 +610,7 @@ We assessed variation among groups using `betadisper` and `adonis2`. These funct
 
 ## Environmental variables {-}
 
-Potential drivers of brachyuran crab community structure were assembled from previous studies [@selkoeEvaluatingAnthropogenicThreats2008; @halpernGlobalMapHuman2008; @selkoeDNACoralReef2016; @selkoeMapHumanImpacts2009], NOAA's National Coral Reef Monitoring Program (NCRMP), the Pacific Islands Ocean Observing System (PacIOOS), and MODIS satellite data products compiled by NASA's Physical Oceanography/Ocean Biology Distributed Active Archive Centers [@NASAOceanBiologyProcessingGroup_2022; @https://doi.org/10.5067/modsa-mo9d9]. Variables were either intrinsic (site depth, latitude, longitude, island slope) or derived from remote sensing and/or modeling (chlorophyll-A, sea-surface temperature, coral cover, potential larval immigration, cumulative human impacts) ([@tbl:env_table; @tbl:arms_metadata_table]). Sea-surface temperature (SST) and chlorophyll-A values were calculated by averaging monthly means across the duration of the soaking period at each sampling site using AQUA MODIS 4 km-resolution gridded datasets. The cumulative human impacts index, a dimensionless numerical value representing spatially-explicit cumulative anthropogenic impacts on various marine ecosystems, is based on a synthesis of a combination of "high resolution, annual data on the intensity of 14 human stressors and their impact on 21 marine ecosystems over 11 years (2003--2013)" [@halpernGlobalMapHuman2008; @halpernRecentPaceChange2019]. For details regarding data import, preparation, and synthesis, see Supplemental material. Due to logistical limitations, environmental data were collected only for shallow samples (\< 30 m).
+Potential drivers of brachyuran crab community structure were assembled from previous studies [@selkoeEvaluatingAnthropogenicThreats2008; @halpernGlobalMapHuman2008; @selkoeDNACoralReef2016; @selkoeMapHumanImpacts2009], NOAA's National Coral Reef Monitoring Program (NCRMP), the Pacific Islands Ocean Observing System (PacIOOS), and MODIS satellite data products compiled by NASA's Physical Oceanography/Ocean Biology Distributed Active Archive Centers [@nasagoddardspaceflightcenterModerateresolutionImagingSpectroradiometer2022; @nasaobpgMODISAquaGlobal2020]. Variables were either intrinsic (site depth, latitude, longitude, island slope) or derived from remote sensing and/or modeling (chlorophyll-A, sea-surface temperature, coral cover, potential larval immigration, cumulative human impacts) ([@tbl:env_table; @tbl:arms_metadata_table]). Sea-surface temperature (SST) and chlorophyll-A values were calculated by averaging monthly means across the duration of the soaking period at each sampling site using AQUA MODIS 4 km-resolution gridded datasets. The cumulative human impacts index, a dimensionless numerical value representing spatially-explicit cumulative anthropogenic impacts on various marine ecosystems, is based on a synthesis of a combination of "high resolution, annual data on the intensity of 14 human stressors and their impact on 21 marine ecosystems over 11 years (2003--2013)" [@halpernGlobalMapHuman2008; @halpernRecentPaceChange2019]. For details regarding data import, preparation, and synthesis, see Supplemental material. Due to logistical limitations, environmental data were collected only for shallow samples (\< 30 m).
 
 ```{r env-table,results="asis", dependson="init"}
 print_table(model_terms,"env_table","Potential environmental drivers of crab community structure across the Hawaiian Archipelago",hide="variable")
@@ -898,15 +901,14 @@ Specimens used in this study were collected under Hawai&#x02BB;i Division of Aqu
 
 # References {-}
 
-::: {#refs}
-:::
+<div class="multi-refs"></div>
 
 \newpage
 
 # Supplemental material {label="S"}
 
 ## Processing of satellite-derived environmental data
-Level-3 mapped (4 km grid-size) sea-surface temperature (SST) and chlorophyll-A (chl-A) data were retrieved from NASA's Physical Oceanography Distributed Active Archive Center [PO.DAAC; @https://doi.org/10.5067/modsa-mo9d9] and Ocean Biology Distributed Active Archive Center [OB.DAAC; @NASAOceanBiologyProcessingGroup_2022] respectively. Monthly summary datasets were downloaded for the period of 2009--2016 and averaged over each of the ARMS unit soaking periods (e.g. 2009--2011, 2010--2012, etc.). Values (SST or chl-A) were extracted for the geographic coordinates of each sampling site from the averaged dataset for the relevant soaking period. Specific monthly-average dataset names can be found in @tbl:nasa_table.
+Level-3 mapped (4 km grid-size) sea-surface temperature (SST) and chlorophyll-A (chl-A) data were retrieved from NASA's Physical Oceanography Distributed Active Archive Center [PO.DAAC; @nasaobpgMODISAquaGlobal2020] and Ocean Biology Distributed Active Archive Center [OB.DAAC; @nasagoddardspaceflightcenterModerateresolutionImagingSpectroradiometer2022] respectively. Monthly summary datasets were downloaded for the period of 2009--2016 and averaged over each of the ARMS unit soaking periods (e.g. 2009--2011, 2010--2012, etc.). Values (SST or chl-A) were extracted for the geographic coordinates of each sampling site from the averaged dataset for the relevant soaking period. Specific monthly-average dataset names can be found in @tbl:nasa_table.
 
 ## Processing of cumulative human impacts data
 Gridded cumulative human impacts raster data calcuated by Halpern et al [-@halpernRecentPaceChange2019] was downloaded from the Knowledge Network for Biocomplexity (KNB) repository [@frazierRecentPaceChange2019]. Human impacts datasets were downloaded for each available year in this study (2009--2013) and averaged over ARMS unit soaking periods (as above). Since cumulative impacts data was only available up until 2013, we used the combined average of all available years for the 2013--2016 soaking period. Since the availability of data points at individual coordinates was highly variable, we averaged impact scores for each sampled island in the study.
@@ -1106,7 +1108,8 @@ cat("{#fig:fig_alpha2}")
 cds <- cc$crab_data_shallow
 
 pcdata <- cds %>%
-  select(where(is.numeric),-c(lon,lat),-closest_island)
+  select(where(is.numeric),-c(lon,lat),-closest_island) %>%
+  select(deployment_year,depth,chl,sst,slope:human_impact,-contains('radius'))
 
 pca <- prcomp(pcdata)
 explained <- (pca$sdev^2)/sum(pca$sdev^2)
@@ -1270,3 +1273,7 @@ print_table(rda_table,"rda_table","Significant marginal terms in the dbRDA analy
 nasa_table <- read_csv(here("data","tables","nasa.csv"))
 print_table(nasa_table,"nasa_table","NASA data repository filenames for CHL and SST satellite data",accuracy=1,hdr_case=NA,format_numbers=FALSE) 
 ```
+
+## References
+
+<div class="multi-refs"></div>

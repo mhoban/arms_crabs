@@ -2,8 +2,8 @@ Environmental Driver,Description,Source,Data resolution,variable
 Site depth,ARMS unit deployment depths,NOAA NCRMP,Site,depth
 Latitude,ARMS unit deployment latitude,NOAA NCRMP,Site/Years,lat
 Longitude,ARMS unit deployment longitude,NOAA NCRMP,Site/Years,lon
-Chlorophyll-A,"Satellite-derived sea surface chlorophyll A, based on monthly means averaged over deployment years",OB.DAAC [@NASAOceanBiologyProcessingGroup_2022],Site (4 km),chl
-Sea-surface temperature,"Satellite-derived sea surface temparature, based on monthly means averaged over deployment years",PO.DAAC [@https://doi.org/10.5067/modsa-mo9d9],Site (4 km),sst
+Chlorophyll-A,"Satellite-derived sea surface chlorophyll A (4 km resolution), based on monthly means averaged over deployment years",OB.DAAC [@nasagoddardspaceflightcenterModerateresolutionImagingSpectroradiometer2022],Site (4 km),chl
+Sea-surface temperature,"Satellite-derived sea surface temparature (4 km resolution), based on monthly means averaged over deployment years",PO.DAAC [@nasaobpgMODISAquaGlobal2020],Site (4 km),sst
 Island slope,"Bathymetric slope index, 1000 $\times$ deployment depth (m) divided by the average horizontal distance from shore to the 50 m isobath (m)",PacIOOS,Site,slope
 Coral cover (%),Satellite-derived coral cover. Defined as the number of pixels with more than 10% cover in IKONOS satellite imagery within the 0--30 m isobaths. Expressed as a percentage of the total number of pixels analyzed for each island in the study,Published literature [@selkoeDNACoralReef2016],Island,coral_cover
 Potential larval immigration,Incoming centrality metric calculated from modelled larval connectivity derived from a biophysical oceanographic model parameterized for a broad selection of Hawaiian marine species,Published literature [@selkoeDNACoralReef2016],Island,larval_immigration
