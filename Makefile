@@ -33,7 +33,17 @@ docx: $(DOCX_FILES)
 
 output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE) $(R_FILES)
 	@echo building $@
-	@R --slave -e 'rmarkdown::render("$<",output_file="$@")'
+	@R --slave -e 'knitr::knit("$<","output/$<.md")' 
+	@pandoc +RTS -K512m -RTS --filter=resources/pandoc-crossref \
+		--citeproc  output/$<.md  --to docx \
+		--from markdown+autolink_bare_uris+tex_math_single_backslash \
+		--output $@ --lua-filter resources/pagebreak.lua \
+		--highlight-style tango --toc-depth=2 \
+		--lua-filter=resources/scholarly-metadata.lua \
+		--lua-filter=resources/author-info-blocks.lua \
+		--lua-filter=resources/abstract-section.lua \
+		--reference-doc=resources/ref.docx \
+		--lua-filter=resources/multirefs.lua
 
 .PHONY: clean
 clean:
