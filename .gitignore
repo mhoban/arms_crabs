@@ -53,3 +53,6 @@ ignore/
 manuscript/
 .vscode/
 tmp/
+data/chlorophyll/
+data/impact/
+data/impacts/
