@@ -1,5 +1,6 @@
 SHELL := bash
 DOCX_FILES := output/$(strip $(patsubst %.Rmd, %.docx, $(wildcard *.Rmd)))
+MD_FILES := output/$(strip $(patsubst %.Rmd, %.Rmd.md, $(wildcard *.Rmd)))
 R_FILES := crabs.R lib/CAPdiscrim.R collapse_taxonomy.R
 TABLES = $(wildcard data/tables/*.csv)
 REFDOC = resources/ref.docx
@@ -50,4 +51,5 @@ clean:
 	@echo cleaning up...
 	@$(RM) -f cache/*
 	@$(RM) -f $(DOCX_FILES)
+	@$(RM) -f $(MD_FILES)
 	@$(RM) -f output/figures/*.svg
