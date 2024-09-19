@@ -286,9 +286,39 @@ setup_crabs <- function() {
   
   cc$crabs <- cc$crabs_untransformed %>%
     ps_standardize("hellinger")
-    # this is the shallow subset
-  cc$crabs_shallow <- cc$crabs %>%
-    subset_samples(region != "mce") 
+  
+  # shallow subset
+  cc$crabs_shallow <- prune_samples(
+    sample_tibble(cc$crabs)$shallow_deep == "shallow",
+    cc$crabs
+  )
+  # prune taxa
+  cc$crabs_shallow <- prune_taxa(taxa_sums(cc$crabs_shallow) > 0,cc$crabs_shallow)
+  
+  # deep subset
+  cc$crabs_deep <- prune_samples(
+    sample_tibble(cc$crabs)$shallow_deep == "deep",
+    cc$crabs
+  )
+  # prune taxa
+  cc$crabs_deep <- prune_taxa(taxa_sums(cc$crabs_deep) > 0,cc$crabs_deep)
+  
+  # untransformed deep subset
+  cc$crabs_deep_untransformed <- prune_samples(
+    sample_tibble(cc$crabs_untransformed)$shallow_deep == "deep",
+    cc$crabs_untransformed
+  ) 
+  # prune deep crabs taxa
+  cc$crabs_deep_untransformed <- prune_taxa(taxa_sums(cc$crabs_deep_untransformed) > 0,cc$crabs_deep_untransformed)
+  
+  # untransformed shallow subset
+  cc$crabs_shallow_untransformed <- prune_samples(
+    sample_tibble(cc$crabs_untransformed)$shallow_deep == "shallow",
+    cc$crabs_untransformed
+  ) 
+  # prune shallow crabs taxa
+  cc$crabs_shallow_untransformed <- prune_taxa(taxa_sums(cc$crabs_shallow_untransformed) > 0,cc$crabs_shallow_untransformed)
+  
   
   # save an unscaled version of the shallow crab metadata
   cc$crab_data_shallow_unscaled <- cc$crabs_shallow %>%
@@ -486,6 +516,8 @@ alpha_diversity <- function(ps,measures=c("Observed","InvSimpson")) {
   try(ad$k_s_island <- kruskal.test(Simpson ~ island_group, data=all_richness),silent=TRUE)
   try(ad$k_r_depth <- kruskal.test(Observed ~ shallow_deep, data=all_richness),silent=TRUE)
   try(ad$k_s_depth <- kruskal.test(Simpson ~ shallow_deep, data=all_richness),silent=TRUE)
+  try(ad$k_r_depth_main <- kruskal.test(Observed ~ shallow_deep, data=all_richness %>% filter(island_group == "main")),silent=TRUE)
+  try(ad$k_s_depth_main <- kruskal.test(Simpson ~ shallow_deep, data=all_richness  %>% filter(island_group == "main")),silent=TRUE)
   
   try(ad$w_r_island <- wilcox.test(Observed ~ island_group, data=all_richness),silent=TRUE)
   try(ad$w_s_island <- wilcox.test(Simpson ~ island_group, data=all_richness),silent=TRUE)

@@ -318,16 +318,6 @@ print_table <- function(tbl,id="",caption="",hdr_case="sentence",hide=character(
   cat(paste0(table_str,collapse="\n"),"\n\n",caption,"\n\n",sep="")
 }
 
-# create deep crabs subset
-cc$crabs_deep <- cc$crabs_untransformed %>%
- subset_samples(shallow_deep == "deep")
- # prune deep crabs taxa
-cc$crabs_deep <- prune_taxa(taxa_sums(cc$crabs_deep) > 0,cc$crabs_deep)
-# create shallow crabs subset
-cc$crabs_shallow <- cc$crabs_untransformed %>%
- subset_samples(shallow_deep == "shallow")
- # prune its taxa
-cc$crabs_shallow <- prune_taxa(taxa_sums(cc$crabs_shallow) > 0,cc$crabs_shallow)
 
 # get average distance from a centroid
 centroid_dist <- function(data) {
@@ -341,8 +331,8 @@ centroid_dist <- function(data) {
 
 # get alpha diversity statistics
 all_alpha <- alpha_diversity(cc$crabs_untransformed)
-deep_alpha <- alpha_diversity(cc$crabs_deep)
-shallow_alpha <- alpha_diversity(cc$crabs_shallow)
+deep_alpha <- alpha_diversity(cc$crabs_deep_untransformed)
+shallow_alpha <- alpha_diversity(cc$crabs_shallow_untransformed)
 
 # color palette for islands
 island_pal <- c(
@@ -451,7 +441,7 @@ crab_taxonomy_validated <- cc$crabs %>%
 # generate sample summaries. code block is cached 
 # so worms API calls don't happen every time
 all_summary <- sample_summary(cc$crabs_untransformed,4,crab_taxonomy_validated)
-deep_summary <- sample_summary(cc$crabs_deep,4,crab_taxonomy_validated)
+deep_summary <- sample_summary(cc$crabs_deep_untransformed,4,crab_taxonomy_validated)
 ```
 
 <!-- 
@@ -487,7 +477,7 @@ Brachyuran crab assemblages were sampled from benthic coral reef habitat in the 
 
 <br><br>
 
-A total of 89 ARMS units were deployed over the course of six years (2009--2016) in shallow coral reef habitat (`r format_range(cc$crabs_shallow %>% sample_tibble() %>% pull(depth))` m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) ([@fig:fig_map; @tbl:arms_table]). Only units deployed on outer reefs were included in this study. To explore the effects of depth, we also present data from an earlier study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], in which 27 units were deployed off O&#x02BB;ahu from 2009--2012 in `r format_range(cc$crab_data %>% sample_tibble() %>% filter(island == "Oahu") %>% pull(depth))` m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m ([@tbl:arms_table]). Shallow units were deployed according to NOAA-RAMP methodology, whereas units $\geq$ 30 m were deployed and recovered using technical mixed gas closed-circuit rebreather diving [see @hurleyAssessmentShallowMesophotic2016]. Unless referring to specific depth zones, we will refer to any units deployed \< 30 m as "shallow" and those deployed $\geq$ 30 m as "deep".  
+A total of 89 ARMS units were deployed over the course of six years (2009--2016) in shallow coral reef habitat (`r format_range(cc$crabs_shallow_untransformed %>% sample_tibble() %>% pull(depth))` m depth) in both the Main (MHI) and Northwest Hawaiian Islands (NWHI) ([@fig:fig_map; @tbl:arms_table]). Only units deployed on outer reefs were included in this study. To explore the effects of depth, we also present data from an earlier study by Hurley et al. [-@hurleyAssessmentShallowMesophotic2016], in which 27 units were deployed off O&#x02BB;ahu from 2009--2012 in `r format_range(cc$crab_data %>% sample_tibble() %>% filter(island == "Oahu") %>% pull(depth))` m depth; nine units were deployed at 12 m, and six each at 30 m, 60 m, and 90 m ([@tbl:arms_table]). Shallow units were deployed according to NOAA-RAMP methodology, whereas units $\geq$ 30 m were deployed and recovered using technical mixed gas closed-circuit rebreather diving [see @hurleyAssessmentShallowMesophotic2016]. Except when discussing specific depth zones, we will refer to any units deployed \< 30 m as "shallow" and those deployed $\geq$ 30 m as "deep".  
 
 ```{r fig-map, fig.cap='Map of ARMS deployment sites across the Hawaiian Archipelago (Papahānaumokuākea Marine National Monument (NWHI) is shaded in light blue).', results="asis", fig.width=9, fig.height=6, dependson="init"}
 library(sf)
@@ -597,7 +587,7 @@ print_table(arms_schedule,"arms_table","Recovered ARMS unit soak times across si
 
 <br><br>
 
-ARMS units were retrieved by encapsulating them in-situ in a 100 μm mesh-lined crate to prevent escape of motile organisms. Once returned to the surface, they were placed in containers of aerated, filtered seawater, crates were removed, and units were systematically disassembled plate-by-plate [see @lerayDNABarcodingMetabarcoding2015 for processing details]. All adult brachyuran crabs ($\geq$ 2 mm) were photographed, identified, and preserved in 95% ethanol. Specimens were initially identified to family or genus using Poore & Ahyong [-@pooreMarineDecapodCrustacea2023] and additionally to species where possible according to expert advice from Scott Godwin (former curator of invertebrate zoology, Bishop Museum) and Gustav Paulay (curator of invertebrate zoology, Florida Museum of Natural History). Where species-level identifications were not possible, taxa were collapsed to family or genus (depending on individual identification). We recognize that the species-level taxonomy of Indo-Pacific brachyurans remains poorly resolved, particularly for abundant groups like the Chlorodiellinae [@lasleyjrIntegrativeSystematicRevision2014; @lasleyjrPhylogeneticRelationshipsUbiquitous2015], and some "species" are known to comprise complexes [e.g. *Perinia tumida*, @servisCharacterizingCoralReef2020; @plaisanceReefassociatedCrustaceanFauna2009]. However, the prevalence of complexes and cryptic diversity suggests that our assignments are likely to under- rather than overrepresent the true number of taxa. Thus, any significant patterns detected likely persist in spite of rather than because of cryptic diversity.  
+ARMS units were retrieved by encapsulating them in-situ in a 100 μm mesh-lined crate to prevent escape of motile organisms. Once returned to the surface, they were placed in containers of aerated, filtered seawater, crates were removed, and units were systematically disassembled plate-by-plate [see @lerayDNABarcodingMetabarcoding2015 for processing details]. All adult brachyuran crabs ($\geq$ 2 mm) were photographed, identified, and preserved in 95% ethanol. Specimens were initially identified to family or genus using Poore & Ahyong [-@pooreMarineDecapodCrustacea2023] and additionally to species where possible according to expert advice from Scott Godwin (former curator of invertebrate zoology, Bishop Museum) and Gustav Paulay (curator of invertebrate zoology, Florida Museum of Natural History). Where species-level identifications were not possible, taxa were collapsed to family or genus (depending on individual identification). We recognize that the species-level taxonomy of Indo-Pacific brachyurans remains poorly resolved, particularly for abundant groups like the Chlorodiellinae [@lasleyjrIntegrativeSystematicRevision2014; @lasleyjrPhylogeneticRelationshipsUbiquitous2015], and some "species" are known to comprise complexes [e.g. *Perinia tumida*, @servisCharacterizingCoralReef2020; @plaisanceReefassociatedCrustaceanFauna2009]. However, the prevalence of species complexes and cryptic diversity suggests that our assignments are likely to under- rather than overrepresent the true number of taxa. Thus, any significant patterns detected likely persist in spite of rather than because of cryptic diversity.  
 
 ## Data analysis {-}
 
@@ -634,7 +624,7 @@ The `r nsamples(cc$crabs_untransformed)` ARMS units deployed across the Hawaiian
 
 ### Mesophotic ARMS {-}
 
-The `r nsamples(cc$crabs_deep)` units deployed at mesophotic depths $\geq$ 30 m on O&#x02BB;ahu yielded fewer species and individuals compared to the complete dataset, with `r num(sum(sample_sums(cc$crabs_deep)),1)` crabs overall, `r sum(unlist(deep_summary$types_breakdown))` distinct taxa (`r deep_summary$types_breakdown$species` species-level identifications, `r deep_summary$types_breakdown$genus` genus, `r deep_summary$types_breakdown$family` family), `r num(deep_summary$abundance_mean,0.1)` $\pm$ `r num(deep_summary$abundance_sd,0.1)` individuals per unit, and abundance ranging from `r format_range(deep_summary$abundance_range)`. The four most abundant taxa in the deep ARMS did not overlap with the most abundant taxa from the complete dataset: `r with(deep_summary,top_list(top,top_n,top_units))`. There were `r deep_summary$singleton_count` singletons, which proportionally accounted for ~`r pc(deep_summary$singleton_count/ntaxa(cc$crabs_deep),0.1)` of species found on deep ARMS. 
+The `r nsamples(cc$crabs_deep_untransformed)` units deployed at mesophotic depths $\geq$ 30 m on O&#x02BB;ahu yielded fewer species and individuals compared to the complete dataset, with `r num(sum(sample_sums(cc$crabs_deep_untransformed)),1)` crabs overall, `r sum(unlist(deep_summary$types_breakdown))` distinct taxa (`r deep_summary$types_breakdown$species` species-level identifications, `r deep_summary$types_breakdown$genus` genus, `r deep_summary$types_breakdown$family` family), `r num(deep_summary$abundance_mean,0.1)` $\pm$ `r num(deep_summary$abundance_sd,0.1)` individuals per unit, and abundance ranging from `r format_range(deep_summary$abundance_range)`. The four most abundant taxa in the deep ARMS did not overlap with the most abundant taxa from the complete dataset: `r with(deep_summary,top_list(top,top_n,top_units))`. There were `r deep_summary$singleton_count` singletons, which proportionally accounted for ~`r pc(deep_summary$singleton_count/ntaxa(cc$crabs_deep_untransformed),0.1)` of species found on deep ARMS. 
 
 ## Alpha diversity {-}
 
@@ -644,7 +634,7 @@ Overall mean species richness for the complete dataset was `r num(all_alpha$rich
 
 ### Comparisons {-}
 
-For the complete dataset, there was no significant difference in observed species richness (`r k_test(all_alpha$k_r_island)`; [@fig:fig_alpha[]{}a]) or effective Simpson diversity (`r k_test(all_alpha$k_s_island,plain=TRUE)`; [@fig:fig_alpha[]{}c]) between the MHI and NWHI. Richness was not significantly different between shallow and deep samples (`r k_test(all_alpha$k_r_depth,plain=TRUE)`; [@fig:fig_alpha[]{}b]) but effective Simpson diversity was (`r k_test(all_alpha$k_s_depth,plain=TRUE)`; [@fig:fig_alpha[]{}d]). When only shallow arms \< 30 m were considered, there were no significant differences in alpha diversity between the MHI and NWHI for either index (richness: `r k_test(shallow_alpha$k_r_island,plain=TRUE)`, [@fig:fig_alpha2[]{}a]; effective Simpson: `r k_test(shallow_alpha$k_s_island,plain=TRUE)`, [@fig:fig_alpha2[]{}b]).
+For the complete dataset, there was no significant difference in observed species richness (`r k_test(all_alpha$k_r_island)`; [@fig:fig_alpha[]{}a]) or effective Simpson diversity (`r k_test(all_alpha$k_s_island,plain=TRUE)`; [@fig:fig_alpha[]{}c]) between the MHI and NWHI. Richness was not significantly different between shallow and deep samples (`r k_test(all_alpha$k_r_depth,plain=TRUE)`; [@fig:fig_alpha[]{}b]) but effective Simpson diversity was (`r k_test(all_alpha$k_s_depth,plain=TRUE)`; [@fig:fig_alpha[]{}d]). When comparing diversity across sampling depths for only sites in the MHI, richness was not significantly different (`r k_test(all_alpha$k_r_depth_main,plain=TRUE)`; [@fig:fig_alpha_main[]{}a]) but effective Simposn diversity was (`r k_test(all_alpha$k_s_depth_main,plain=TRUE)`; [@fig:fig_alpha_main[]{}b]). When only shallow arms \< 30 m were considered, there were no significant differences in alpha diversity between the MHI and NWHI for either index (richness: `r k_test(shallow_alpha$k_r_island,plain=TRUE)`, [@fig:fig_alpha2[]{}a]; effective Simpson: `r k_test(shallow_alpha$k_s_island,plain=TRUE)`, [@fig:fig_alpha2[]{}b]).
 
 <!--For the complete dataset, there was no significant difference in observed species richness between the MHI and NWHI `r w_test(all_alpha$w_r_island)`, but effective Simpson diversity was significantly different ([@fig:fig_alpha[]{}a]; `r w_test(all_alpha$w_s_island,plain=TRUE)`). When only shallow arms \< 30 m were considered, neither comparison was significant (richness: `r w_test(shallow_alpha$w_r_island,plain=TRUE)`; effective Simpson: `r w_test(shallow_alpha$w_s_island,plain=TRUE)`). Effective Simpson diversity was significantly different between shallow and deep samples ([@fig:fig_alpha[]{}b]; `r w_test(all_alpha$w_s_depth,plain=TRUE)`) but richness was not (`r w_test(all_alpha$w_r_depth,plain=TRUE)`).  -->
 
@@ -657,7 +647,7 @@ For the complete dataset, there was no significant difference in observed specie
 library(formula.tools)
 
 # set random seed for consistency
-set.seed(99917)
+set.seed(32767)
 
 reduce_model <- function(m,o,d,vif_limit=3,condition=character()) {
   vifs <- vif.cca(m)
@@ -673,19 +663,11 @@ reduce_model <- function(m,o,d,vif_limit=3,condition=character()) {
   }
 }
 
-# dd <- cc$crab_data_shallow %>%
-#   # select(-c(chl,sst,human_impact)) %>%
-#   rename(chl=X4km_chl,sst=X4km_sst,human_impact=cumulative_impacts)
-
 # calculate full dbRDA model
 db_modl <- dbrda(
   cc$crab_otus_shallow ~ depth +
     chl + sst + slope + coral_cover +
-    # X4km_chl + X4km_sst + slope + coral_cover +
-    # chl_4km_terra + sst_4km_terra + slope + coral_cover +
-    # chl_9km_terra + sst_9km_terra + slope + coral_cover +
     larval_immigration + human_impact +
-    # larval_immigration + cumulative_impacts +
     lat + lon +
     Condition(recovery_year),
   data=cc$crab_data_shallow,
@@ -694,8 +676,7 @@ db_modl <- dbrda(
 )
 
 # reduce model to terms with VIF <= 3
-db_modl <- reduce_model(db_modl,cc$crab_otus_shallow,cc$crab_data_shallow,vif_limit = 4)
-# db_modl <- reduce_model(db_modl,cc$crab_otus_shallow,dd,vif_limit = 3)
+db_modl <- reduce_model(db_modl,cc$crab_otus_shallow,cc$crab_data_shallow,vif_limit = 3)
 
 # calculate biplot vectors and magnitudes
 vectors <- db_modl %>%
@@ -922,6 +903,8 @@ Gridded cumulative human impacts raster data calcuated by Halpern et al [-@halpe
 ### Other datasets
 Coral cover and potential larval immigration were imported from the online supplemtal material accompanying Selkoe et al. [-@selkoeDNACoralReef2016].
 
+\newpage
+
 ## Figures and tables
 
 ```{r fig-alpha, fig.cap='Box plots of (a,b) species richness and (c,d) effective Simpson diversity for complete dataset (all sampled depths). Asterisks indicate significant differences (K-W test). Notches represent nonparametric confidence intervals about the median. (a) Species richness by island group. (b) Species richness by sampling depth. (c) Effective Simpson diversity by island group. (d) Effective Simpson diversity by sampling depth.', results="asis", dev="svg", fig.width=10, fig.height=10, dependson="init"}
@@ -1047,6 +1030,75 @@ cat("{#fig:fig_alpha}")
 
 \newpage
 
+```{r fig-alpha-main, fig.cap='Box plots of species richness and effective Simpson diversity per depth zone for Main Hawaiian Islands only. Asterisks and notches as above. (a) Species richness by sampling depth. (b) Effective Simpson diversity by sampling depth.', results="asis", dev="svg", fig.width=8, fig.height=4, dependson="init"}
+# depth comparison for main islands only
+art <- all_alpha$richness_table %>% 
+  filter(island_group == "main") %>%
+  mutate(island_group = str_to_sentence(island_group)) %>%
+  mutate(shallow_deep = str_to_sentence(shallow_deep),shallow_deep = fct_reorder(shallow_deep,depth))
+
+if (all_alpha$k_r_depth$p.value < 0.05) {
+  which_max <- art %>% 
+    group_by(shallow_deep) %>% 
+    summarise(r = mean(Observed)) %>%
+    slice(which.max(r)) %>%
+    pull(shallow_deep) %>%
+    as.character()
+  max_r <- max(art$Observed) + (diff(range(art$Observed)))/10
+  sig <- tribble(
+    ~x,~y,
+    which_max,max_r
+  ) 
+} else {
+  sig <- tribble(~x,~y)
+}
+
+pointsize <- 5
+
+p1 <- ggplot(art) + 
+  geom_boxplot(aes(x=shallow_deep,y=Observed,fill=shallow_deep),notch=TRUE) +
+  geom_point(aes(x,y),data=sig,shape=8,size=pointsize,stroke=1.5) + 
+  scale_fill_manual(values=sample_depth_pal) +
+  guides(fill="none") + 
+  plotz_theme()  + 
+  xlab("Sampling depth") + 
+  ylab("Richness") 
+
+if (all_alpha$k_s_depth$p.value < 0.05) {
+  which_max <- art %>% 
+    group_by(shallow_deep) %>% 
+    summarise(r = mean(Simpson)) %>%
+    slice(which.max(r)) %>%
+    pull(shallow_deep) %>%
+    as.character()
+  max_r <- max(art$Simpson) + (diff(range(art$Simpson)))/10
+  sig <- tribble(
+    ~x,~y,
+    which_max,max_r
+  ) 
+} else {
+  sig <- tribble(~x,~y)
+}
+
+p2 <- ggplot(art) + 
+  geom_boxplot(aes(x=shallow_deep,y=Simpson,fill=shallow_deep),notch=TRUE) +
+  geom_point(aes(x,y),data=sig,shape=8,size=pointsize,stroke=1.5) + 
+  scale_fill_manual(values=sample_depth_pal) +
+  guides(fill="none") + 
+  plotz_theme()  + 
+  xlab("Sampling depth") + 
+  ylab("Effective Simpson diversity") 
+
+
+(p1 + p2) & 
+  plot_annotation(tag_levels = list(str_glue("({letters[1:2]})"))) & 
+  theme(plot.tag = element_text(face="italic"))
+cat("{#fig:fig_alpha_main}")
+```
+
+
+\newpage
+
 ```{r fig-alpha2, fig.cap='Box plots of (a) species richness and (b) Effective Simpson diversity by island group for shallow samples only. Notches as in [@fig:fig_alpha]. Both comparisons were non-significant.', results="asis", dev="svg", fig.width=8, fig.height=4, dependson="init"}
 art <- shallow_alpha$richness_table %>% 
   mutate(island_group = str_to_sentence(island_group)) %>%
@@ -1158,7 +1210,7 @@ pairwise_island <- pairwise_adonis(cc$crab_dist_shallow,cc$crab_data_shallow$haw
 pw <- pairwise_island %>%
   filter(p_adj < 0.05)
 
-islands <- cc$crabs_shallow %>%
+islands <- cc$crabs_shallow_untransformed %>%
   sample_tibble() %>%
   pull(hawaiian_name) %>%
   levels()
@@ -1284,6 +1336,8 @@ print_table(rda_table,"rda_table","Significant marginal terms in the dbRDA analy
 nasa_table <- read_csv(here("data","tables","nasa.csv"))
 print_table(nasa_table,"nasa_table","NASA data repository filenames for CHL and SST satellite data",accuracy=1,hdr_case=NA,format_numbers=FALSE) 
 ```
+
+\newpage
 
 ## References
 
