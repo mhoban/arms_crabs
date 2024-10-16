@@ -50,8 +50,6 @@ arms_sf <- read_csv("data/metadata.csv") %>%
 initial_radius <- 10
 
 # download chl/sst datasets ---------------------------------------------------------------------------------------
-library(raster)
-
 # setup parallel workers
 if (rstudioapi::isAvailable()) {
   plan(multisession,workers=8)
@@ -326,8 +324,8 @@ aa <- arms %>%
   group_by(range) %>%
   group_modify(\(data,grp) {
     # get date range
-    y1 <- min(arms$deployment_year)
-    y2 <- max(arms$recovery_year)
+    y1 <- min(data$deployment_year)
+    y2 <- max(data$recovery_year)
     # if our range is outside of the available range,
     # take the mean across the whole time period we have data for
     if (!all(c(y1,y2) %in% all_years)) {
