@@ -78,8 +78,8 @@ library(vegan)
 library(ggrepel)
 library(here)
 library(worrms)
-library(BiodiversityR)
 library(ggtext)
+source("lib/CAPdiscrim.R")
 
 # set random seed for consistency
 set.seed(31337)
