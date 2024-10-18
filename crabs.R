@@ -358,6 +358,15 @@ setup_crabs <- function() {
   cc$crab_otus_shallow <- otu_table(cc$crabs_shallow)
   cc$crab_data_shallow <- sample_tibble(cc$crabs_shallow)
   
+  
+  cc$crabs_oahu <- prune_samples(
+    sample_tibble(cc$crabs)$island == "Oahu",
+    cc$crabs
+  )
+  # prune taxa
+  cc$crabs_oahu <- prune_taxa(taxa_sums(cc$crabs_oahu) > 0,cc$crabs_oahu)
+  cc$crab_dist_oahu <- distance(cc$crabs_oahu,"bray")
+  
   return(cc)
 }
 
