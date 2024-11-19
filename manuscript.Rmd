@@ -53,6 +53,9 @@ header-includes:
   - \usepackage{upgreek}
 multiref_no_duplicates: true
 ---
+<!--
+TODO: italics in tables S4/S5
+-->
 <!--word count: Proceedings B publishes articles up to 12 pages, including figures and tables, with no more than 10 000 words. The word count includes the title page, author names, abstract, figure legends, tables and the reference list. As a rough guide, 10 000 words = 12 pages without additional figures; 850 words = 1 page and 2-4 small figures = 1 page. For example, an acceptable paper could be made up of 9 000 words and 4 small figures or 8500 words, 2 large figures and 4 small figures.-->
 ### Keywords {-}
 <div custom-style="mono">Mesophotic coral ecosystems, community structure, depth gradient, environmental drivers, Hawaii, Autonomous Reef Monitoring Structures</div>
@@ -105,8 +108,9 @@ if (!crabs_done) {
 # some utility funtions
 
 # do an english comma-separated list
-format_list <- function(l) {
-  l[length(l)] <- str_c("and ",l[length(l)])
+format_list <- function(l,fmt=function(x) x) {
+  l <- fmt(l)
+  if(length(l) > 1) l[length(l)] <- str_c("and ",l[length(l)])
   if (length(l) > 2) { 
     str_c(l,collapse=", ")
   } else {
@@ -135,44 +139,6 @@ plotz_theme <- function() {
       legend.key = element_blank(),
       panel.grid = element_blank()
     )
-}
-
-# abstract method to format species name
-format_species <- function(...) UseMethod("format_species")
-
-# format species in a list
-format_species.list <- function(spp,authority=TRUE,...) {
-  if (spp$found) {
-    a <- ifelse(authority,str_glue(" {spp$authority}"),"")
-    str_glue("*{spp$species}*{a}")
-  } else {
-    s <- str_split(spp$species," ")[[1]]
-    str_trim(str_glue("*{s[1]}* {s[2]}"))
-  }
-}
-
-# format species in a character vector
-format_species.character <- function(species,found,authority,auth=TRUE,...) {
-  spp <- map2_chr(species,found,~{
-    .y <- ifelse(is.na(.y),FALSE,.y)
-    s <- list(species=.x,found=.y,authority="")
-    format_species(s,FALSE)
-  })
-  if (auth) {
-    authority <- if_else(!is.na(authority),str_c(" ",authority),"")
-    spp <- str_c(spp,authority)
-  }
-  return(spp)
-}
-
-# format species in a data frame
-format_species.data.frame <- function(spp,authority=TRUE,...) {
-  spp %>%
-    pmap_chr(~{
-      row <- list(...)
-      s <- row[c('species','found','authority','otu')]
-      format_species(s,authority)
-    })
 }
 
 # format percents and numbers
@@ -274,8 +240,8 @@ permanova <- function(modl,accuracy=0.01,stat="pseudo-F",by=NULL,sentence=TRUE) 
 }
 
 # format a top-n list of species
-top_list <- function(species,n,units,len=4,fig=NULL) {
-  s1 <- map_chr(species,format_species)
+top_list <- function(species,n,units,len=4,fig=NULL,taxonomy) {
+  s1 <- species 
   s2 <- map2_chr(n,units,~{
     if (is.null(fig)) {
       str_glue("({.x} individuals from {.y} units)")
@@ -463,12 +429,19 @@ crab_taxonomy_validated <- cc$crabs %>%
     authority = case_when(
       valid_name != scientificname ~ valid_authority,
       .default = authority
+    ),
+    genus = coalesce(genus.y,genus.x),
+    family = coalesce(family.y,family.x),
+    display_species = case_when(
+      taxon_level == "species" ~ str_glue("*{species}*"),
+      taxon_level == "genus" ~ str_glue("*{genus}* sp."),
+      taxon_level == "family" ~ str_glue("{family} sp."),
+      .default = species 
     )
-  ) %>%
-  mutate(display_species = format_species(.))
+  )
 ```
 
-```{r summaries, include=FALSE, dependson="init"}
+```{r summaries, include=FALSE, dependson="taxonomy-validation"}
 # generate sample summaries. code block is cached 
 # so worms API calls don't happen every time
 all_summary <- sample_summary(cc$crabs_untransformed,4,crab_taxonomy_validated)
@@ -490,7 +463,7 @@ Coral reefs are among the most diverse habitats in the world, and they face incr
 
 The Hawaiian Archipelago, stretching across ~2,500 km in the North Pacific Ocean, provides a natural laboratory to examine drivers of metazoan community structure. This chain of islands comprises two regions, the inhabited high islands of the main Hawaiian Islands (MHI) and the uninhabited low islands, atolls, and banks of the Northwestern Hawaiian Islands (NWHI) which reside within one of the world's largest marine protected areas---the Papahānaumokuākea Marine National Monument. The island chain is subject to considerable anthropogenic and physical gradients driving differences in temperature, coral cover, human population, and anthropogenic impact, among others, all of which influence coral reef communities [@selkoeMapHumanImpacts2009]. Nearshore drop-offs along the island chain also allow access to deeper reef habitat, enabling the examination of depth influences on community structure.
 
-To date, the majority of studies that have examined community structure across the Hawaiian archipelago and along a depth gradient have focused on conspicuous taxa such as corals and fishes [e.g., @benfieldComparisonCoralReef2008; @caballero-aragonWaveExposureTemperature2023; @kaneTrophicDesignationLive2017; @langeWaveExposureShapes2021; @vanlierHabitatConnectivityComplexity2018]. However, these taxa make up a minority of coral reef biodiversity and thus may not be indicative of community patterns overall [@fautinOverviewMarineBiodiversity2010]. Furthermore, studies on these taxa have also been criticized for confounding multiple potentially covarying factors (such as habitat area and/or complexity) across the measured gradients [e.g., @bellwoodRegionalscaleAssemblyRules2001; @grahamEffectsMarineReserve2003; @connollyCommunityStructureCorals2005; @ewersConfoundingFactorsDetection2006; @fletcherRoleHabitatArea2007].  
+To date, the majority of studies that have examined community structure across the Hawaiian archipelago and/or along a depth gradient have focused on conspicuous taxa such as corals and fishes [e.g., @benfieldComparisonCoralReef2008; @caballero-aragonWaveExposureTemperature2023; @kaneTrophicDesignationLive2017; @langeWaveExposureShapes2021; @vanlierHabitatConnectivityComplexity2018]. However, these taxa make up a minority of coral reef biodiversity and thus may not be indicative of community patterns overall [@fautinOverviewMarineBiodiversity2010]. Furthermore, studies on these taxa have also been criticized for confounding multiple potentially covarying factors (such as habitat area and/or complexity) across the measured gradients [e.g., @bellwoodRegionalscaleAssemblyRules2001; @grahamEffectsMarineReserve2003; @connollyCommunityStructureCorals2005; @ewersConfoundingFactorsDetection2006; @fletcherRoleHabitatArea2007].  
 
 Here, we used autonomous reef monitoring structures (ARMS)---standardized collection devices designed to mimic reef structural complexity---to sample cryptic communities while controlling for habitat [@zimmermanArtificialReefMatrix2004; @brainardAutonomousReefMonitoring2009]. Such standardization can reduce variability in recovered communities that may arise due to local variation in habitat composition and availability [@ransomeImportanceStandardizationBiodiversity2017]. We targeted brachyuran crabs, a ubiquitous group often used as an exemplar to assess coral reef biodiversity [@knowltonCoralReefBiodiversity2010; @plaisanceDiversityCoralReefs2011; @servisCharacterizingCoralReef2020; @plaisanceReefassociatedCrustaceanFauna2009] and comprising a notable proportion of the coral reef cryptofauna [284 species in Hawai&#x02BB;i, @castroCatalogAnomuranBrachyuran2011]. We used assemblages recovered from ARMS units to examine drivers of community composition across the Hawaiian Archipelago, compared crab communities among islands and regions (MHI vs. NWHI), and examined the effects of a suite of possible environmental and anthropogenic drivers of community structure to test hypotheses about their relative importance. 
 
@@ -699,6 +672,7 @@ deep_gens <- g %>%
   pull(genus) %>%
   unique() %>%
   sort()
+deep_gens <- str_glue("*{deep_gens}*")
   
 s <- cc$crabs %>%
   psmelt() %>%
@@ -716,9 +690,11 @@ spp <- s %>%
 
 deep_spp <- s %>%
   filter(shallow_deep == "deep") %>%
-  pull(species) %>%
-  unique() %>%
-  sort()
+  arrange(species) %>%
+  select(OTU) %>%
+  left_join(crab_taxonomy_validated,by=c("OTU" = "otu")) %>%
+  pull(display_species) %>%
+  unique()
 ```
 Out of the `r all_summary$taxonomy_breakdown$families` families recovered, `r fam['shallow']` were exclusive to shallow ARMS recovered from `r dr(cc$crabs_shallow_untransformed)` m and `r fam['deep']` were exclusive to units $\geq$ 30 m (`r format_list(deep_fams)`; [@tbl:family_depth_table_s]). `r str_to_sentence(english(gen['shallow']))` genera were found exclusively shallow and `r gen['deep']` exclusively deep (`r format_list(deep_gens)`; [@tbl:genus_depth_table_s]). `r str_to_sentence(english(spp['shallow']))` distinct taxa (including those collapsed to genus or family) were exclusive to shallow ARMS units and `r spp['deep']` were found only deep (`r format_list(deep_spp)`; [@tbl:species_depth_table_s]).
 
@@ -1585,9 +1561,14 @@ crabbo <- cc$crabs %>%
   group_by(depth_zone) %>%
   filter(Abundance > 0) %>%
   ungroup() %>%
+  left_join(crab_taxonomy_validated %>% select(otu,display_species),by=c("OTU" = "otu")) %>%
   group_by(family) %>%
   filter(n_distinct(shallow_deep) == 1) %>%
-  summarise(zones = str_c(unique(depth_zone),collapse=", "), deeps = str_c(unique(shallow_deep),collapse=", "),species=str_c(unique(species),collapse=", ")) %>%
+  summarise(
+    zones = str_c(unique(depth_zone),collapse=", "),
+    deeps = str_c(unique(shallow_deep),collapse=", "),
+    species = format_list( unique(display_species) )
+  ) %>%
   ungroup() %>%
   arrange(deeps,zones,family,species) %>%
   select(deeps,family,species,zones) %>%
@@ -1610,9 +1591,14 @@ crabbo <- cc$crabs %>%
   group_by(depth_zone) %>%
   filter(Abundance > 0) %>%
   ungroup() %>%
+  left_join(crab_taxonomy_validated %>% select(otu,display_species),by=c("OTU" = "otu")) %>%
   group_by(genus) %>%
   filter(n_distinct(shallow_deep) == 1) %>%
-  summarise(zones = str_c(unique(depth_zone),collapse=", "), deeps = str_c(unique(shallow_deep),collapse=", "),species=str_c(unique(species),collapse=", ")) %>%
+  summarise(
+    zones = str_c(unique(depth_zone),collapse=", "),
+    deeps = str_c(unique(shallow_deep),collapse=", "),
+    species=format_list(unique(display_species))
+  ) %>%
   ungroup() %>%
   arrange(deeps,zones,genus,species) %>%
   select(deeps,genus,species,zones) %>%
@@ -1635,13 +1621,14 @@ crabbo <- cc$crabs %>%
   group_by(depth_zone) %>%
   filter(Abundance > 0) %>%
   ungroup() %>%
-  group_by(species) %>%
+  left_join(crab_taxonomy_validated %>% select(otu,display_species),by=c("OTU" = "otu")) %>%
+  group_by(display_species) %>%
   filter(n_distinct(shallow_deep) == 1) %>%
   summarise(zones = str_c(unique(depth_zone),collapse=", "), deeps = str_c(unique(shallow_deep),collapse=", ")) %>%
   ungroup() %>%
-  arrange(deeps,zones,species) %>%
-  select(deeps,species,zones) %>%
-  mutate( deeps = deep_map[deeps] ) %>%
+  arrange(deeps,zones,display_species) %>%
+  select(deeps,species=display_species,zones) %>%
+  mutate(  deeps = deep_map[deeps] ) %>%
   rename(`"Species"`=species,`Depth range`=deeps,`Depth zones`=zones)
 
 print_table(crabbo,"species_depth_table_s","Brachyuran taxa exclusive to shallow or mesophotic habitat",hdr_case="none",accuracy=1)
