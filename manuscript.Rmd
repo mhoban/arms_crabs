@@ -53,9 +53,6 @@ header-includes:
   - \usepackage{upgreek}
 multiref_no_duplicates: true
 ---
-<!--
-TODO: italics in tables S4/S5
--->
 <!--word count: Proceedings B publishes articles up to 12 pages, including figures and tables, with no more than 10 000 words. The word count includes the title page, author names, abstract, figure legends, tables and the reference list. As a rough guide, 10 000 words = 12 pages without additional figures; 850 words = 1 page and 2-4 small figures = 1 page. For example, an acceptable paper could be made up of 9 000 words and 4 small figures or 8500 words, 2 large figures and 4 small figures.-->
 ### Keywords {-}
 <div custom-style="mono">Mesophotic coral ecosystems, community structure, depth gradient, environmental drivers, Hawaii, Autonomous Reef Monitoring Structures</div>
