@@ -567,8 +567,6 @@ cat("{#fig:fig_map}")
 ```{r arms-table,results="asis", dependson="init"}
 arms_schedule <- cc$crabs_untransformed %>%
   sample_tibble() %>%
-  # separate_wider_regex(sample,patterns=c(recovery_year="^[0-9]+","_",sample=".*"))  %>%
-  # select(sample,everything()) %>%
   unite("range",deployment_year,recovery_year,sep="--") %>%
   mutate(
     island = case_when(
@@ -581,11 +579,22 @@ arms_schedule <- cc$crabs_untransformed %>%
     ),
     island = fct_reorder(island,-lat)
   ) %>%
-  count(island,range) %>%
+  group_by(island) %>%
+  mutate(depth = str_glue("{min(depth)}--{max(depth)} m")) %>%
+  ungroup() %>%
+  group_by(island,range) %>%
+  summarise( n = n(), depth = first(depth) ) %>%
+  ungroup() %>%
   pivot_wider(names_from="range",values_from="n")  %>%
-  select(island,order(colnames(.))) %>%
-  mutate(across(-island,~replace_na(.x,0)))
-print_table(arms_schedule,"arms_table","ARMS unit deployment schedule by island (number of units)",accuracy=1)
+  mutate(
+    across(-c(island,depth),~replace_na(.x,0)),
+    across(
+      everything(),
+      ~if_else(str_detect(island,'deep'),str_c("**",.x,"**"),as.character(.x))
+    )
+  ) %>%
+  select(island,`Depth range`=depth,order(colnames(.)))
+print_table(arms_schedule,"arms_table","ARMS unit deployment schedule by island (number of units). Mesophotic deployments apear in bold.",accuracy=1)
 ```
 
 <br><br>
