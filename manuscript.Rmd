@@ -451,8 +451,7 @@ which allows us to include computed values that couldn't easily go in the yaml h
 -->
 # Abstract {-}
 
-Investigations into the environmental and anthropogenic factors that shape coral reef communities have historically been limited in both depth range and taxonomic scope. Despite high biodiversity and the recognized importance of mesophotic habitats and due to logistical challenges, previous studies have focused largely on fishes and corals and the shallowest ~30 m of their depth ranges. Here, we examine the variability patterns of brachyuran crabs recovered from Autonomous Reef Monitoring Structures across the ~2,500 km Hawaiian Archipelago and ~90 m of depth. We examine the effects of a suite of environmental, ecological, and anthropogenic factors on shallow (8--17 m) crab assemblages and compare them with those sampled along a shallow-to-mesophotic depth gradient (12--90 m) on O&#x02BB;ahu. Shallow assemblages were significantly different between the Main and Northwest Hawaiian Islands and significantly associated with human impacts, chlorophyll-A, sea-surface temperature, island slope, the potential for larval immigration, and depth. However, we found more variation along the depth gradient on O&#x02BB;ahu than among the shallow assemblages across the entire archipelago. This finding suggests that 90 m of depth is a stronger determinant of brachyuran assemblage structure than the latitudinal, environmental, or anthropogenic gradients across the entire span of the Hawaiian Islands.
-
+Investigations into the environmental and anthropogenic factors that shape coral reef communities have been historically limited both in depth range and taxonomic scope. Despite high biodiversity and the recognized importance of mesophotic habitats and due to logistical challenges, previous studies have focused largely on fishes and corals and the shallowest ~30 m of their depth ranges. Here, we examine the variability patterns of brachyuran crabs recovered from Autonomous Reef Monitoring Structures across the ~2,500 km Hawaiian Archipelago and ~90 m of depth. We examine the effects of a suite of environmental, ecological, and anthropogenic factors (latitude, longitude, site depth, deployment years, chlorophyll-A, sea surface temperature, island slope, coral cover, potential larval immigration, cumulative human impacts) on shallow (8--17 m) crab assemblages and compare them with those sampled along a shallow-to-mesophotic depth gradient (12--90 m) on O&#x02BB;ahu. Shallow assemblage structure was significantly different between the inhabited Main and relatively pristine Northwest Hawaiian Islands and significantly associated with human impacts, chlorophyll-A, sea-surface temperature, island slope, potential larval immigration, and depth. Despite this variation, community differences along the depth gradient on O&#x02BB;ahu alone were greater than among the shallow assemblages across the entire archipelago. This finding suggests that 90 m of depth is a stronger determinant of brachyuran assemblage structure than the latitudinal, environmental, or anthropogenic gradients across the entire span of the Hawaiian Islands.
 
 # Introduction {-}
 
@@ -1470,12 +1469,13 @@ cd <- crabs_reduced_data %>%
 
 # run CAP analysis, taking care of negative eigenvalues where necessary
 cap_depth <- CAPdiscrim(otus ~ sample_group, data=cd, dist="bray", axes=2, m=0, add=TRUE)
-# # calculate proportion of explained variance
+# calculate proportion of explained variance
 cap_var <- cap_depth$manova$Eigenvalues / sum(cap_depth$manova$Eigenvalues)
 cap_var <- list(x = cap_var[1], y = cap_var[2])
 ```
-```{r fig-cap-reduced, fig.cap="Reduced dataset CAP ordination of crab communities by island group and depth zone. Samples were deployed only during the years 2010--2013", results="asis", dev="svg", fig.width=9, fig.height=6, dependson="cap-analysis-reduced"}
+```{r fig-cap-reduced, fig.cap="CAP ordination of crab communities by island group and depth zone showing only samples deployed during the years 2010--2013.", results="asis", dev="svg", fig.width=9, fig.height=6, dependson="cap-analysis-reduced"}
 # make the sample group look nice
+# (possibly already defined above, but let's do it here just for good measure)
 nice <- function(s) {
   str_replace(s,"shallow","Shallow") %>%
     str_replace("main","(MHI)") %>%
