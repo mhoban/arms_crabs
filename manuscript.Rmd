@@ -704,7 +704,7 @@ deep_spp <- s %>%
   pull(display_species) %>%
   unique()
 ```
-Out of the `r all_summary$taxonomy_breakdown$families` families recovered, `r fam['shallow']` were exclusive to shallow ARMS recovered from `r dr(cc$crabs_shallow_untransformed)` m and `r fam['deep']` were exclusive to units $\geq$ 30 m (`r format_list(deep_fams)`; [@tbl:family_depth_table_s]). `r str_to_sentence(english(gen['shallow']))` genera were found exclusively shallow and `r gen['deep']` exclusively deep (`r format_list(deep_gens)`; [@tbl:genus_depth_table_s]). `r str_to_sentence(english(spp['shallow']))` distinct taxa (including those collapsed to genus or family) were exclusive to shallow ARMS units and `r spp['deep']` were found only deep (`r format_list(deep_spp)`; [@tbl:species_depth_table_s]).
+Out of the `r all_summary$taxonomy_breakdown$families` families recovered, `r fam['shallow']` were exclusive to shallow ARMS recovered from `r dr(cc$crabs_shallow_untransformed)` m and `r fam['deep']` were exclusive to units $\geq$ 30 m (`r format_list(deep_fams)`; [@tbl:family_depth_table_s]). `r str_to_sentence(english(gen['shallow']))` genera were found exclusively shallow and `r gen['deep']` exclusively deep (`r format_list(deep_gens)`; [@tbl:genus_depth_table_s]). `r str_to_sentence(english(spp['shallow']))` distinct taxa (including those collapsed to genus or family) were exclusive to shallow ARMS units and `r spp['deep']` were found only deep (`r format_list(deep_spp)`; [@tbl:species_depth_table_s]). For a more in-depth taxonomic treatment of the assemblage composition of mesophotic vs. shallow ARMS units, see Hurley et al. [-@hurleyAssessmentShallowMesophotic2016].
 
 ## Alpha diversity {-}
 
@@ -991,11 +991,13 @@ cat("{#fig:fig_cap}")
 <br><br>
 
 # Discussion {-}
-The Hawaiian Archipelago is among the most remote oceanic island chains on the planet and encompasses a range of gradients (anthropogenic, biotic, abiotic), making it an ideal natural laboratory to study the impacts of various drivers of species assemblages across space. Human activities are considerably higher in the populated MHI than in the protected and remote NWHI [@selkoeEvaluatingAnthropogenicThreats2008; @selkoeMapHumanImpacts2009; @selkoeDNACoralReef2016]. Although we did not consider the effects of individual impacts here, an index representing *cumulative* anthropogenic impacts was among the top drivers of shallow brachyuran community structure, similar to findings in previous work examining genetic diversity as it relates to species richness and habitat area, quality, and stability across the archipelago [@selkoeDNACoralReef2016]. The next-most significant driver, chlorophyll-A, can be used as a proxy for primary productivity. Productivity gradients across the Hawaiian Archipelago coincide with differences in coral reef community composition [@selkoeDNACoralReef2016], endemic reef fish dominance [@friedlanderDominanceEndemicsReef2020], survival rates of top predators [@bakerEffectVariableOceanic2007], and island geomorphology [@goveNearislandBiologicalHotspots2016]. Although not a significant factor in our model, coral cover and species composition are thought to affect patterns of benthic assemblages. Due to the limited availability of datasets covering our entire study area, our model only included coral cover at the island scale, but previous work has shown that coral species composition does not vary considerably across the archipelago [@griggCommunityStructureSuccession1983]. Crab communities from Lalo (French Frigate Shoals), which was found to harbor the highest coral species diversity [@griggCommunityStructureSuccession1983], did not group separately from the rest of our samples ([@fig:fig_cap]). Given the prevalence in our model of significant factors known to be important influencers of marine communities in Hawai&#x02BB;i, it is not surprising that we find the same top drivers of community structure for brachyuran crabs, one of the primary taxonomic groups inhabiting coral reefs. What is surprising---given the maximum vertical separation among shallow ARMS units of `r diff(range(cc$crab_data_shallow_unscaled$depth))` m---is the consistent significance of depth as a driver of community composition across these gradients.
+The Hawaiian Archipelago is among the most remote oceanic island chains on the planet and encompasses a range of gradients (anthropogenic, biotic, abiotic), making it an ideal natural laboratory to study the impacts of various drivers of species assemblages across space. Human activities are considerably higher in the populated MHI than in the protected and remote NWHI [@selkoeEvaluatingAnthropogenicThreats2008; @selkoeMapHumanImpacts2009; @selkoeDNACoralReef2016]. Although we did not consider the effects of individual impacts here, an index representing *cumulative* anthropogenic impacts was among the top drivers of shallow brachyuran community structure, similar to findings in previous work examining genetic diversity as it relates to species richness and habitat area, quality, and stability across the archipelago [@selkoeDNACoralReef2016]. The next-most significant driver, chlorophyll-A, can be used as a proxy for primary productivity. Productivity gradients across the Hawaiian Archipelago coincide with differences in coral reef community composition [@selkoeDNACoralReef2016], endemic reef fish dominance [@friedlanderDominanceEndemicsReef2020], survival rates of top predators [@bakerEffectVariableOceanic2007], and island geomorphology [@goveNearislandBiologicalHotspots2016]. Although not a significant factor in our model, coral cover and species composition are thought to affect patterns of benthic assemblages. Due to the limited availability of datasets covering our entire study area, our model only included coral cover at the island scale, but previous work has shown that coral species composition does not vary considerably across the archipelago (aside from the presence of *Acropora* in the NWHI) [@griggCommunityStructureSuccession1983]. Crab communities from Lalo (French Frigate Shoals), which was found to harbor the highest coral species diversity [@griggCommunityStructureSuccession1983], did not group separately from the rest of our samples ([@fig:fig_cap]). Given the prevalence in our model of significant factors known to be important influencers of marine communities in Hawai&#x02BB;i, it is not surprising that we find the same top drivers of community structure for brachyuran crabs, one of the primary taxonomic groups inhabiting coral reefs. What is surprising---given the maximum vertical separation among shallow ARMS units of `r diff(range(cc$crab_data_shallow_unscaled$depth))` m---is the consistent significance of depth as a driver of community composition across these gradients.
 
-Although our shallow-water ARMS units were deployed within a narrow depth range (`r dr(cc$crabs_shallow_untransformed)` m), depth still emerged as a significant and consistent driver of community variation among these units. Similar fine-scale depth patterns have been found in previous studies, both using molecular [e.g., @desouzaImportanceDepthTemperature2023; @westEDNAMetabarcodingSurvey2020] and traditional survey methods [e.g., @williamsBenthicCommunitiesTwo2013; @srinivasanDepthDistributionsCoral2003], but our results recover them alongside multiple other geographic and environmental gradients. Depth in and of itself is unlikely to affect marine community composition and oceanographic factors with well-known depth profiles (e.g., temperature, oxygen, nutrients, etc.) are not expected to vary dramatically across such a narrow depth range (\< 10 m), although internal waves can deliver variable temperatures across shallow reefs [@storlazziInternalTidesCan2020; @wyattHeatAccumulationCoral2020] and fine-scale habitat variability among sites may also influence the community differences we found [@steyaertRemoteReefCryptobenthic2022]. Unfortunately, we lack high resolution environmental data at depth for individual deployments, and thus cannot unravel the co-varying factor(s) associated with the depth effects we observed for shallow assemblages. Regardless, given its significance across both narrow (\< 10 m) and wider (90 m) depth ranges sampled here, a factor associated with depth is clearly an important driver for cryptobenthic crab communities across the Hawaiian Archipelago. As brachyurans are a ubiquitous and important component of coral reef communities [@reynsPatternsProcessesBrachyuran1999; @lasleyjrPhylogeneticRelationshipsUbiquitous2015; @hazeriLatitudinalSpeciesDiversity2019], these findings are likely to apply more broadly as well.
+Although our shallow-water ARMS units were deployed within a narrow depth range (`r dr(cc$crabs_shallow_untransformed)` m), depth still emerged as a significant and consistent driver of community variation among these units. Similar fine-scale depth patterns have been found in previous studies, both using molecular [e.g., @desouzaImportanceDepthTemperature2023; @westEDNAMetabarcodingSurvey2020] and traditional survey methods [e.g., @williamsBenthicCommunitiesTwo2013; @srinivasanDepthDistributionsCoral2003], but our results recover them alongside numerous other geographic and environmental gradients. Depth in and of itself is unlikely to affect marine community composition and oceanographic factors with well-known depth profiles (e.g., temperature, oxygen, nutrients, etc.) are not expected to vary dramatically across such a narrow depth range (\< 10 m), although internal waves can deliver variable temperatures across shallow reefs [@storlazziInternalTidesCan2020; @wyattHeatAccumulationCoral2020] and fine-scale habitat variability among sites may also influence the community differences we found [@steyaertRemoteReefCryptobenthic2022]. Unfortunately, we lack high resolution environmental data at depth for individual deployments, and thus cannot unravel the co-varying factor(s) associated with the depth effects we observed for shallow assemblages. Regardless, given its significance across both narrow (\< 10 m) and wider (90 m) depth ranges sampled here, a factor associated with depth is clearly an important driver for cryptobenthic crab communities across the Hawaiian Archipelago. As brachyurans are a ubiquitous and important component of coral reef communities [@reynsPatternsProcessesBrachyuran1999; @lasleyjrPhylogeneticRelationshipsUbiquitous2015; @hazeriLatitudinalSpeciesDiversity2019], these findings are likely to apply more broadly as well.
 
-While depth was a significant driver of community composition among shallow-water ARMS units ([@fig:fig_dbrda; @tbl:rda_table_s]), its influence was considerably more striking when comparing shallow to mesophotic samples. In our CAP ordination, all shallow communities across the archipelago clustered separately from the deep samples $\geq$ 30 m at the single island of O&#x02BB;ahu ([@fig:fig_cap]). Additionally, the two deepest sampled depths (60 m and 90 m) clustered apart from 30 m. According to this analysis, there was more community variation among samples spanning 90 m of depth on a single island than across ~2,500 km of shallow habitat experiencing multiple gradients of environmental, ecological, and anthropogenic influence. Shallow communities from O&#x02BB;ahu share more affinity with Hōlanikū (~2,200 km away) than they do with O&#x02BB;ahu communities at 90 m depth ([@fig:fig_cap]). The ordination also revealed two distinct groups within the mesophotic samples: one comprising the 30 m samples and the other the 60 m and 90 m samples. These two groups correspond with the upper and lower mesophotic zones, respectively [@kahngCommunityEcologyMesophotic2010; @rochaMesophoticCoralEcosystems2018; but see @pyleMesophoticCoralEcosystems2019]. ARMS units from the upper mesophotic zone (~30--45 m), which has often been considered an extension of shallow reefs, lie closer to shallow O&#x02BB;ahu units. Conversely, the lower mesophotic (~60--150 m), which is primarily thought to constitute a unique community, can be seen in the more tightly- and separately-grouped cluster of units from 60 m and 90 m. This pattern of community transition from shallow to mesophotic reefs is consistent with what has been shown for various other taxonomic groups [@lesserGlobalCommunityBreaks2019; @rochaMesophoticCoralEcosystems2018], lending support to the hypothesis that there may be broad-scale depth-based assembly rules for coral reef communities.
+While depth was a significant driver of community composition among shallow-water ARMS units ([@fig:fig_dbrda; @tbl:rda_table_s]), its influence was considerably more striking when comparing shallow to mesophotic samples. In our CAP ordination, all shallow communities across the archipelago clustered separately from the deep samples $\geq$ 30 m at the single island of O&#x02BB;ahu ([@fig:fig_cap]). Additionally, the two deepest sampled depths (60 m and 90 m) clustered apart from 30 m. According to this analysis, there was more community variation among samples spanning 90 m of depth on a single island than across ~2,500 km of shallow habitat experiencing multiple gradients of environmental, ecological, and anthropogenic influence. Shallow communities from O&#x02BB;ahu share more affinity with Hōlanikū (~2,200 km away) than they do with O&#x02BB;ahu communities at 90 m depth ([@fig:fig_cap]). One potential weakness of our dataset is the broad timescale over which ARMS units were deployed ([@tbl:arms_table]). However, the majority of our ARMS units were deployed over the periods of 2010--2012 or 2010--2013, with an overlap of two years. A reduced version of the CAP ordination using only those overlapping deployments retains the same overall patterns as the full ordination, with the primary difference being the more pronounced separation among mesophotic assemblages ([@fig:fig_cap_reduced]).
+
+The ordination also revealed two distinct groups within the mesophotic samples: one comprising the 30 m samples and the other the 60 m and 90 m samples. These two groups correspond with the upper and lower mesophotic zones, respectively [@kahngCommunityEcologyMesophotic2010; @rochaMesophoticCoralEcosystems2018; but see @pyleMesophoticCoralEcosystems2019]. ARMS units from the upper mesophotic zone (~30--45 m), which has often been considered an extension of shallow reefs, lie closer to shallow O&#x02BB;ahu units. Conversely, the lower mesophotic (~60--150 m), which is primarily thought to constitute a unique community, can be seen in the more tightly- and separately-grouped cluster of units from 60 m and 90 m. This pattern of community transition from shallow to mesophotic reefs is consistent with what has been shown for various other taxonomic groups [@lesserGlobalCommunityBreaks2019; @rochaMesophoticCoralEcosystems2018], lending support to the hypothesis that there may be broad-scale depth-based assembly rules for coral reef communities.
 
 In addition to community composition, mesophotic samples also exhibited alpha diversity differences. Effective Simpson diversity was significantly higher in deep communities (for comparisons among all islands and solely within the MHI, but not exclusively at O&#x02BB;ahu) ([@fig:fig_alpha; @fig:fig_alpha_main]). This pattern is in contrast to observations that biodiversity often decreases with depth [@pyleComprehensiveInvestigationMesophotic2016; @kahngCommunityEcologyMesophotic2010], although the differences we found were slight and our findings may be influenced by differences in habitat availability across depth zones (especially of the habitat types ARMS are designed to mimic).
 
@@ -1032,7 +1034,7 @@ Specimens used in this study were collected under Hawai&#x02BB;i Division of Aqu
 All data import and processing code for environmental variables used in the dbRDA model can be found in the file `get-data.R` from the associated github repository. Details for specific datasets are given below.
 
 ### Processing of satellite-derived environmental data
-Level-3 mapped (4 km grid-size) sea-surface temperature (SST) and chlorophyll-A (chl-A) data were retrieved from NASA's Physical Oceanography Distributed Active Archive Center [PO.DAAC; @nasaobpgMODISAquaGlobal2020] and Ocean Biology Distributed Active Archive Center [OB.DAAC; @nasagoddardspaceflightcenterModerateresolutionImagingSpectroradiometer2022] respectively. Monthly summary datasets were downloaded for the period of 2009--2016 and averaged over ARMS unit soaking periods (e.g. 2009--2011, 2010--2012, etc.). Values (SST or chl-A) were extracted for the geographic coordinates of each sampling site from the averaged dataset for the relevant soaking period. Original raw monthly-average datasets can be retrieved from the NASA ocean data repository at [https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/](https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/)`<data_filename>`, where data filenames are formatted as `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.CHL.chlor_a.4km.nc'` or `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.SST.sst.4km.nc'` (NASA ocean data repository login credentials are required).
+Level-3 mapped (4 km grid-size) sea-surface temperature (SST) and chlorophyll-A (chl-A) data were retrieved from NASA's Physical Oceanography Distributed Active Archive Center (PO.DAAC [@nasaobpgMODISAquaGlobal2020]) and Ocean Biology Distributed Active Archive Center (OB.DAAC [@nasagoddardspaceflightcenterModerateresolutionImagingSpectroradiometer2022]) respectively. Monthly summary datasets were downloaded for the period of 2009--2016 and averaged over ARMS unit soaking periods (e.g. 2009--2011, 2010--2012, etc.). Values (SST or chl-A) were extracted for the geographic coordinates of each sampling site from the averaged dataset for the relevant soaking period. Original raw monthly-average datasets can be retrieved from the NASA ocean data repository at [https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/](https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/)`<data_filename>`, where data filenames are formatted as `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.CHL.chlor_a.4km.nc'` or `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.SST.sst.4km.nc'` (NASA ocean data repository login credentials are required).
 
 ### Processing of cumulative human impacts data
 Gridded cumulative human impacts raster data calculated by Halpern et al [-@halpernRecentPaceChange2019] was downloaded from the Knowledge Network for Biocomplexity (KNB) repository [@frazierRecentPaceChange2019]. Human impacts datasets were downloaded for each available year in this study (2009--2013) and averaged over ARMS unit soaking periods (as above). Cumulative impacts data was only available through 2013, so we used the combined average of all available years for the 2013--2016 soaking period. Additionally, as the availability of data points at individual sampling site coordinates was highly variable, we averaged impact scores across sites within islands.
@@ -1447,6 +1449,85 @@ ggplot(pw1) +
   scale_x_discrete(position="top") +
   scale_y_discrete(limits=rev)
 cat("{#fig:fig_pairwise}")
+```
+
+\newpage
+
+```{r cap-analysis-reduced,dependson="init",echo=FALSE,message=FALSE,warning=FALSE,results="hide"}
+# reduce crab data to only those deployed from 2010--2013
+crabs_reduced <- prune_samples(
+  with(sample_tibble(cc$crabs),deployment_year == 2010 & recovery_year %in% c(2012,2013)),
+  cc$crabs
+)
+# get sample data
+crabs_reduced_data <- sample_tibble(crabs_reduced)
+
+# get otu table
+otus <- otu_table(crabs_reduced) %>%
+  as.data.frame()
+# get sample data
+cd <- crabs_reduced_data %>%
+  mutate(sample_group = factor(sample_group,ordered=FALSE)) %>%
+  as.data.frame()
+
+# run CAP analysis, taking care of negative eigenvalues where necessary
+cap_depth <- CAPdiscrim(otus ~ sample_group, data=cd, dist="bray", axes=2, m=0, add=TRUE)
+# # calculate proportion of explained variance
+cap_var <- cap_depth$manova$Eigenvalues / sum(cap_depth$manova$Eigenvalues)
+cap_var <- list(x = cap_var[1], y = cap_var[2])
+```
+```{r fig-cap-reduced, fig.cap="Reduced dataset CAP ordination of crab communities by island group and depth zone. Samples were deployed only during the years 2010--2013", results="asis", dev="svg", fig.width=9, fig.height=6, dependson="cap-analysis-reduced"}
+# make the sample group look nice
+nice <- function(s) {
+  str_replace(s,"shallow","Shallow") %>%
+    str_replace("main","(MHI)") %>%
+    str_replace("nwhi","(NWHI)") %>%
+    str_replace("(^[0-9]+)","O‘ahu \\1") %>%
+    str_split("((?<=[0-9])(?=[a-zA-Z]))|(_)") %>%
+    map_chr(~str_c(.x,collapse=" "))
+}
+
+# create tibble of cap results and join in sample data
+pcap_reduced <- cap_depth$x %>%
+  as_tibble(rownames="sample") %>%
+  left_join(cd,by="sample") %>%
+  mutate(
+    sample_group = nice(sample_group),
+    sample_group = fct_reorder(sample_group,depth)
+  )
+
+# get centroids of each point cluster
+centroids_reduced <- pcap_reduced %>% group_by(sample_group) %>%
+  summarise(LD1=mean(LD1),LD2=mean(LD2))
+# make an oahu/not oahu factor
+pcap_reduced <- pcap_reduced %>%
+  mutate(
+    oahu = factor(
+      case_when(
+        island == "Oahu" ~ "oahu",
+        # island == "French Frigate Shoals" ~ "ffs",
+        .default = "noahu"
+      ),
+      levels = c("oahu","noahu")
+    )
+  )
+
+# plot the thing
+ggplot(pcap_reduced,aes(x=LD1,y=LD2,fill=sample_group)) +
+  stat_ellipse(geom="polygon",level=0.95,alpha=0.1,show.legend = FALSE) +
+  geom_point(mapping=aes(shape=oahu),color="black",size=5)  +
+  geom_label_repel(data=centroids_reduced,aes(label=sample_group), color="white", show.legend = FALSE) +
+  # scale_shape_manual(values=c("oahu" = 23, "ffs" = 22, "noahu" = 21),name="Island", labels=c("noahu"="Other islands","oahu"="O‘ahu","ffs"="Lalo (French Frigate Shoals)" )) +
+  scale_shape_manual(values=c("oahu" = 23, "noahu" = 21),name="Island", labels=c("noahu"="Other islands","oahu"="O‘ahu")) +
+  scale_fill_manual(values=sample_depth_pal,name="Sample group") +
+  guides(
+    fill=guide_legend(override.aes=list(shape=21)),
+    shape=guide_legend(override.aes=list(fill="black"))
+  ) +
+  xlab(str_glue("Linear discriminant 1 [{pc(cap_var$x,0.1)}]")) +
+  ylab(str_glue("Linear discriminant 2 [{pc(cap_var$y,0.1)}]")) +
+  plotz_theme()
+cat("{#fig:fig_cap_reduced}")
 ```
 
 \newpage
