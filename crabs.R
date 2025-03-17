@@ -374,9 +374,12 @@ sample_summary <- function(ps,top_n=5,taxonomy=NULL) {
   ss <- list() 
   
   # make otu lookup table
-  otu_lookup <- tax_table(ps) %>%
-    as.data.frame() %>%
-    as_tibble(rownames="otu") %>%
+  otu_lookup <- ps %>%
+    taxa_tibble(otu_col = "otu") %>%
+    mutate(species = as.character(case_when(
+      as.logical(complex) ~ str_glue('"{species}"'),
+      .default = species
+    ))) %>%
     select(otu,species) %>%
     deframe()
   
@@ -432,6 +435,7 @@ sample_summary <- function(ps,top_n=5,taxonomy=NULL) {
     slice(match(ss$top_otus,otu)) %>%
     mutate(
       disp = case_when(
+        as.logical(complex) & taxon_level == "species" ~ str_glue("\"{display_species}\" {authority}"),
         taxon_level == "species" ~ str_glue("{display_species} {authority}"),
         .default = display_species
       )

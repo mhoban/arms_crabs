@@ -40,8 +40,8 @@ crabs_collapsed <- crabs %>%
   pivot_wider(names_from = "otu", values_from = "count", values_fn = sum)
 
 # make sure the taxonomy table is unique
-taxonomy_collapsed <- taxonomy_collapsed %>% select(otu,taxon_level:species) %>%
-  distinct(otu,taxon_level,family,genus,species)
+taxonomy_collapsed <- taxonomy_collapsed %>% select(otu,taxon_level:species,complex) %>%
+  distinct(otu,taxon_level,family,genus,species,complex)
 
 # save the new collapsed tables
 dir_create(here("data","generated"))
