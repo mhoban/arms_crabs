@@ -3,6 +3,7 @@ DOCX_FILES := output/$(strip $(patsubst %.Rmd, %.docx, $(wildcard *.Rmd)))
 MD_FILES := output/$(strip $(patsubst %.Rmd, %.Rmd.md, $(wildcard *.Rmd)))
 R_FILES := crabs.R lib/CAPdiscrim.R collapse_taxonomy.R
 TABLES = $(wildcard data/tables/*.csv)
+IMAGES = $(wildcard data/images/*.png)
 REFDOC = resources/ref.docx
 CITES = references/citations.json
 CITESTYLE = references/style.csl
@@ -32,7 +33,7 @@ open: docx
 
 docx: $(DOCX_FILES)
 
-output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE) $(R_FILES)
+output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE) $(R_FILES) $(IMAGES)
 	@echo building $@
 	@R --slave -e 'knitr::knit("$<","output/$<.md")'
 	@pandoc +RTS -K512m -RTS --filter=pandoc-crossref \
