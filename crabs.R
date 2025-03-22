@@ -363,6 +363,15 @@ setup_crabs <- function() {
   return(cc)
 }
 
+# make a species be cf.
+cf_species <- function(spp,deitalicize=TRUE) {
+  if (deitalicize) {
+    str_replace(spp," ","* cf. *")
+  } else {
+    str_replace(spp," "," cf. ")
+  }
+}
+
 sample_summary <- function(ps,top_n=5,taxonomy=NULL) {
   ss <- list()
 
@@ -370,7 +379,7 @@ sample_summary <- function(ps,top_n=5,taxonomy=NULL) {
   otu_lookup <- ps %>%
     taxa_tibble(otu_col = "otu") %>%
     mutate(species = as.character(case_when(
-      as.logical(complex) ~ str_glue('"{species}"'),
+      as.logical(complex) ~ cf_species(species),
       .default = species
     ))) %>%
     select(otu,species) %>%
@@ -428,7 +437,7 @@ sample_summary <- function(ps,top_n=5,taxonomy=NULL) {
     slice(match(ss$top_otus,otu)) %>%
     mutate(
       disp = case_when(
-        as.logical(complex) & taxon_level == "species" ~ str_glue("\"{display_species}\" {authority}"),
+        as.logical(complex) & taxon_level == "species" ~ str_glue("{cf_species(display_species)} {authority}"),
         taxon_level == "species" ~ str_glue("{display_species} {authority}"),
         .default = display_species
       )
