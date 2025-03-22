@@ -25,17 +25,17 @@ export OSASCRIPT
 force-open: clean docx
 	@echo "$$OSASCRIPT" | osascript
 	@open $(DOCX_FILES)
-	
+
 open: docx
 	@echo "$$OSASCRIPT" | osascript
 	@open $(DOCX_FILES)
 
-docx: $(DOCX_FILES) 
+docx: $(DOCX_FILES)
 
 output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE) $(R_FILES)
 	@echo building $@
-	@R --slave -e 'knitr::knit("$<","output/$<.md")' 
-	@pandoc +RTS -K512m -RTS --filter=resources/pandoc-crossref \
+	@R --slave -e 'knitr::knit("$<","output/$<.md")'
+	@pandoc +RTS -K512m -RTS --filter=pandoc-crossref \
 		--citeproc  output/$<.md  --to docx \
 		--from markdown+autolink_bare_uris+tex_math_single_backslash \
 		--output $@ --lua-filter resources/pagebreak.lua \
