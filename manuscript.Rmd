@@ -301,11 +301,11 @@ print_table <- function(tbl,id="",caption="",hdr_case="sentence",hide=character(
 
   caption <- sprintf("%s {#tbl:%s}",caption,id)
 
-  table_str <- pander::pandoc.table.return(
+  table_str <- pandoc.table.return(
     tbl,
     keep.line.breaks=TRUE,
     caption=NULL,
-    style="grid",
+    style="multiline",
     split.cells=cell_width,
     split.tables=Inf,
     justify='left',
@@ -949,7 +949,7 @@ We assessed variation among groups using `betadisper` and `adonis2`. These funct
 
 ## Environmental variables {-}
 
-We assembled potential drivers of brachyuran crab community structure from previous studies [@selkoeDNACoralReef2016; @halpernRecentPaceChange2019], NOAA's National Coral Reef Monitoring Program (NCRMP), the Pacific Islands Ocean Observing System (PacIOOS), and MODIS satellite data products compiled by NASA's Physical Oceanography/Ocean Biology Distributed Active Archive Centers [@nasagoddardspaceflightcenterModerateresolutionImagingSpectroradiometer2022; @nasaobpgMODISAquaGlobal2020]. Variables were either intrinsic (site depth, latitude, longitude, island slope) or derived from remote sensing and/or modeling (chlorophyll-A, sea-surface temperature, coral cover, potential larval immigration, cumulative human impacts) ([@tbl:tbl_env], Supplementary [@tbl:tbl_supp_arms_metadata]). Sea-surface temperature (SST) and chlorophyll-A values were calculated by averaging monthly means across the duration of the soaking period for each deployment using AQUA MODIS 4 km-resolution gridded datasets. The cumulative human impacts index, a dimensionless numerical value representing spatially-explicit cumulative anthropogenic impacts on various marine ecosystems, is based on a synthesis of a combination of "high resolution, annual data on the intensity of 14 human stressors and their impact on 21 marine ecosystems over 11 years (2003--2013)" [@halpernGlobalMapHuman2008; @halpernRecentPaceChange2019]. The index of potential larval immigration was imported from [@selkoeDNACoralReef2016] and represents the potential of a given island to act as a destination for larval settlement. It is an "estimate of in-closeness centrality" from a biophysical model simulating larval dispersal in the Hawaiian Islands [@selkoeDNACoralReef2016 supp. mat.]. For details regarding data import, preparation, and synthesis, see Supplementary Information. Due to logistical and dataset limitations, environmental/ecological drivers were only available for shallow (\< 30 m) samples.
+We assembled potential drivers of brachyuran crab community structure from previous studies [@selkoeDNACoralReef2016; @halpernRecentPaceChange2019], NOAA's National Coral Reef Monitoring Program (NCRMP), the Pacific Islands Ocean Observing System (PacIOOS), and MODIS satellite data products compiled by NASA's Physical Oceanography/Ocean Biology Distributed Active Archive Centers [@nasaCHL; @nasaSST]. Variables were either intrinsic (site depth, latitude, longitude, island slope) or derived from remote sensing and/or modeling (chlorophyll-A, sea-surface temperature, coral cover, potential larval immigration, cumulative human impacts) ([@tbl:tbl_env], Supplementary [@tbl:tbl_supp_arms_metadata]). Sea-surface temperature (SST) and chlorophyll-A values were calculated by averaging monthly means across the duration of the soaking period for each deployment using AQUA MODIS 4 km-resolution gridded datasets. The cumulative human impacts index, a dimensionless numerical value representing spatially-explicit cumulative anthropogenic impacts on various marine ecosystems, is based on a synthesis of a combination of "high resolution, annual data on the intensity of 14 human stressors and their impact on 21 marine ecosystems over 11 years (2003--2013)" [@halpernGlobalMapHuman2008; @halpernRecentPaceChange2019]. The index of potential larval immigration was imported from [@selkoeDNACoralReef2016] and represents the potential of a given island to act as a destination for larval settlement. It is an "estimate of in-closeness centrality" from a biophysical model simulating larval dispersal in the Hawaiian Islands [@selkoeDNACoralReef2016 supp. mat.]. For details regarding data import, preparation, and synthesis, see Supplementary Information. Due to logistical and dataset limitations, environmental/ecological drivers were only available for shallow (\< 30 m) samples.
 
 # References {-}
 
@@ -983,7 +983,7 @@ The authors declare no competing interests.
 print_table(rda_table,"tbl_rda","Significant marginal terms in the dbRDA analysis of crab community variation across the Hawaiian Archipelago",hdr_case="none",accuracy=0.001)
 ```
 
-<br><br>
+\newpage
 
 ```{r tbl-arms,results="asis", dependson="init"}
 arms_schedule <- cc$crabs_untransformed %>%
@@ -1018,13 +1018,18 @@ arms_schedule <- cc$crabs_untransformed %>%
 print_table(arms_schedule,"tbl_arms","ARMS unit deployment schedule by island (number of units). Mesophotic deployments apear in bold.",accuracy=1)
 ```
 
-<br><br>
+\newpage
 
 ```{r tbl-env,results="asis", dependson="init"}
-print_table(model_terms,"tbl_env","Potential environmental drivers of crab community structure across the Hawaiian Archipelago",hide="variable")
+mt <- model_terms %>%
+	mutate(
+		Description = str_wrap(Description,60),
+		# `Environmental Driver` = str_pad(`Environmental Driver`,30,pad="-",side="right"),
+		# `Data resolution` = str_pad(`Data resolution`,20,pad="-",side="right"),
+		Source = str_wrap(Source,30)
+	)
+print_table(mt,"tbl_env","Potential environmental drivers of crab community structure across the Hawaiian Archipelago",hide="variable")
 ```
-
-
 
 \newpage
 
@@ -1035,7 +1040,7 @@ print_table(model_terms,"tbl_env","Potential environmental drivers of crab commu
 All data import and processing code for environmental variables used in the dbRDA model can be found in the file `get-data.R` from the associated github repository. Details for specific datasets are given below.
 
 ### Processing of satellite-derived environmental data
-Level-3 mapped (4 km grid-size) sea-surface temperature (SST) and chlorophyll-A (chl-A) data were retrieved from NASA's Physical Oceanography Distributed Active Archive Center (PO.DAAC [@nasaobpgMODISAquaGlobal2020]) and Ocean Biology Distributed Active Archive Center (OB.DAAC [@nasagoddardspaceflightcenterModerateresolutionImagingSpectroradiometer2022]) respectively. Monthly summary datasets were downloaded for the period of 2009--2016 and averaged over ARMS unit soaking periods (e.g. 2009--2011, 2010--2012, etc.). Values (SST or chl-A) were extracted for the geographic coordinates of each sampling site from the averaged dataset for the relevant soaking period. Original raw monthly-average datasets can be retrieved from the NASA ocean data repository at [https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/](https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/)`<data_filename>`, where data filenames are formatted as `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.CHL.chlor_a.4km.nc'` or `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.SST.sst.4km.nc'` (NASA ocean data repository login credentials are required).
+Level-3 mapped (4 km grid-size) sea-surface temperature (SST) and chlorophyll-A (chl-A) data were retrieved from NASA's Physical Oceanography Distributed Active Archive Center (PO.DAAC [@nasaSST]) and Ocean Biology Distributed Active Archive Center (OB.DAAC [@nasaCHL]) respectively. Monthly summary datasets were downloaded for the period of 2009--2016 and averaged over ARMS unit soaking periods (e.g. 2009--2011, 2010--2012, etc.). Values (SST or chl-A) were extracted for the geographic coordinates of each sampling site from the averaged dataset for the relevant soaking period. Original raw monthly-average datasets can be retrieved from the NASA ocean data repository at [https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/](https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/)`<data_filename>`, where data filenames are formatted as `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.CHL.chlor_a.4km.nc'` or `'AQUA_MODIS.<YYYYmmdd_start>_<YYYYmmdd_end>.L3m.MO.SST.sst.4km.nc'` (NASA ocean data repository login credentials are required).
 
 ### Processing of cumulative human impacts data
 Gridded cumulative human impacts raster data calculated by Halpern et al [-@halpernRecentPaceChange2019] was downloaded from the Knowledge Network for Biocomplexity (KNB) repository [@frazierRecentPaceChange2019]. Human impacts datasets were downloaded for each available year in this study (2009--2013) and averaged over ARMS unit soaking periods (as above). Cumulative impacts data was only available through 2013, so we used the combined average of all available years for the 2013--2016 soaking period. Additionally, as the availability of data points at individual sampling site coordinates was highly variable, we averaged impact scores across sites within islands.

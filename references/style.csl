@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="en-GB">
+  <locale xml:lang="en-GB">
+    <terms>
+      <term name="in">In</term>
+    </terms>
+  </locale>
   <info>
     <title>Scientific Reports</title>
     <id>http://www.zotero.org/styles/nature</id>
@@ -155,6 +160,7 @@
         <choose>
           <if type="chapter paper-conference" match="any">
             <text term="in"/>
+						<text variable="event-title"/>
           </if>
         </choose>
         <text macro="container-title"/>
