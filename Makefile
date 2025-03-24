@@ -46,6 +46,7 @@ output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE) $(R_FILES) $(IMAG
 		--lua-filter=resources/abstract-section.lua \
 		--reference-doc=resources/ref.docx \
 		--lua-filter=resources/multirefs.lua
+	@echo built output/$<.docx
 
 .PHONY: clean
 clean:
