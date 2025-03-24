@@ -49,7 +49,11 @@ chapters: True
 chaptersDepth: 1
 chapDelim: ""
 lofTitle: |
-	# Figure legends {-}
+  # Figure legends {-}
+lofItemTitle: |
+  Fig.
+lofItemTemplate: |
+  $$lofItemTitle$$ $$i$$$$listItemTitleDelim$$ $$t$$
 header-includes:
   - \usepackage{bm}
   - \usepackage{upgreek}
@@ -557,8 +561,26 @@ deep_spp <- s %>%
   left_join(crab_taxonomy_validated,by=c("OTU" = "otu")) %>%
   pull(display_species) %>%
   unique()
+
+ndepths <- cc$crab_data %>%
+  pull(depth_zone) %>%
+  n_distinct()
+
+everywhere <- cc$crabs_untransformed %>%
+  psmelt() %>%
+  filter(Abundance > 0) %>%
+  group_by(OTU,species) %>%
+  summarise(dp = n_distinct(depth_zone)) %>%
+  filter(dp == ndepths) %>%
+  arrange(species) %>%
+  left_join(crab_taxonomy_validated,by=c("OTU" = "otu")) %>%
+  mutate(display_species = as.character(case_when(
+    as.logical(complex) ~ cf_species(display_species),
+    .default = display_species
+  ))) %>%
+  pull(display_species)
 ```
-Out of the `r all_summary$taxonomy_breakdown$families` families recovered, `r fam['shallow']` were exclusive to shallow ARMS recovered from `r dr(cc$crabs_shallow_untransformed)` m and `r fam['deep']` were exclusive to units $\geq$ 30 m (`r format_list(deep_fams)`; Supplementary [@tbl:tbl_supp_family_depth]). `r str_to_sentence(english(gen['shallow']))` genera were found exclusively shallow and `r gen['deep']` exclusively deep (`r format_list(deep_gens)`; Supplementary [@tbl:tbl_supp_genus_depth]). `r str_to_sentence(english(spp['shallow']))` distinct taxa (including those collapsed to genus or family) were exclusive to shallow ARMS units and `r spp['deep']` were found only deep (`r format_list(deep_spp)`; Supplementary [@tbl:tbl_supp_species_depth]). For a more in-depth taxonomic treatment of the assemblage composition of mesophotic vs. shallow ARMS units, see [@hurleyAssessmentShallowMesophotic2016].
+Out of the `r all_summary$taxonomy_breakdown$families` families recovered, `r fam['shallow']` were exclusive to shallow ARMS recovered from `r dr(cc$crabs_shallow_untransformed)` m and `r fam['deep']` were exclusive to units $\geq$ 30 m (`r format_list(deep_fams)`; Supplementary [@tbl:tbl_supp_family_depth]). `r str_to_sentence(english(gen['shallow']))` genera were found exclusively shallow and `r gen['deep']` exclusively deep (`r format_list(deep_gens)`; Supplementary [@tbl:tbl_supp_genus_depth]). `r str_to_sentence(english(spp['shallow']))` distinct taxa (including those collapsed to genus or family) were exclusive to shallow ARMS units and `r spp['deep']` were found only deep (`r format_list(deep_spp)`; Supplementary [@tbl:tbl_supp_species_depth]). Out of the `r ntaxa(cc$crabs)` total recovered taxa, only `r length(everywhere)` were found across all `r ndepths` depth zones (`r format_list(everywhere)`). For a more in-depth taxonomic treatment of the assemblage composition of mesophotic vs. shallow ARMS units, see [@hurleyAssessmentShallowMesophotic2016].
 
 ## Alpha diversity {-}
 
@@ -951,32 +973,7 @@ We assessed variation among groups using `betadisper` and `adonis2`. These funct
 
 We assembled potential drivers of brachyuran crab community structure from previous studies [@selkoeDNACoralReef2016; @halpernRecentPaceChange2019], NOAA's National Coral Reef Monitoring Program (NCRMP), the Pacific Islands Ocean Observing System (PacIOOS), and MODIS satellite data products compiled by NASA's Physical Oceanography/Ocean Biology Distributed Active Archive Centers [@nasaCHL; @nasaSST]. Variables were either intrinsic (site depth, latitude, longitude, island slope) or derived from remote sensing and/or modeling (chlorophyll-A, sea-surface temperature, coral cover, potential larval immigration, cumulative human impacts) ([@tbl:tbl_env], Supplementary [@tbl:tbl_supp_arms_metadata]). Sea-surface temperature (SST) and chlorophyll-A values were calculated by averaging monthly means across the duration of the soaking period for each deployment using AQUA MODIS 4 km-resolution gridded datasets. The cumulative human impacts index, a dimensionless numerical value representing spatially-explicit cumulative anthropogenic impacts on various marine ecosystems, is based on a synthesis of a combination of "high resolution, annual data on the intensity of 14 human stressors and their impact on 21 marine ecosystems over 11 years (2003--2013)" [@halpernGlobalMapHuman2008; @halpernRecentPaceChange2019]. The index of potential larval immigration was imported from [@selkoeDNACoralReef2016] and represents the potential of a given island to act as a destination for larval settlement. It is an "estimate of in-closeness centrality" from a biophysical model simulating larval dispersal in the Hawaiian Islands [@selkoeDNACoralReef2016 supp. mat.]. For details regarding data import, preparation, and synthesis, see Supplementary Information. Due to logistical and dataset limitations, environmental/ecological drivers were only available for shallow (\< 30 m) samples.
 
-# References {-}
-
-<!-- show main bibliography -->
-<div class="multi-refs"></div>
-
-# Acknowledgements {-}
-We thank the NOAA Coral Reef Conservation Program for supporting the deployment and recovery of the shallow ARMS. We thank the UH Mānoa Dive Safety Office (D. Pence, K. Stender, J. Jones, and C.J. Bradley) for installation and retrieval of the mesophotic ARMS. We specially thank K. Flanagan from the UH dive program, whose support was instrumental in the development of the mesophotic ARMS project, and J. Copus, who provided expert mesophotic field support; both were taken too soon. May their memories be a blessing. We thank the members of the ToBo lab, particularly M. Iacchei, C. Ka&#x02BB;apu-Lyons, and Z. Hee, for discussion, support, and their efforts in the disassembly and sorting of ARMS samples on retrieval. This is contribution #xxx from the Hawai&#x02BB;i Institute of Marine Biology and #xxx from the School of Ocean and Earth Science and Technology at the University of Hawai&#x02BB;i.
-
-# Author contributions {-}
-Conceptualization: MLH, KKH, DJS, RJT; Data curation: MLH; Formal Analysis: MLH, KKH; Funding acquisition: KKH, DJS, RJT; Investigation: MLH, KKH, KR, DJS; Methodology: MLH, KKH, DJS, MAT; Project administration: KKH, DJS, RJT; Resources: KR, MAT, RJT; Software: MLH; Supervision: DJS, RJT; Validation: MLH, MAT, RJT; Visualization: MLH, KR; Writing -- original draft: MLH, KKH, RJT; Writing -- review & editing: MLH, KKH, KR, DJS, MAT, RJT
-
-# Data availability statement {-}
-All data and code used to generate this manuscript and its accompanying figures and tables can be found on github at [https://github.com/mhoban/arms_crabs](https://github.com/mhoban/arms_crabs).
-
-# Additional Information {-}
-
-## Funding {-}
-This work was funded through a combination of grants including NSF OCE-1260169, NSF GRFP DGE-1329626, and NSF OCE-2048457. In addition, the NOAA Coral Reef Conservation Program funded the Pacific Reef Assessment and Monitoring Program, which included the shallow ARMS deployment in the Hawaiian Archipelago.
-<!--
-Specimens used in this study were collected under Hawai&#x02BB;i Division of Aquatic Resources Special Activity Permit numbers SAP 2013-47, SAP 2012-63, SAP 2011-01, and SAP 2008-99.
--->
-
-## Competing interests {-}
-The authors declare no competing interests.
-
-\listoffigures
+\newpage
 
 # Tables {-}
 ```{r tbl-rda,results="asis",dependson="rda-analysis"}
@@ -1022,14 +1019,41 @@ print_table(arms_schedule,"tbl_arms","ARMS unit deployment schedule by island (n
 
 ```{r tbl-env,results="asis", dependson="init"}
 mt <- model_terms %>%
-	mutate(
-		Description = str_wrap(Description,60),
-		# `Environmental Driver` = str_pad(`Environmental Driver`,30,pad="-",side="right"),
-		# `Data resolution` = str_pad(`Data resolution`,20,pad="-",side="right"),
-		Source = str_wrap(Source,30)
-	)
+  mutate(
+    Description = str_wrap(Description,60),
+    # `Environmental Driver` = str_pad(`Environmental Driver`,30,pad="-",side="right"),
+    # `Data resolution` = str_pad(`Data resolution`,20,pad="-",side="right"),
+    Source = str_wrap(Source,30)
+  )
 print_table(mt,"tbl_env","Potential environmental drivers of crab community structure across the Hawaiian Archipelago",hide="variable")
 ```
+
+# References {-}
+
+<!-- show main bibliography -->
+<div class="multi-refs"></div>
+
+# Acknowledgements {-}
+We thank the NOAA Coral Reef Conservation Program for supporting the deployment and recovery of the shallow ARMS. We thank the UH Mānoa Dive Safety Office (D. Pence, K. Stender, J. Jones, and C.J. Bradley) for installation and retrieval of the mesophotic ARMS. We specially thank K. Flanagan from the UH dive program, whose support was instrumental in the development of the mesophotic ARMS project, and J. Copus, who provided expert mesophotic field support; both were taken too soon. May their memories be a blessing. We thank the members of the ToBo lab, particularly M. Iacchei, C. Ka&#x02BB;apu-Lyons, and Z. Hee, for discussion, support, and their efforts in the disassembly and sorting of ARMS samples on retrieval. This is contribution #xxx from the Hawai&#x02BB;i Institute of Marine Biology and #xxx from the School of Ocean and Earth Science and Technology at the University of Hawai&#x02BB;i.
+
+# Author contributions {-}
+Conceptualization: MLH, KKH, DJS, RJT; Data curation: MLH; Formal Analysis: MLH, KKH; Funding acquisition: KKH, DJS, RJT; Investigation: MLH, KKH, KR, DJS; Methodology: MLH, KKH, DJS, MAT; Project administration: KKH, DJS, RJT; Resources: KR, MAT, RJT; Software: MLH; Supervision: DJS, RJT; Validation: MLH, MAT, RJT; Visualization: MLH, KR; Writing -- original draft: MLH, KKH, RJT; Writing -- review & editing: MLH, KKH, KR, DJS, MAT, RJT
+
+# Data availability statement {-}
+All data and code used to generate this manuscript and its accompanying figures and tables can be found on github at [https://github.com/mhoban/arms_crabs](https://github.com/mhoban/arms_crabs).
+
+# Additional Information {-}
+
+## Funding {-}
+This work was funded through a combination of grants including NSF OCE-1260169, NSF GRFP DGE-1329626, and NSF OCE-2048457. In addition, the NOAA Coral Reef Conservation Program funded the Pacific Reef Assessment and Monitoring Program, which included the shallow ARMS deployment in the Hawaiian Archipelago.
+<!--
+Specimens used in this study were collected under Hawai&#x02BB;i Division of Aquatic Resources Special Activity Permit numbers SAP 2013-47, SAP 2012-63, SAP 2011-01, and SAP 2008-99.
+-->
+
+## Competing interests {-}
+The authors declare no competing interests.
+
+\listoffigures
 
 \newpage
 
@@ -1170,7 +1194,7 @@ p4 <- ggplot(art) +
 (p1 + p2) / (p3 + p4) &
   plot_annotation(tag_levels = list(letters[1:4])) &
   theme(plot.tag = element_text(face="bold"))
-cat("{#fig:fig_supp_alpha}")
+cat("{#fig:fig_supp_alpha hidden=\"y\"}")
 ```
 
 \newpage
@@ -1296,7 +1320,7 @@ p4 <- ggplot(art) +
 (p1 + p3) / (p2 + p4) &
   plot_annotation(tag_levels = list(letters[1:4])) &
   theme(plot.tag = element_text(face="bold"))
-cat("{#fig:fig_supp_alpha_main}")
+cat("{#fig:fig_supp_alpha_main hidden=\"y\"}")
 ```
 
 
@@ -1365,7 +1389,7 @@ p2 <- ggplot(art) +
 (p1 + p2) &
   plot_annotation(tag_levels = list(letters[1:2])) &
   theme(plot.tag = element_text(face="bold"))
-cat("{#fig:fig_supp_alpha2}")
+cat("{#fig:fig_supp_alpha2 hidden=\"y\"}")
 ```
 
 \newpage
@@ -1385,7 +1409,7 @@ explained <- (pca$sdev^2)/sum(pca$sdev^2)
 
 bp <- cds %>%
   bind_cols(scores(pca)) %>%
-	mutate(island_group = str_to_sentence(island_group))
+  mutate(island_group = str_to_sentence(island_group))
 
 loadings <- pca$rotation %>%
   as_tibble(rownames = "label") %>%
@@ -1411,7 +1435,7 @@ ggplot(bp,aes(x=PC1,y=PC2)) +
   xlab(str_glue("PC1 [{pc(explained[1])}]")) +
   ylab(str_glue("PC2 [{pc(explained[2])}]")) +
   plotz_theme()
-cat("{#fig:fig_supp_pca}")
+cat("{#fig:fig_supp_pca hidden=\"y\"}")
 ```
 
 \newpage
@@ -1463,7 +1487,7 @@ ggplot(pw1) +
   xlab("") + ylab("") +
   scale_x_discrete(position="top") +
   scale_y_discrete(limits=rev)
-cat("{#fig:fig_supp_pairwise}")
+cat("{#fig:fig_supp_pairwise hidden=\"y\"}")
 ```
 
 \newpage
@@ -1500,7 +1524,7 @@ ggplot(dists,aes(x=depth,y=dist,fill=depth)) +
   plotz_theme() +
   xlab("Sampling depth") +
   ylab("Euclidean distance")
-cat("{#fig:fig_supp_euclid}")
+cat("{#fig:fig_supp_euclid hidden=\"y\"}")
 ```
 
 \newpage
@@ -1580,7 +1604,7 @@ ggplot(pcap_reduced,aes(x=LD1,y=LD2,fill=sample_group)) +
   xlab(str_glue("Linear discriminant 1 [{pc(cap_var$x,0.1)}]")) +
   ylab(str_glue("Linear discriminant 2 [{pc(cap_var$y,0.1)}]")) +
   plotz_theme()
-cat("{#fig:fig_supp_cap_reduced}")
+cat("{#fig:fig_supp_cap_reduced hidden=\"y\"}")
 ```
 
 \newpage
