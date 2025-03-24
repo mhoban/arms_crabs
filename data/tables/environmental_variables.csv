@@ -1,10 +1,10 @@
-Environmental Driver,Description,Source,Resolution,variable
-Site depth,Depth at which ARMS units were deployed,NOAA NCRMP,Site,depth
-Latitude,ARMS unit deployment latitude,NOAA NCRMP,Site,lat
-Longitude,ARMS unit deployment longitude,NOAA NCRMP,Site,lon
-Chlorophyll-A,"Satellite-derived sea surface chlorophyll A, averaged over deployment years",OB.DAAC [@NASAOceanBiologyProcessingGroup_2022],Site,chl
-Sea-surface temperature,"Satellite-derived sea surface temparature, averaged over deployment years",PO.DAAC [@https://doi.org/10.5067/modsa-mo9d9],Site,sst
-Island slope,"Bathymetric slope index, defined as the average horizontal distance from shore to the 50 m isobath",PacIOOS,Site,slope
-Coral cover (%),Satellite-derived coral cover. Defined as the number of pixels with more than 10% cover in IKONOS satellite imagery covering the 0--30 m depth range. Expressed as a percentage of the total number of pixels analyzed,Published literature [@selkoeDNACoralReef2016],Island,coral_cover
-Larval connectivity,Incoming centrality metric calculated from modeled larval connectivity estimated from an oceanographic biophysical model parameterized for multiple reef species,Published literature [@selkoeDNACoralReef2016],Island,larval_connectivity
-Human impacts,Dimensionless measure of cumulative human impacts,Published literature [@selkoeEvaluatingAnthropogenicThreats2008; @selkoeMapHumanImpacts2009; @selkoeDNACoralReef2016],Island,human_impact
+Environmental Driver,Description,Source,Data resolution,variable
+Site depth,ARMS unit deployment depths.,NOAA NCRMP,Site,depth
+Latitude,ARMS unit deployment latitude.,NOAA NCRMP,Site,lat
+Longitude,ARMS unit deployment longitude.,NOAA NCRMP,Site,lon
+Chlorophyll-A,"Satellite-derived sea surface chlorophyll-A (4 km resolution), based on monthly means averaged over deployment years.",OB.DAAC [@nasaCHL],Site/Years,chl
+Sea-surface temperature,"Satellite-derived sea surface temparature (4 km resolution), based on monthly means averaged over deployment years.",PO.DAAC [@nasaSST],Site/Years,sst
+Island slope,"Bathymetric slope index, 1000 $\times$ deployment depth (m) divided by the average horizontal distance from shore to the 50 m isobath (m).",PacIOOS,Site,slope
+Coral cover (%),Satellite-derived coral cover. Defined as the number of pixels with more than 10% cover in IKONOS satellite imagery within the 0--30 m isobaths. Expressed as a percentage of the total number of pixels analyzed for each island in the study.,Published literature [@selkoeDNACoralReef2016],Island,coral_cover
+Potential larval immigration,Incoming centrality metric calculated from modelled larval connectivity derived from a biophysical oceanographic model parameterized for a broad selection of Hawaiian marine species.,Published literature [@selkoeDNACoralReef2016],Island,larval_immigration
+Cumulative human impacts,"Dimensionless index of cumulative human impacts to marine ecosystems based on high resolution, annual data on the intensity of 14 human stressors and their impact on 21 marine ecosystems globally over 11 years (2003--2013).",Published literature [@halpernGlobalMapHuman2008; @frazierRecentPaceChange2019; @halpernRecentPaceChange2019],Island/Years,human_impact

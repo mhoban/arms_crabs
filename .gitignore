@@ -48,4 +48,12 @@ resources/import
 
 old/
 data/images
+data/generated
 ignore/
+submission/
+.vscode/
+tmp/
+data/chlorophyll/
+data/impact/
+notes.txt
+data/impacts/

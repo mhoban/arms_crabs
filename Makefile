@@ -1,6 +1,9 @@
 SHELL := bash
 DOCX_FILES := output/$(strip $(patsubst %.Rmd, %.docx, $(wildcard *.Rmd)))
+MD_FILES := output/$(strip $(patsubst %.Rmd, %.Rmd.md, $(wildcard *.Rmd)))
+R_FILES := crabs.R lib/CAPdiscrim.R collapse_taxonomy.R
 TABLES = $(wildcard data/tables/*.csv)
+IMAGES = $(wildcard data/images/*.png)
 REFDOC = resources/ref.docx
 CITES = references/citations.json
 CITESTYLE = references/style.csl
@@ -23,20 +26,31 @@ export OSASCRIPT
 force-open: clean docx
 	@echo "$$OSASCRIPT" | osascript
 	@open $(DOCX_FILES)
-	
+
 open: docx
 	@echo "$$OSASCRIPT" | osascript
 	@open $(DOCX_FILES)
 
-docx: $(DOCX_FILES) 
+docx: $(DOCX_FILES)
 
-output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE)
+output/%.docx: %.Rmd $(TABLES) $(REFDOC) $(CITES) $(CITESTYLE) $(R_FILES) $(IMAGES)
 	@echo building $@
-	@R --slave -e 'rmarkdown::render("$<",output_file="$@")'
+	@R --slave -e 'knitr::knit("$<","output/$<.md")'
+	@pandoc +RTS -K512m -RTS --filter=resources/pandoc-crossref \
+		--citeproc  output/$<.md  --to docx \
+		--from markdown+autolink_bare_uris+tex_math_single_backslash \
+		--output $@ --lua-filter resources/pagebreak.lua \
+		--highlight-style tango --toc-depth=2 \
+		--lua-filter=resources/scholarly-metadata.lua \
+		--lua-filter=resources/author-info-blocks.lua \
+		--lua-filter=resources/abstract-section.lua \
+		--reference-doc=resources/ref.docx \
+		--lua-filter=resources/multirefs.lua
 
 .PHONY: clean
 clean:
 	@echo cleaning up...
 	@$(RM) -f cache/*
 	@$(RM) -f $(DOCX_FILES)
+	@$(RM) -f $(MD_FILES)
 	@$(RM) -f output/figures/*.svg
