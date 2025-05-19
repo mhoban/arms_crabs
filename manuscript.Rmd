@@ -1,5 +1,5 @@
 ---
-title: 'Cryptobenthic reef assemblages are more distinct across a 90 m depth gradient than 2,500 km of shallow marine habitat in the Hawaiian Archipelago'
+title: 'A cryptobenthic reef assemblage is more distinct across a 90 m depth gradient than 2,500 km of shallow marine habitat in the Hawaiian Archipelago'
 author:
   - Mykle L. Hoban:
       institute:
