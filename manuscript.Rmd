@@ -199,6 +199,23 @@ pval <- function(p) {
   )
 }
 
+# get the p-value from an anova output
+apval <- function(aaa, modl_term = NULL) {
+  if (!is(aaa,'anova')) {
+    stop("wrong thing")
+  }
+  m <- suppressWarnings(broom::tidy(aaa)) %>%
+    filter( !term %in% c("Total","Residual") )
+  if (!is.null(modl_term)) {
+    m <- m %>% filter(term == modl_term)
+  }
+  if (nrow(m) > 0) {
+    pval(m$p.value[1])
+  } else {
+    stop("nothing in the model anymore")
+  }
+}
+
 # format permdisp test results
 permdisp <- function(bd,accuracy=0.01,perm=999) {
   a <- anova(bd,permutations=perm) %>%
@@ -803,7 +820,7 @@ deep_dist <- pcap %>%
 distance_t <- t.test(deep_dist,shallow_dist,alternative = "g",var.equal = FALSE)
 oahu_t <- t.test(oahu_dist,shallow_dist,alternative = "g",var.equal = FALSE)
 ```
-Shallow crab community structure was significantly different between island groups (MHI vs. NWHI) (`r permanova(anova_region,0.01)`) as well as among individual islands (`r permanova(anova_island,0.01)`; see Supplementary [@fig:fig_supp_pairwise] for results of pairwise comparisons). There was no significant difference in community dispersion between the MHI and NWHI (`r permdisp(bd_region)`). When mesophotic ($\geq$ 30 m) ARMS units were included, there were significant differences among depth zones (\< 30 m, 30 m, 60 m, 90 m) both for all islands (`r permanova(anova_depth,0.01)`) and samples restricted to O&#x02BB;ahu (`r permanova(anova_depth_oahu,0.01)`), and community dispersion (`r permdisp(bd_depth)`). However, community dispersion was not different among depth zones $\geq$ 30 m (`r permdisp(bd_deep)`). Although crab communities were significantly different among both depth zones and island groups for the complete dataset (`r permanova(anova_both,0.01)`), depth explained `r num(effect_ratio,0.1)` times more variability than island group (based on model $\mathrm{R}^2$).
+Shallow crab assemblages were significantly different between island groups (MHI vs. NWHI; `r apval(anova_region)`) and among individual islands (`r apval(anova_island)`; see Supplementary [@fig:fig_supp_pairwise] for results of pairwise comparisons). There was no significant difference in community dispersion between the MHI and NWHI (`r apval(anova(bd_region,perm=PERM))`) for shallow crab assemblages. Crab assemblages were significantly different among depth zones (\< 30 m, 30 m, 60 m, 90 m) both when comparing shallow assemblages at all islands to deep assemblages on O&#x02BB;ahu (`r apval(anova_depth)`) and when comparing assemblages on O&#x02BB;ahu alone (`r apval(anova_depth_oahu)`). Community dispersion was significantly different among depth zones for comparison among all islands (`r apval(anova(bd_depth,perm=PERM))`), however community dispersion was not different among depth zones $\geq$ 30 m (`r apval(anova(bd_deep,perm=PERM))`). Although crab assemblages were significantly different among both depth zones (`r apval(anova_both,"depth_zone")`) and island groups (`r apval(anova_both,"island_group")`) in a combined model the complete dataset, depth explained `r num(effect_ratio,0.1)` times more variability than island group (based on model term $\mathrm{R}^2$). For detailed descriptions of model results, see Supplementary [@tbl:tbl_supp_stats].
 
 In the CAP analysis of island group and depth zone, ARMS units were correctly reassigned to sample groups `r pc(cap_depth$percent/100,0.1)` of the time. The first two linear discriminant axes explained `r pc(cap_var$x,0.1)` and `r pc(cap_var$y,0.1)` of the variation, respectively. Mesophotic samples (30--90 m) from O&#x02BB;ahu were grouped separately in ordination space from all shallow samples across the archipelago ([@fig:fig_cap]). Shallow samples from O&#x02BB;ahu primarily clustered with shallow samples from other islands ([@fig:fig_cap]). A CAP ordination including only samples from O&#x02BB;ahu shows a similar pattern of depth zonation ([@fig:fig_supp_cap_oahu]). Variability among 30--90 m samples was apparently greater than among all shallow samples, with mean Euclidean distances between deep samples in canonical space significantly greater than between shallow samples (`r t_test(distance_t)`; [@fig:fig_cap], Supplementary [@fig:fig_supp_euclid]). Similarly, variability among samples from O&#x02BB;ahu (including mesophotic depths) exceeded variability among all shallow samples combined (based on Euclidean distances as above; `r t_test(oahu_t,plain=TRUE)`).
 
@@ -1817,6 +1834,43 @@ crabbo <- cc$crabs %>%
   rename(`"Species"`=species,`Depth range`=deeps,`Depth zones`=zones)
 
 print_table(crabbo,"tbl_supp_species_depth","Brachyuran taxa exclusive to shallow or mesophotic habitat",hdr_case="none",accuracy=1)
+```
+
+\newpage
+
+```{r tbl-supp-stats, results="asis", dependson="permanova"}
+suppressWarnings({
+  all_terms <- bind_rows(
+    broom::tidy(anova_island) %>%
+      mutate(model = "crabs_shallow ~ island"),
+    broom::tidy(anova_region) %>%
+      mutate(model = "crabs_shallow ~ island_group"),
+    broom::tidy(anova_depth) %>%
+      mutate(model = "crabs_all ~ depth_zone"),
+    broom::tidy(anova_depth_oahu) %>%
+      mutate(model = "crabs_oahu ~ depth_zone"),
+    broom::tidy(anova_both) %>%
+      mutate(model = "crabs_all ~ island_group + depth_zone"),
+    broom::tidy(anova(bd_region,PERM)) %>%
+      rename(SumOfSqs=sumsq,R2=meansq) %>%
+      mutate(term = replace(term,which(term == "Groups"),"island_group")) %>%
+      mutate(model = "crabs_shallow ~ island_group\n\n(permdisp)"),
+    broom::tidy(anova(bd_depth,PERM)) %>%
+      rename(SumOfSqs=sumsq,R2=meansq) %>%
+      mutate(term = replace(term,which(term == "Groups"),"depth_zone")) %>%
+      mutate(model = "crabs_all ~ depth_zone\n\n(permdisp)"),
+    broom::tidy(anova(bd_deep,PERM)) %>%
+      rename(SumOfSqs=sumsq,R2=meansq) %>%
+      mutate(term = replace(term,which(term == "Groups"),"depth_zone")) %>%
+      mutate(model = "crabs_deep ~ depth_zone\n\n(permdisp)")
+  ) %>%
+    filter(!term %in% c("Residuals","Residual","Total")) %>%
+		mutate(df = as.character(df),Permutations=as.character(PERM),p.value = pval(p.value)) %>%
+    select(model,everything()) %>%
+    rename(Model = model, Term = term, `DF` = df, `SS`=SumOfSqs, `R^2^`=R2, `Pseudo-F`=statistic,`p-value`=p.value)
+    # rename(Model = model, Term = term, `   DF   ` = df, `Sum of Squares`=SumOfSqs, `$\\mathrm{R}^2$`=R2, `Pseudo-F`=statistic,`p-value`=p.value)
+})
+print_table(all_terms,"tbl_supp_stats","Detailed results of multivariate statistical comparisons",hdr_case="none",accuracy=0.001)
 ```
 
 \newpage
