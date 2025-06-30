@@ -1,5 +1,5 @@
 Environmental Driver,Description,Source,Data resolution,variable
-Site depth,ARMS unit deployment depths.,NOAA NCRMP,Site,depth
+Deployment depth,ARMS unit deployment depths.,NOAA NCRMP,Site,depth
 Latitude,ARMS unit deployment latitude.,NOAA NCRMP,Site,lat
 Longitude,ARMS unit deployment longitude.,NOAA NCRMP,Site,lon
 Chlorophyll-A,"Satellite-derived sea surface chlorophyll-A (4 km resolution), based on monthly means averaged over deployment years.",OB.DAAC [@nasaCHL],Site/Years,chl
