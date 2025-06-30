@@ -6,20 +6,20 @@ taxonomy_collapsed <- taxonomy %>%
       # fix two misspellings
       species == "Charybdis (Charybdis) hawaiensis" ~ "Charybdis Charybdis hawaiensis",
       species == "Catoptrus inequalis" ~ "Catoptrus inaequalis",
-      # make morphospecies into just "genus/family sp."
-      str_detect(species,"sp[0-9]+") ~ str_c(coalesce(genus,family)," sp."),
+      # make morphospecies into just "genus/family spp."
+      str_detect(species,"sp[0-9]+") ~ str_c(coalesce(genus,family)," spp."),
       .default = species
     ),
     # reset known taxon level
     taxon_level = case_when(
-      species == str_glue("{genus} sp.") ~ "genus",
-      species == str_glue("{family} sp.") ~ "family",
+      species == str_glue("{genus} spp.") ~ "genus",
+      species == str_glue("{family} spp.") ~ "family",
       .default = taxon_level
     )
   ) %>%
   # assign them new otu IDs
   group_by(species) %>%
-  mutate( old_otu = otu,  otu = str_replace_all(str_replace(species,fixed(" sp."),"")," ","_")) %>%
+  mutate( old_otu = otu,  otu = str_replace_all(str_replace(species,fixed(" spp."),"")," ","_")) %>%
   ungroup() %>%
   select(-ends_with("otu"),ends_with("otu")) %>%
   arrange(family,genus,species)
