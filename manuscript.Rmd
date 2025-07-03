@@ -854,9 +854,7 @@ Shallow crab assemblages were significantly different between island groups (MHI
 In the CAP analysis of island group and depth zone, ARMS units were correctly reassigned to sample groups `r pc(cap_depth$percent/100,0.1)` of the time. The first two linear discriminant axes explained `r pc(cap_var$x,0.1)` and `r pc(cap_var$y,0.1)` of the variation, respectively. Mesophotic samples (30--90 m) from O&#x02BB;ahu were grouped separately in ordination space from shallow samples across the archipelago (including O&#x02BB;ahu; [@fig:fig_cap]). Shallow samples from O&#x02BB;ahu primarily clustered with shallow samples from other islands ([@fig:fig_cap]). A CAP ordination limited to O&#x02BB;ahu shows similar patterns of depth zonation (Supplementary [@fig:fig_supp_cap_oahu]). Variability in canonical space was significantly greater among deep (30--90 m) than among shallow samples ($\le$ 30 m) (Welch two-sample t-test of mean Euclidean distances:  `r t_test(distance_t,plain=TRUE)`; [@fig:fig_cap], Supplementary [@fig:fig_supp_euclid]). Similarly, variability within O&#x02BB;ahu alone (when mesophotic samples were included) exceeded the variability among all shallow samples combined (`r t_test(oahu_t,plain=TRUE)`).
 
 ```{r fig-cap, fig.cap="Canonical analysis of principal coordinates (CAP) ordination of crab assemblages by island group and depth zone. Shallow samples are the same as those plotted with environmental drivers in @fig:fig_dbrda, to which the mesophotic samples (30 m, 60 m, and 90 m) are added here for comparison. Depth transect samples collected on the island of O&#x02BB;ahu are plotted with a diamond (and separately as Supplementary @fig:fig_supp_cap_oahu) for direct comparison relative to archipelago-wide shallow samples represented by a circle.", results="asis", fig.width=9, fig.height=6, dependson="cap-analysis"}
-centroids <- pcap %>% group_by(sample_group) %>%
-  summarise(LD1=mean(LD1),LD2=mean(LD2))
-pcap <- pcap %>%
+pcap2 <- pcap %>%
   mutate(
     oahu = factor(
       # if_else(island == "Oahu","oahu","noahu"),
@@ -869,11 +867,14 @@ pcap <- pcap %>%
     )
   )
 
+centroids <- pcap2 %>% group_by(sample_group) %>%
+  summarise(LD1=mean(LD1),LD2=mean(LD2))
+
 # add a "Shallow (O‘ahu)" level to the sample_group column
 
 newgrp <- "Shallow (O‘ahu)"
 oldgrp <- 'Shallow (MHI)'
-ll <- levels(pcap$sample_group)
+ll <- levels(pcap2$sample_group)
 after <- which(ll == oldgrp)
 
 # give the new group the same color as the other one
@@ -881,13 +882,19 @@ after <- which(ll == oldgrp)
 
 # add the new factor level and make sure levels are appropriately ordered
 # also, add a shape column that we'll use below
-pcap <- pcap %>%
+pcap2 <- pcap2 %>%
   mutate(
+    old_sample_group = sample_group,
     sample_group = case_when(
       island == "Oahu" & depth_zone == "shallow" ~ newgrp,
       .default = sample_group
     ),
-    sample_group = fct_reorder(sample_group,depth),
+    dz=str_replace(depth_zone,"^([0-9]+)","z\\1"),
+    dz=str_c(dz,region,depth)
+  ) %>%
+  arrange(dz) %>%
+  mutate(
+    sample_group = fct_inorder(sample_group),
     shape = case_when(
       island == "Oahu" ~ 23,
       .default = 21
@@ -895,23 +902,28 @@ pcap <- pcap %>%
   )
 
 # get the new list of factor levels
-depth_groups <- levels(pcap$sample_group)
+depth_groups <- levels(pcap2$sample_group)
 
 # get a vector of shapes in the correct order
-shapes <- pcap %>%
+shapes <- pcap2 %>%
   distinct(sample_group,shape) %>%
   arrange(match(sample_group,depth_groups)) %>%
-  deframe
+  deframe()
+
+centroids <- pcap2 %>% group_by(old_sample_group) %>%
+  summarise(LD1=mean(LD1),LD2=mean(LD2)) %>%
+  mutate(old_sample_group = as.character(old_sample_group)) %>%
+  rename(sample_group=old_sample_group)
+
 
 # plot the cap
-ggplot(pcap,aes(x=LD1,y=LD2,fill=sample_group)) +
-  stat_ellipse(geom="polygon",level=0.95,alpha=0.1,show.legend = FALSE) +
-  # geom_point(aes(shape=oahu),color="black",shape=21,size=5)  +
+ggplot(pcap2,aes(x=LD1,y=LD2,fill=sample_group)) +
   geom_point(mapping=aes(shape=oahu),color="black",size=5)  +
-  geom_label_repel(data=centroids,aes(label=sample_group), color="white", show.legend = FALSE) +
-  # scale_shape_manual(values=c("oahu" = 23, "ffs" = 22, "noahu" = 21),name="Island", labels=c("noahu"="Other islands","oahu"="O‘ahu","ffs"="Lalo (French Frigate Shoals)" )) +
+  stat_ellipse(mapping=aes(x=LD1,y=LD2,fill=old_sample_group),inherit.aes = FALSE,geom="polygon",level=0.95,alpha=0.1,show.legend = FALSE) +
   scale_shape_manual(values=c("oahu" = 23, "noahu" = 21),name="Island", labels=c("noahu"="Other islands","oahu"="O‘ahu"),guide="none") +
-  scale_fill_manual(values=sample_depth_pal,name="Depth/region") +
+  scale_fill_manual(values=sample_depth_pal,name="Depth/region",guide="none") + 
+  # geom_label_repel(data=centroids,aes(x=LD1,y=LD2,fill=sample_group,label=sample_group),inherit.aes = FALSE, color="white", show.legend = FALSE) +
+  geom_label_repel(data=centroids,mapping=aes(x=LD1,LD2,label=sample_group,fill=sample_group),color="white",inherit.aes = FALSE,show.legend = FALSE) + 
   guides(
     fill=guide_legend(override.aes=list(shape=shapes))
   ) +
